@@ -1,0 +1,1182 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>【Docker】Docker从入门到干活，看这一篇足矣 - CoolLiuzw</title><meta name=Description content="jaeger: open source, end-to-end distributed tracing Monitor and troubleshoot transactions in complex distributed systems."><meta property="og:title" content="【Docker】Docker从入门到干活，看这一篇足矣"><meta property="og:description" content="jaeger: open source, end-to-end distributed tracing Monitor and troubleshoot transactions in complex distributed systems."><meta property="og:type" content="article"><meta property="og:url" content="https://coder-user.github.io/06-docker-all/"><meta property="og:image" content="https://coder-user.github.io/06-docker-all/featured-image.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2020-12-20T22:03:32+08:00"><meta property="article:modified_time" content="2021-06-12T20:04:28+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://coder-user.github.io/06-docker-all/featured-image.png"><meta name=twitter:title content="【Docker】Docker从入门到干活，看这一篇足矣"><meta name=twitter:description content="jaeger: open source, end-to-end distributed tracing Monitor and troubleshoot transactions in complex distributed systems."><meta name=application-name content="LoveIt"><meta name=apple-mobile-web-app-title content="LoveIt"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://coder-user.github.io/06-docker-all/><link rel=prev href=https://coder-user.github.io/09-go-module/><link rel=next href=https://coder-user.github.io/07-redis-install/><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"【Docker】Docker从入门到干活，看这一篇足矣","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/coder-user.github.io\/06-docker-all\/"},"image":[{"@type":"ImageObject","url":"https:\/\/coder-user.github.io\/06-docker-all\/featured-image.png","width":682,"height":163}],"genre":"posts","keywords":"编程","wordcount":9425,"url":"https:\/\/coder-user.github.io\/06-docker-all\/","datePublished":"2020-12-20T22:03:32+08:00","dateModified":"2021-06-12T20:04:28+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"coolliuzw","logo":{"@type":"ImageObject","url":"https:\/\/coder-user.github.io\/images\/avatar_me.png","width":600,"height":600}},"author":{"@type":"Person","name":"coolliuzw"},"description":"jaeger: open source, end-to-end distributed tracing Monitor and troubleshoot transactions in complex distributed systems."}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark')&&document.body.setAttribute('theme','dark')</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=CoolLiuzw><span class=header-title-pre><i class="far fa-kiss-wink-heart fa-fw"></i></span>CoolLiuzw</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>所有文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=CoolLiuzw><span class=header-title-pre><i class="far fa-kiss-wink-heart fa-fw"></i></span>CoolLiuzw</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/ title>所有文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">【Docker】Docker从入门到干活，看这一篇足矣</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>coolliuzw</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E7%BC%96%E7%A8%8B/><i class="far fa-folder fa-fw"></i>编程</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2020-12-20>2020-12-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 9425 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 19 分钟&nbsp;<span id=/06-docker-all/ class=leancloud_visitors data-flag-title=【Docker】Docker从入门到干活，看这一篇足矣>
+<i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class=featured-image><img class=lazyload src=/svg/loading.min.svg data-src=/06-docker-all/featured-image.png data-srcset="/06-docker-all/featured-image.png, /06-docker-all/featured-image.png 1.5x, /06-docker-all/featured-image.png 2x" data-sizes=auto alt=/06-docker-all/featured-image.png title="jaeger: open source, end-to-end distributed tracing Monitor and troubleshoot transactions in complex distributed systems."></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#docker从入门到干活看这一篇足矣>Docker从入门到干活，看这一篇足矣</a></li><li><a href=#转载文章需要更好的阅读效果可以移步原文>转载文章，需要更好的阅读效果可以移步原文</a></li><li><a href=#容器简介><strong>容器简介</strong></a><ul><li><a href=#什么是-linux-容器><strong>什么是 Linux 容器</strong></a></li><li><a href=#容器不就是虚拟化吗><strong>容器不就是虚拟化吗</strong></a></li><li><a href=#容器发展简史><strong>容器发展简史</strong></a></li></ul></li><li><a href=#什么是-docker><strong>什么是 Docker？</strong></a><ul><li><a href=#docker-如何工作><strong>Docker 如何工作？</strong></a></li><li><a href=#docker-技术是否与传统的-linux-容器相同><strong>Docker 技术是否与传统的 Linux 容器相同？</strong></a></li><li><a href=#docker的目标><strong>docker的目标</strong></a></li></ul></li><li><a href=#安装docker><strong>安装Docker</strong></a><ul><li><a href=#docker基础命令操作><strong>Docker基础命令操作</strong></a></li><li><a href=#启动第一个容器><strong>启动第一个容器</strong></a></li><li><a href=#docker镜像生命周期><strong>Docker镜像生命周期</strong></a></li></ul></li><li><a href=#docker镜像相关操作><strong>Docker镜像相关操作</strong></a><ul><li><a href=#搜索官方仓库镜像><strong>搜索官方仓库镜像</strong></a></li><li><a href=#获取镜像><strong>获取镜像</strong></a></li><li><a href=#导出镜像><strong>导出镜像</strong></a></li><li><a href=#删除镜像><strong>删除镜像</strong></a></li><li><a href=#导入镜像><strong>导入镜像</strong></a></li><li><a href=#查看镜像的详细信息><strong>查看镜像的详细信息</strong></a></li></ul></li><li><a href=#容器的日常管理><strong>容器的日常管理</strong></a><ul><li><a href=#容器的起停><strong>容器的起/停</strong></a></li><li><a href=#进入容器方法><strong>进入容器方法</strong></a></li><li><a href=#删除所有容器><strong>删除所有容器</strong></a></li><li><a href=#启动时进行端口映射><strong>启动时进行端口映射</strong></a></li></ul></li><li><a href=#docker-数据卷的管理><strong>Docker 数据卷的管理</strong></a><ul><li><a href=#挂载时创建卷><strong>挂载时创建卷</strong></a></li><li><a href=#创建卷后挂载><strong>创建卷后挂载</strong></a></li><li><a href=#手动将容器保存为镜像><strong>手动将容器保存为镜像</strong></a></li></ul></li><li><a href=#dockerfile自动构建docker镜像><strong>Dockerfile自动构建docker镜像</strong></a><ul><li><a href=#dockerfile指令集><strong>Dockerfile指令集</strong></a></li><li><a href=#创建一个dockerfile><strong>创建一个Dockerfile</strong></a></li><li><a href=#使用dcokerfile安装kodexplorer><strong>使用Dcokerfile安装kodexplorer</strong></a></li></ul></li><li><a href=#docker中的镜像分层><strong>Docker中的镜像分层</strong></a><ul><li><a href=#docker-镜像为什么分层><strong>Docker 镜像为什么分层</strong></a></li><li><a href=#可写的容器层><strong>可写的容器层</strong></a></li><li><a href=#容器层的细节说明><strong>容器层的细节说明</strong></a></li></ul></li><li><a href=#使用docker运行zabbix-server><strong>使用docker运行zabbix-server</strong></a><ul><li><a href=#容器间的互联><strong>容器间的互联</strong></a></li><li><a href=#启动zabbix容器><strong>启动zabbix容器</strong></a></li><li><a href=#关于zabbix-api><strong>关于zabbix API</strong></a></li></ul></li><li><a href=#docker-仓库registry><strong>docker 仓库（registry）</strong></a><ul><li><a href=#创建一个普通仓库><strong>创建一个普通仓库</strong></a></li><li><a href=#带basic认证的仓库><strong>带basic认证的仓库</strong></a></li></ul></li><li><a href=#docker-compose编排工具><strong>docker-compose编排工具</strong></a><ul><li><a href=#安装docker-compose><strong>安装docker-compose</strong></a></li><li><a href=#编排启动镜像><strong>编排启动镜像</strong></a></li><li><a href=#haproxy代理后端docker容器><strong>haproxy代理后端docker容器</strong></a></li><li><a href=#安装socat-直接操作socket控制haproxy><strong>安装socat 直接操作socket控制haproxy</strong></a></li></ul></li><li><a href=#重启docker服务容器全部退出的解决办法>重启docker服务，容器全部退出的解决办法</a><ul><li><a href=#在启动是指定自动重启><strong>在启动是指定自动重启</strong></a></li><li><a href=#修改docker默认配置文件><strong>修改docker默认配置文件</strong></a></li></ul></li><li><a href=#docker网络类型><strong>Docker网络类型</strong></a><ul><li><a href=#docker的网络类型><strong>docker的网络类型</strong></a></li><li><a href=#不为容器配置网络功能><strong>不为容器配置网络功能</strong></a></li><li><a href=#与其他容器共享网络配置container><strong>与其他容器共享网络配置(Container）</strong></a></li><li><a href=#使用宿主机网络><strong>使用宿主机网络</strong></a></li><li><a href=#查看网络列表><strong>查看网络列表</strong></a></li><li><a href=#用pipework为docker容器配置独立ip><strong>用PIPEWORK为docker容器配置独立IP</strong></a></li><li><a href=#docker跨主机通信之macvlan><strong>Docker跨主机通信之macvlan</strong></a></li></ul></li><li><a href=#docker企业级镜像仓库harbor><strong>docker企业级镜像仓库harbor</strong></a><ul><li><a href=#使用容器的建议><strong>使用容器的建议</strong></a></li><li><a href=#关于docker容器的监控><strong>关于Docker容器的监控</strong></a></li></ul></li><li><a href=#参考文献>参考文献</a></li></ul></nav></div></div><div class=content id=content><h2 id=docker从入门到干活看这一篇足矣>Docker从入门到干活，看这一篇足矣</h2><p>Java笔记虾</p><p><img class=lazyload src=/svg/loading.min.svg data-src=./images/640-20201220220508087.png data-srcset="./images/640-20201220220508087.png, ./images/640-20201220220508087.png 1.5x, ./images/640-20201220220508087.png 2x" data-sizes=auto alt=./images/640-20201220220508087.png title=图片></p><p><em>作者：惨绿少年</em></p><h2 id=转载文章需要更好的阅读效果可以移步原文>转载文章，需要更好的阅读效果可以移步原文</h2><ul><li><a href=https://mp.weixin.qq.com/s/QNo3pDlzxFjkmu0OEmcq3g target=_blank rel="noopener noreffer">Java笔记虾原文地址</a></li></ul><h2 id=容器简介><strong>容器简介</strong></h2><h3 id=什么是-linux-容器><strong>什么是 Linux 容器</strong></h3><p>Linux容器是与系统其他部分隔离开的一系列进程，从另一个镜像运行，并由该镜像提供支持进程所需的全部文件。</p><p>容器提供的镜像包含了应用的所有依赖项，因而在从开发到测试再到生产的整个过程中，它都具有可移植性和一致性。</p><p><img class=lazyload src=/svg/loading.min.svg data-src=./images/640.png data-srcset="./images/640.png, ./images/640.png 1.5x, ./images/640.png 2x" data-sizes=auto alt=./images/640.png title=图片></p><p>更加详细地来说，请您假定您在开发一个应用。您使用的是一台笔记本电脑，而且您的开发环境具有特定的配置。其他开发人员身处的环境配置可能稍有不同。您正在开发的应用依赖于您当前的配置，还要依赖于某些特定文件。</p><p>与此同时，您的企业还拥有标准化的测试和生产环境，且具有自身的配置和一系列支持文件。</p><p>您希望尽可能多在本地模拟这些环境，而不产生重新创建服务器环境的开销。</p><p>因此，您要如何确保应用能够在这些环境中运行和通过质量检测，并且在部署过程中不出现令人头疼的问题，也无需重新编写代码和进行故障修复？答案就是使用容器。</p><p>容器可以确保您的应用拥有必需的配置和文件，使得这些应用能够在从开发到测试、再到生产的整个流程中顺利运行，而不出现任何不良问题。这样可以避免危机，做到皆大欢喜。</p><p>虽然这只是简化的示例，但在需要很高的可移植性、可配置性和隔离的情况下，我们可以利用 Linux 容器通过很多方式解决难题。</p><p>无论基础架构是在企业内部还是在云端，或者混合使用两者，容器都能满足您的需求。</p><h3 id=容器不就是虚拟化吗><strong>容器不就是虚拟化吗</strong></h3><p>是，但也不竟然。我们用一种简单方式来思考一下：</p><p>虚拟化使得许多操作系统可同时在单个系统上运行。</p><p>容器则可共享同一个操作系统内核，将应用进程与系统其他部分隔离开。</p><p><img class=lazyload src=/svg/loading.min.svg data-src=./images/640-20201220220500078.png data-srcset="./images/640-20201220220500078.png, ./images/640-20201220220500078.png 1.5x, ./images/640-20201220220500078.png 2x" data-sizes=auto alt=./images/640-20201220220500078.png title=图片></p><p>图 - 普通虚拟化技术和Docker的对比</p><p>这意味着什么？首先，让多个操作系统在单个虚拟机监控程序上运行以实现虚拟化，并不能达成和使用容器同等的轻量级效果。</p><p>事实上，在仅拥有容量有限的有限资源时，您需要能够可以进行密集部署的轻量级应用。</p><p>Linux 容器可从单个操作系统运行，在所有容器中共享该操作系统，因此应用和服务能够保持轻量级，并行快速运行。</p><h3 id=容器发展简史><strong>容器发展简史</strong></h3><p><img class=lazyload src=/svg/loading.min.svg data-src=./images/640-20201220220518197.png data-srcset="./images/640-20201220220518197.png, ./images/640-20201220220518197.png 1.5x, ./images/640-20201220220518197.png 2x" data-sizes=auto alt=./images/640-20201220220518197.png title=图片></p><p>我们现在称为容器技术的概念最初出现在 2000 年，当时称为 FreeBSD jail，这种技术可将 FreeBSD 系统分区为多个子系统（也称为 Jail）。</p><p>Jail 是作为安全环境而开发的，系统管理员可与企业内部或外部的多个用户共享这些 Jail。</p><p>Jail 的目的是让进程在经过修改的 chroot 环境中创建，而不会脱离和影响整个系统 — 在 chroot 环境中，对文件系统、网络和用户的访问都实现了虚拟化。</p><p>尽管 Jail 在实施方面存在局限性，但最终人们找到了脱离这种隔离环境的方法。</p><p>但这个概念非常有吸引力。</p><p>2001 年，通过 Jacques Gélinas 的 VServer 项目，隔离环境的实施进入了 Linux 领域。</p><p>正如 Gélinas 所说，这项工作的目的是“在高度独立且安全的单一环境中运行多个通用 Linux 服务器 [sic]。”</p><p>在完成了这项针对 Linux 中多个受控制用户空间的基础性工作后，Linux 容器开始逐渐成形并最终发展成了现在的模样。</p><h2 id=什么是-docker><strong>什么是 Docker？</strong></h2><p>“Docker” 一词指代多种事物，包括开源社区项目、开源项目使用的工具、主导支持此类项目的公司 Docker Inc. 以及该公司官方支持的工具。技术产品和公司使用同一名称，的确让人有点困惑。</p><p>我们来简单说明一下：</p><p>🎍 IT 软件中所说的 “Docker” ，是指容器化技术，用于支持创建和使用 Linux 容器。</p><p>🎍 开源 Docker 社区致力于改进这类技术，并免费提供给所有用户，使之获益。</p><p>🎍 Docker Inc. 公司凭借 Docker 社区产品起家，它主要负责提升社区版本的安全性，并将改进后的版本与更广泛的技术社区分享。此外，它还专门对这些技术产品进行完善和安全固化，以服务于企业客户。</p><p>借助 Docker ，您可将容器当做重量轻、模块化的虚拟机使用。同时，您还将获得高度的灵活性，从而实现对容器的高效创建、部署及复制，并能将其从一个环境顺利迁移至另一个环境。</p><h3 id=docker-如何工作><strong>Docker 如何工作？</strong></h3><p>Docker 技术使用 Linux 内核和内核功能（例如 Cgroups 和 namespaces）来分隔进程，以便各进程相互独立运行。</p><p>这种独立性正是采用容器的目的所在；它可以独立运行多种进程、多个应用程序，更加充分地发挥基础设施的作用，同时保持各个独立系统的安全性。</p><p>容器工具（包括 Docker）可提供基于镜像的部署模式。这使得它能够轻松跨多种环境，与其依赖程序共享应用或服务组。Docker 还可在这一容器环境中自动部署应用程序（或者合并多种流程，以构建单个应用程序）。</p><p>此外，由于这些工具基于 Linux 容器构建，使得 Docker 既易于使用，又别具一格 —— 它可为用户提供前所未有的高度应用程访问权限、快速部署以及版本控制和分发能力。</p><h3 id=docker-技术是否与传统的-linux-容器相同><strong>Docker 技术是否与传统的 Linux 容器相同？</strong></h3><p>否。Docker 技术最初是基于 LXC 技术构建（大多数人都会将这一技术与“传统的” Linux 容器联系在一起），但后来它逐渐摆脱了对这种技术的依赖。</p><p><strong>就轻量级 虚拟化 这一功能来看，LXC 非常有用</strong>，但它无法提供出色的开发人员或用户体验。除了运行容器之外，Docker 技术还具备其他多项功能，包括简化用于构建容器、传输镜像以及控制镜像版本的流程。</p><p><img class=lazyload src=/svg/loading.min.svg data-src=./images/640-20201220220522659.png data-srcset="./images/640-20201220220522659.png, ./images/640-20201220220522659.png 1.5x, ./images/640-20201220220522659.png 2x" data-sizes=auto alt=./images/640-20201220220522659.png title=图片></p><p>传统的 Linux 容器使用 init 系统来管理多种进程。这意味着，所有应用程序都作为一个整体运行。与此相反，Docker 技术鼓励应用程序各自独立运行其进程，并提供相应工具以实现这一功能。这种精细化运作模式自有其优势。</p><h3 id=docker的目标><strong>docker的目标</strong></h3><p>docker的主要目标是"Build,Ship and Run any App,Angwhere",构建，运输，处处运行</p><ul><li>**构建：**做一个docker镜像</li><li>**运输：**docker pull</li><li>**运行：**启动一个容器</li></ul><p>每一个容器，他都有自己的文件系统rootfs.</p><h2 id=安装docker><strong>安装Docker</strong></h2><p>环境说明</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 需要两台几点进行安装
+[root@docker01 ~]# cat /etc/redhat-release 
+CentOS Linux release 7.2.1511 (Core) 
+[root@docker01 ~]# uname  -r 
+3.10.0-327.el7.x86_64
+[root@docker01 ~]# hostname -I
+10.0.0.100 172.16.1.100 
+[root@docker02 ~]# hostname -I
+10.0.0.101 172.16.1.101
+</code></pre></td></tr></table></div></div><p>在<strong>两个节点</strong>上都进行操作</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>wget -O /etc/yum.repos.d/docker-ce.repo https://mirrors.ustc.edu.cn/docker-ce/linux/centos/docker-ce.repo
+sed -i &#39;s#download.docker.com#mirrors.ustc.edu.cn/docker-ce#g&#39; /etc/yum.repos.d/docker-ce.repo
+yum install docker-ce -y
+</code></pre></td></tr></table></div></div><p>修改在docker01配置：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 修改启动文件，监听远程端口
+vim /usr/lib/systemd/system/docker.service
+ExecStart=/usr/bin/dockerd -H unix:///var/run/docker.sock -H tcp://10.0.0.100:2375
+systemctl daemon-reload
+systemctl enable docker.service 
+systemctl restart docker.service
+# ps -ef检查进行，是否启动
+</code></pre></td></tr></table></div></div><p>在docker02测试</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker02 ~]# docker -H 10.0.0.100 info
+Containers: 0
+ Running: 0
+ Paused: 0
+ Stopped: 0
+Images: 0
+Server Version: 17.12.0-ce
+Storage Driver: devicemapper
+···
+</code></pre></td></tr></table></div></div><h3 id=docker基础命令操作><strong>Docker基础命令操作</strong></h3><p>查看docker相关信息</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]#  docker version  
+Client:
+ Version:    17.12.0-ce
+ API version:    1.35
+ Go version:    go1.9.2
+ Git commit:    c97c6d6
+ Built:    Wed Dec 27 20:10:14 2017
+ OS/Arch:    linux/amd64
+Server:
+ Engine:
+  Version:    17.12.0-ce
+  API version:    1.35 (minimum version 1.12)
+  Go version:    go1.9.2
+  Git commit:    c97c6d6
+  Built:    Wed Dec 27 20:12:46 2017
+  OS/Arch:    linux/amd64
+  Experimental:    false
+</code></pre></td></tr></table></div></div><p>配置docker镜像加速</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>vi /etc/docker/daemon.json
+{
+  &#34;registry-mirrors&#34;: [&#34;https://registry.docker-cn.com&#34;]
+}   
+</code></pre></td></tr></table></div></div><h3 id=启动第一个容器><strong>启动第一个容器</strong></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker run -d -p 80:80 nginx
+Unable to find image &#39;nginx:latest&#39; locally
+latest: Pulling from library/nginx
+e7bb522d92ff: Pull complete 
+6edc05228666: Pull complete 
+cd866a17e81f: Pull complete 
+Digest: sha256:285b49d42c703fdf257d1e2422765c4ba9d3e37768d6ea83d7fe2043dad6e63d
+Status: Downloaded newer image for nginx:latest
+8d8f81da12b5c10af6ba1a5d07f4abc041cb95b01f3d632c3d638922800b0b4d
+# 容器启动后，在浏览器进行访问测试 
+</code></pre></td></tr></table></div></div><p>参数说明</p><p><img class=lazyload src=/svg/loading.min.svg data-src=./images/640-20201220220530226.png data-srcset="./images/640-20201220220530226.png, ./images/640-20201220220530226.png 1.5x, ./images/640-20201220220530226.png 2x" data-sizes=auto alt=./images/640-20201220220530226.png title=图片></p><h3 id=docker镜像生命周期><strong>Docker镜像生命周期</strong></h3><p><img class=lazyload src=/svg/loading.min.svg data-src=./images/640-20201220220528515.png data-srcset="./images/640-20201220220528515.png, ./images/640-20201220220528515.png 1.5x, ./images/640-20201220220528515.png 2x" data-sizes=auto alt=./images/640-20201220220528515.png title=图片></p><h2 id=docker镜像相关操作><strong>Docker镜像相关操作</strong></h2><h3 id=搜索官方仓库镜像><strong>搜索官方仓库镜像</strong></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]#  docker search centos
+NAME                      DESCRIPTION                    STARS    OFFICIAL               AUTOMATED
+centos                    The official build of CentOS.  3992     [OK]      
+ansible/centos7-ansible   Ansible on Centos7             105                              [OK]
+</code></pre></td></tr></table></div></div><p>列表说明</p><p><img class=lazyload src=/svg/loading.min.svg data-src=./images/640-20201220220538009.png data-srcset="./images/640-20201220220538009.png, ./images/640-20201220220538009.png 1.5x, ./images/640-20201220220538009.png 2x" data-sizes=auto alt=./images/640-20201220220538009.png title=图片></p><h3 id=获取镜像><strong>获取镜像</strong></h3><p>根据镜像名称拉取镜像</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker pull centos
+Using default tag: latest
+latest: Pulling from library/centos
+af4b0a2388c6: Downloading  34.65MB/73.67MB
+</code></pre></td></tr></table></div></div><p>查看当前主机镜像列表</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker image list 
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+centos              latest              ff426288ea90        3 weeks ago         207MB
+nginx               latest              3f8a4339aadd        5 weeks ago         108MB
+</code></pre></td></tr></table></div></div><p>拉第三方镜像方法</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>docker pull index.tenxcloud.com/tenxcloud/httpd
+</code></pre></td></tr></table></div></div><h3 id=导出镜像><strong>导出镜像</strong></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker image list 
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+centos              latest              ff426288ea90        3 weeks ago         207MB
+nginx               latest              3f8a4339aadd        5 weeks ago         108MB
+# 导出
+[root@docker01 ~]# docker image save centos &gt; docker-centos.tar.gz
+</code></pre></td></tr></table></div></div><h3 id=删除镜像><strong>删除镜像</strong></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker image rm centos:latest
+[root@docker01 ~]# docker image list 
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+nginx               latest              3f8a4339aadd        5 weeks ago         108MB
+</code></pre></td></tr></table></div></div><h3 id=导入镜像><strong>导入镜像</strong></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker image load -i docker-centos.tar.gz  
+e15afa4858b6: Loading layer  215.8MB/215.8MB
+Loaded image: centos:latest
+[root@docker01 ~]# docker image list 
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+centos              latest              ff426288ea90        3 weeks ago         207MB
+nginx               latest              3f8a4339aadd        5 weeks ago         108MB
+</code></pre></td></tr></table></div></div><h3 id=查看镜像的详细信息><strong>查看镜像的详细信息</strong></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker image inspect centos
+</code></pre></td></tr></table></div></div><h2 id=容器的日常管理><strong>容器的日常管理</strong></h2><h3 id=容器的起停><strong>容器的起/停</strong></h3><p>最简单的运行一个容器</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker run nginx
+</code></pre></td></tr></table></div></div><p>创建容器，两步走（不常用）</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker create centos:latest  /bin/bash
+bb7f32368ecf0492adb59e20032ab2e6cf6a563a0e6751e58930ee5f7aaef204
+[root@docker01 ~]# docker start stupefied_nobel
+stupefied_nobel
+</code></pre></td></tr></table></div></div><p>快速启动容器方法</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker run  centos:latest  /usr/bin/sleep 20;
+</code></pre></td></tr></table></div></div><p><strong>容器内的第一个进程必须一直处于运行的状态，否则这个容器，就会处于退出状态！</strong></p><p>查看正在运行的容器</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker container ls
+    或
+[root@docker01 ~]# docker ps 
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+8708e93fd767        nginx               &#34;nginx -g &#39;daemon of…&#34;   6 seconds ago       Up 4 seconds        80/tcp              keen_lewin
+</code></pre></td></tr></table></div></div><p>查看你容器详细信息/ip</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker container  inspect  容器名称/id
+</code></pre></td></tr></table></div></div><p>查看你所有容器（包括未运行的）</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS               NAMES
+8708e93fd767        nginx               &#34;nginx -g &#39;daemon of…&#34;   4 minutes ago       Exited (0) 59 seconds ago                       keen_lewin
+f9f3e6af7508        nginx               &#34;nginx -g &#39;daemon of…&#34;   5 minutes ago       Exited (0) 5 minutes ago                        optimistic_haibt
+8d8f81da12b5        nginx               &#34;nginx -g &#39;daemon of…&#34;   3 hours ago         Exited (0) 3 hours ago                          lucid_bohr
+</code></pre></td></tr></table></div></div><p>停止容器</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker stop 容器名称/id 
+或
+[root@docker01 ~]# docker container  kill  容器名称/id
+
+</code></pre></td></tr></table></div></div><h3 id=进入容器方法><strong>进入容器方法</strong></h3><p><strong>启动时进去方法</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker run -it #参数：-it 可交互终端
+[root@docker01 ~]# docker run -it nginx:latest  /bin/bash
+root@79241093859e:/#
+</code></pre></td></tr></table></div></div><p>退出/离开容器</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>ctrl+p &amp; ctrl+q
+</code></pre></td></tr></table></div></div><p><strong>启动后进入容器的方法</strong></p><p>启动一个docker</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker run -it centos:latest 
+[root@1bf0f43c4d2f /]# ps -ef 
+UID         PID   PPID  C STIME TTY          TIME CMD
+root          1      0  0 15:47 pts/0    00:00:00 /bin/bash
+root         13      1  0 15:47 pts/0    00:00:00 ps -ef
+</code></pre></td></tr></table></div></div><p>attach进入容器，使用pts/0 ，会让所用通过此方法进如放入用户看到同样的操作。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker attach 1bf0f43c4d2f
+[root@1bf0f43c4d2f /]# ps -ef 
+UID         PID   PPID  C STIME TTY          TIME CMD
+root          1      0  0 15:47 pts/0    00:00:00 /bin/bash
+root         14      1  0 15:49 pts/0    00:00:00 ps -ef
+</code></pre></td></tr></table></div></div><p>自命名启动一个容器 &ndash;name</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker attach 1bf0f43c4d2f
+[root@1bf0f43c4d2f /]# ps -ef 
+UID         PID   PPID  C STIME TTY          TIME CMD
+root          1      0  0 15:47 pts/0    00:00:00 /bin/bash
+root         14      1  0 15:49 pts/0    00:00:00 ps -ef
+</code></pre></td></tr></table></div></div><p>exec 进入容器方法（推荐使用）</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker exec -it clsn1  /bin/bash 
+[root@b20fa75b4b40 /]# 重新分配一个终端
+[root@b20fa75b4b40 /]# ps -ef 
+UID         PID   PPID  C STIME TTY          TIME CMD
+root          1      0  0 16:11 pts/0    00:00:00 /bin/bash
+root         13      0  0 16:14 pts/1    00:00:00 /bin/bash
+root         26     13  0 16:14 pts/1    00:00:00 ps -ef
+</code></pre></td></tr></table></div></div><h3 id=删除所有容器><strong>删除所有容器</strong></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker rm -f  `docker ps -a -q`
+# -f 强制删除
+</code></pre></td></tr></table></div></div><h3 id=启动时进行端口映射><strong>启动时进行端口映射</strong></h3><p>-p参数端口映射</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker run -d -p 8888:80  nginx:latest 
+287bec5c60263166c03e1fc5b0b8262fe76507be3dfae4ce5cd2ee2d1e8a89a9
+</code></pre></td></tr></table></div></div><p>不同指定映射方法</p><p><img class=lazyload src=/svg/loading.min.svg data-src=./images/640-20201220220545061.png data-srcset="./images/640-20201220220545061.png, ./images/640-20201220220545061.png 1.5x, ./images/640-20201220220545061.png 2x" data-sizes=auto alt=./images/640-20201220220545061.png title=图片></p><p>随机映射</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>docker run -P （大P）# 需要镜像支持
+</code></pre></td></tr></table></div></div><h2 id=docker-数据卷的管理><strong>Docker 数据卷的管理</strong></h2><h3 id=挂载时创建卷><strong>挂载时创建卷</strong></h3><p>挂载卷</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker run -d -p 80:80 -v /data:/usr/share/nginx/html nginx:latest
+079786c1e297b5c5031e7a841160c74e91d4ad06516505043c60dbb78a259d09
+</code></pre></td></tr></table></div></div><p>容器内站点目录: /usr/share/nginx/html</p><p>在宿主机写入数据，查看</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# echo &#34;http://www.nmtui.com&#34; &gt;/data/index.html
+[root@docker01 ~]# curl 10.0.0.100
+http://www.nmtui.com
+</code></pre></td></tr></table></div></div><p>设置共享卷，使用同一个卷启动一个新的容器</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker run -d -p 8080:80 -v /data:/usr/share/nginx/html nginx:latest 
+351f0bd78d273604bd0971b186979aa0f3cbf45247274493d2490527babb4e42
+[root@docker01 ~]# curl 10.0.0.100:8080
+http://www.nmtui.com
+</code></pre></td></tr></table></div></div><p>查看卷列表</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker volume ls
+DRIVER              VOLUME NAME
+</code></pre></td></tr></table></div></div><h3 id=创建卷后挂载><strong>创建卷后挂载</strong></h3><p>创建一个卷</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker volume create 
+f3b95f7bd17da220e63d4e70850b8d7fb3e20f8ad02043423a39fdd072b83521
+[root@docker01 ~]# docker volume ls 
+DRIVER              VOLUME NAME
+local               f3b95f7bd17da220e63d4e70850b8d7fb3e20f8ad02043423a39fdd072b83521
+</code></pre></td></tr></table></div></div><p>指定卷名</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker volume ls 
+DRIVER              VOLUME NAME
+local               clsn
+local               f3b95f7bd17da220e63d4e70850b8d7fb3e20f8ad02043423a39fdd072b83521
+</code></pre></td></tr></table></div></div><p>查看卷路径</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker volume inspect clsn 
+[
+    {
+        &#34;CreatedAt&#34;: &#34;2018-02-01T00:39:25+08:00&#34;,
+        &#34;Driver&#34;: &#34;local&#34;,
+        &#34;Labels&#34;: {},
+        &#34;Mountpoint&#34;: &#34;/var/lib/docker/volumes/clsn/_data&#34;,
+        &#34;Name&#34;: &#34;clsn&#34;,
+        &#34;Options&#34;: {},
+        &#34;Scope&#34;: &#34;local&#34;
+    }
+]
+</code></pre></td></tr></table></div></div><p>使用卷创建</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker run -d -p 9000:80 -v clsn:/usr/share/nginx/html nginx:latest 
+1434559cff996162da7ce71820ed8f5937fb7c02113bbc84e965845c219d3503
+# 宿主机测试
+[root@docker01 ~]# echo &#39;blog.nmtui.com&#39; &gt;/var/lib/docker/volumes/clsn/_data/index.html 
+[root@docker01 ~]# curl 10.0.0.100:9000
+blog.nmtui.com
+</code></pre></td></tr></table></div></div><p>设置卷</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker run  -d  -P  --volumes-from 079786c1e297 nginx:latest 
+b54b9c9930b417ab3257c6e4a8280b54fae57043c0b76b9dc60b4788e92369fb
+</code></pre></td></tr></table></div></div><p>查看使用的端口</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# netstat -lntup 
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1400/sshd           
+tcp        0      0 10.0.0.100:2375         0.0.0.0:*               LISTEN      26218/dockerd       
+tcp6       0      0 :::9000                 :::*                    LISTEN      32015/docker-proxy  
+tcp6       0      0 :::8080                 :::*                    LISTEN      31853/docker-proxy  
+tcp6       0      0 :::80                   :::*                    LISTEN      31752/docker-proxy  
+tcp6       0      0 :::22                   :::*                    LISTEN      1400/sshd           
+tcp6       0      0 :::32769                :::*                    LISTEN      32300/docker-proxy  
+[root@docker01 ~]# curl 10.0.0.100:32769
+http://www.nmtui.com
+</code></pre></td></tr></table></div></div><h3 id=手动将容器保存为镜像><strong>手动将容器保存为镜像</strong></h3><p>本次是基于docker官方centos 6.8 镜像创建</p><p>官方镜像列表：</p><p><a href=https://hub.docker.com/explore/>https://hub.docker.com/explore/</a></p><p>启动一个centos6.8的镜像</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker pull  centos:6.8
+[root@docker01 ~]# docker run -it -p 1022:22 centos:6.8  /bin/bash
+# 在容器种安装sshd服务，并修改系统密码
+[root@582051b2b92b ~]# yum install  openssh-server -y 
+[root@582051b2b92b ~]# echo &#34;root:123456&#34; |chpasswd
+[root@582051b2b92b ~]#  /etc/init.d/sshd start
+</code></pre></td></tr></table></div></div><p>启动完成后镜像ssh连接测试</p><p>将容器提交为镜像</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker commit brave_mcclintock  centos6-ssh
+</code></pre></td></tr></table></div></div><p>使用新的镜像启动容器</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker run -d  -p 1122:22  centos6-ssh:latest  /usr/sbin/sshd -D 
+5b8161fda2a9f2c39c196c67e2eb9274977e7723fe51c4f08a0190217ae93094
+</code></pre></td></tr></table></div></div><p>在容器安装httpd服务</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@5b8161fda2a9 /]#  yum install httpd -y
+</code></pre></td></tr></table></div></div><p>编写启动脚本脚本</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash><span class=o>[</span>root@5b8161fda2a9 /<span class=o>]</span><span class=c1># cat  init.sh </span>
+<span class=c1>#!/bin/bash </span>
+/etc/init.d/httpd start 
+/usr/sbin/sshd -D
+<span class=o>[</span>root@5b8161fda2a9 /<span class=o>]</span><span class=c1># chmod +x init.sh </span>
+<span class=c1># 注意执行权限</span>
+</code></pre></td></tr></table></div></div><p>再次提交为新的镜像</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker commit  5b8161fda2a9 centos6-httpd 
+sha256:705d67a786cac040800b8485cf046fd57b1828b805c515377fc3e9cea3a481c1
+</code></pre></td></tr></table></div></div><p>启动镜像，做好端口映射。并在浏览器中测试访问</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker run -d -p 1222:22 -p 80:80  centos6-httpd /init.sh 
+46fa6a06644e31701dc019fb3a8c3b6ef008d4c2c10d46662a97664f838d8c2c
+</code></pre></td></tr></table></div></div><h2 id=dockerfile自动构建docker镜像><strong>Dockerfile自动构建docker镜像</strong></h2><p>官方构建dockerffile文件参考</p><p><a href=https://github.com/CentOS/CentOS-Dockerfiles>https://github.com/CentOS/CentOS-Dockerfiles</a></p><h3 id=dockerfile指令集><strong>Dockerfile指令集</strong></h3><p>dockerfile主要组成部分：</p><ul><li>基础镜像信息 FROM centos:6.8</li><li>制作镜像操作指令RUN yum insatll openssh-server -y</li><li>容器启动时执行指令 CMD ["/bin/bash"]</li></ul><p>dockerfile常用指令：</p><ul><li>FROM 这个镜像的妈妈是谁？（指定基础镜像）</li><li>MAINTAINER 告诉别人，谁负责养它？（指定维护者信息，可以没有）</li><li>RUN 你想让它干啥（在命令前面加上RUN即可）</li><li>ADD 给它点创业资金（COPY文件，会自动解压）</li><li>WORKDIR 我是cd,今天刚化了妆（设置当前工作目录）</li><li>VOLUME 给它一个存放行李的地方（设置卷，挂载主机目录）</li><li>EXPOSE 它要打开的门是啥（指定对外的端口）</li><li>CMD 奔跑吧，兄弟！（指定容器启动后的要干的事情）</li></ul><p>dockerfile其他指令：</p><ul><li>COPY 复制文件</li><li>ENV 环境变量</li><li>ENTRYPOINT 容器启动后执行的命令</li></ul><h3 id=创建一个dockerfile><strong>创建一个Dockerfile</strong></h3><p>创建第一个Dockerfile文件</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 创建目录
+[root@docker01 base]# cd /opt/base
+# 创建Dcokerfile文件，注意大小写
+[root@docker01 base]# vim Dockerfile
+FROM centos:6.8
+RUN yum install openssh-server -y 
+RUN echo &#34;root:123456&#34; |chpasswd
+RUN /etc/init.d/sshd start 
+CMD [&#34;/usr/sbin/sshd&#34;,&#34;-D&#34;]
+</code></pre></td></tr></table></div></div><p>构建docker镜像</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 base]# docker image build  -t centos6.8-ssh . 
+-t 为镜像标签打标签  . 表示当前路径
+</code></pre></td></tr></table></div></div><p>使用自构建的镜像启动</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 base]# docker run  -d -p 2022:22 centos6.8-ssh-b 
+dc3027d3c15dac881e8e2aeff80724216f3ac725f142daa66484f7cb5d074e7a
+</code></pre></td></tr></table></div></div><h3 id=使用dcokerfile安装kodexplorer><strong>使用Dcokerfile安装kodexplorer</strong></h3><p>Dockerfile文件内容</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>FROM centos:6.8
+RUN yum install wget unzip php php-gd php-mbstring -y &amp;&amp; yum clean all
+# 设置工作目录，之后的操作都在这个目录中
+WORKDIR /var/www/html/
+RUN wget -c http://static.kodcloud.com/update/download/kodexplorer4.25.zip
+RUN unzip kodexplorer4.25.zip &amp;&amp; rm -f kodexplorer4.25.zip
+RUN chown -R apache.apache .
+CMD [&#34;/usr/sbin/apachectl&#34;,&#34;-D&#34;,&#34;FOREGROUND&#34;]
+</code></pre></td></tr></table></div></div><p>更多的Dockerfile可以参考官方方法。</p><h2 id=docker中的镜像分层><strong>Docker中的镜像分层</strong></h2><p>参考文档：</p><p><a href=http://www.maiziedu.com/wiki/cloud/dockerimage/>http://www.maiziedu.com/wiki/cloud/dockerimage/</a></p><p>Docker 支持通过扩展现有镜像，创建新的镜像。实际上，Docker Hub 中 99% 的镜像都是通过在 base 镜像中安装和配置需要的软件构建出来的。</p><p><img class=lazyload src=/svg/loading.min.svg data-src=./images/640-20201220220822869.png data-srcset="./images/640-20201220220822869.png, ./images/640-20201220220822869.png 1.5x, ./images/640-20201220220822869.png 2x" data-sizes=auto alt=./images/640-20201220220822869.png title=图片></p><p>从上图可以看到，新镜像是从 base 镜像一层一层叠加生成的。每安装一个软件，就在现有镜像的基础上增加一层。</p><h3 id=docker-镜像为什么分层><strong>Docker 镜像为什么分层</strong></h3><p>镜像分层最大的一个好处就是共享资源。</p><p>比如说有多个镜像都从相同的 base 镜像构建而来，那么 Docker Host 只需在磁盘上保存一份 base 镜像；同时内存中也只需加载一份 base 镜像，就可以为所有容器服务了。而且镜像的每一层都可以被共享。</p><p>如果多个容器共享一份基础镜像，当某个容器修改了基础镜像的内容，比如 /etc 下的文件，这时其他容器的 /etc 是不会被修改的，修改只会被限制在单个容器内。这就是容器 Copy-on-Write 特性。</p><h3 id=可写的容器层><strong>可写的容器层</strong></h3><p>当容器启动时，一个新的可写层被加载到镜像的顶部。这一层通常被称作“容器层”，“容器层”之下的都叫“镜像层”。</p><p><img class=lazyload src=/svg/loading.min.svg data-src=./images/640-20201220220830541.png data-srcset="./images/640-20201220220830541.png, ./images/640-20201220220830541.png 1.5x, ./images/640-20201220220830541.png 2x" data-sizes=auto alt=./images/640-20201220220830541.png title=图片></p><p>所有对容器的改动 - 无论添加、删除、还是修改文件都只会发生在容器层中。只有<strong>容器层是可写的，容器层下面的所有镜像层都是只读的。</strong></p><h3 id=容器层的细节说明><strong>容器层的细节说明</strong></h3><p>镜像层数量可能会很多，所有镜像层会联合在一起组成一个统一的文件系统。如果不同层中有一个相同路径的文件，比如 /a，上层的 /a 会覆盖下层的 /a，也就是说用户只能访问到上层中的文件 /a。在容器层中，用户看到的是一个叠加之后的文件系统。</p><p>文件操作的</p><p><img class=lazyload src=/svg/loading.min.svg data-src=./images/640-20201220220605389.png data-srcset="./images/640-20201220220605389.png, ./images/640-20201220220605389.png 1.5x, ./images/640-20201220220605389.png 2x" data-sizes=auto alt=./images/640-20201220220605389.png title=图片></p><p>只有当需要修改时才复制一份数据，这种特性被称作 Copy-on-Write。可见，容器层保存的是镜像变化的部分，不会对镜像本身进行任何修改。</p><p>这样就解释了我们前面提出的问题：容器层记录对镜像的修改，所有镜像层都是只读的，不会被容器修改，所以镜像可以被多个容器共享。</p><h2 id=使用docker运行zabbix-server><strong>使用docker运行zabbix-server</strong></h2><h3 id=容器间的互联><strong>容器间的互联</strong></h3><p>在运行zabbix之前务必要了解容器间互联的方法</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 创建一个nginx容器
+docker run -d -p 80:80 nginx
+# 创建容器，做link，并进入容器中
+docker run -it --link quirky_brown:web01 centos-ssh /bin/bash
+# 在容器中访问nginx容器可以ping通
+ping web01 
+</code></pre></td></tr></table></div></div><p>命令执行过程</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 启动apache容器
+[root@docker01 ~]# docker run -d httpd:2.4  
+3f1f7fc554720424327286bd2b04aeab1b084a3fb011a785b0deab6a34e56955
+^[[A[root@docker01 docker ps -a
+CONTAINER ID        IMAGE               COMMAND              CREATED             STATUS              PORTS               NAMES
+3f1f7fc55472        httpd:2.4           &#34;httpd-foreground&#34;   6 seconds ago       Up 5 seconds        80/tcp              determined_clarke
+# 拉取一个busybox 镜像
+[root@docker01 ~]# docker pull busybox 
+# 启动容器
+[root@docker01 ~]# docker run -it  --link determined_clarke:web busybox:latest   /bin/sh 
+/ # 
+# 使用新的容器访问最初的web容器
+/ # ping web 
+PING web (172.17.0.2): 56 data bytes
+64 bytes from 172.17.0.2: seq=0 ttl=64 time=0.058 ms
+^C
+--- web ping statistics ---
+1 packets transmitted, 1 packets received, 0% packet loss
+round-trip min/avg/max = 0.058/0.058/0.058 ms   
+</code></pre></td></tr></table></div></div><h3 id=启动zabbix容器><strong>启动zabbix容器</strong></h3><p>1、启动一个mysql的容器</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>docker run --name mysql-server -t \
+      -e MYSQL_DATABASE=&#34;zabbix&#34; \
+      -e MYSQL_USER=&#34;zabbix&#34; \
+      -e MYSQL_PASSWORD=&#34;zabbix_pwd&#34; \
+      -e MYSQL_ROOT_PASSWORD=&#34;root_pwd&#34; \
+      -d mysql:5.7 \
+      --character-set-server=utf8 --collation-server=utf8_bin 
+</code></pre></td></tr></table></div></div><p>2、启动java-gateway容器监控java服务</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>docker run --name zabbix-java-gateway -t \
+      -d zabbix/zabbix-java-gateway:latest
+</code></pre></td></tr></table></div></div><p>3、启动zabbix-mysql容器使用link连接mysql与java-gateway。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>docker run --name zabbix-server-mysql -t \
+      -e DB_SERVER_HOST=&#34;mysql-server&#34; \
+      -e MYSQL_DATABASE=&#34;zabbix&#34; \
+      -e MYSQL_USER=&#34;zabbix&#34; \
+      -e MYSQL_PASSWORD=&#34;zabbix_pwd&#34; \
+      -e MYSQL_ROOT_PASSWORD=&#34;root_pwd&#34; \
+      -e ZBX_JAVAGATEWAY=&#34;zabbix-java-gateway&#34; \
+      --link mysql-server:mysql \
+      --link zabbix-java-gateway:zabbix-java-gateway \
+      -p 10051:10051 \
+      -d zabbix/zabbix-server-mysql:latest
+</code></pre></td></tr></table></div></div><p>4、启动zabbix web显示，使用link连接zabbix-mysql与mysql。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>docker run --name zabbix-web-nginx-mysql -t \
+      -e DB_SERVER_HOST=&#34;mysql-server&#34; \
+      -e MYSQL_DATABASE=&#34;zabbix&#34; \
+      -e MYSQL_USER=&#34;zabbix&#34; \
+      -e MYSQL_PASSWORD=&#34;zabbix_pwd&#34; \
+      -e MYSQL_ROOT_PASSWORD=&#34;root_pwd&#34; \
+      --link mysql-server:mysql \
+      --link zabbix-server-mysql:zabbix-server \
+      -p 80:80 \
+      -d zabbix/zabbix-web-nginx-mysql:latest
+</code></pre></td></tr></table></div></div><h3 id=关于zabbix-api><strong>关于zabbix API</strong></h3><p>关于zabbix API可以参考官方文档：</p><p><a href=https://www.zabbix.com/documentation/3.4/zh/manual/api>https://www.zabbix.com/documentation/3.4/zh/manual/api</a></p><p>1、获取token方法</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 获取token
+[root@docker02 ~]# curl -s -X POST -H &#39;Content-Type:application/json&#39; -d &#39;
+{
+&#34;jsonrpc&#34;: &#34;2.0&#34;,
+&#34;method&#34;: &#34;user.login&#34;,
+&#34;params&#34;: {
+&#34;user&#34;: &#34;Admin&#34;,
+&#34;password&#34;: &#34;zabbix&#34;
+},
+&#34;id&#34;: 1
+}&#39; http://10.0.0.100/api_jsonrpc.php
+{&#34;jsonrpc&#34;:&#34;2.0&#34;,&#34;result&#34;:&#34;d3be707f9e866ec5d0d1c242292cbebd&#34;,&#34;id&#34;:1}
+</code></pre></td></tr></table></div></div><h2 id=docker-仓库registry><strong>docker 仓库（registry）</strong></h2><h3 id=创建一个普通仓库><strong>创建一个普通仓库</strong></h3><p>1、创建仓库</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>docker run -d -p 5000:5000 --restart=always --name registry -v /opt/myregistry:/var/lib/registry  registry 
+</code></pre></td></tr></table></div></div><p>2、修改配置文件，使之支持http</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# cat  /etc/docker/daemon.json 
+{
+  &#34;registry-mirrors&#34;: [&#34;https://registry.docker-cn.com&#34;],
+  &#34;insecure-registries&#34;: [&#34;10.0.0.100:5000&#34;]
+}
+</code></pre></td></tr></table></div></div><p>重启docker让修改生效</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# systemctl restart  docker.service
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>
+</code></pre></td></tr></table></div></div><p>3、修改镜像标签</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker tag  busybox:latest  10.0.0.100:5000/clsn/busybox:1.0
+[root@docker01 ~]# docker images
+REPOSITORY                      TAG                 IMAGE ID            CREATED             SIZE
+centos6-ssh                     latest              3c2b1e57a0f5        18 hours ago        393MB
+httpd                           2.4                 2e202f453940        6 days ago          179MB
+10.0.0.100:5000/clsn/busybox    1.0                 5b0d59026729        8 days ago          1.15MB
+</code></pre></td></tr></table></div></div><p>4、将新打标签的镜像上传镜像到仓库</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker push   10.0.0.100:5000/clsn/busybox
+</code></pre></td></tr></table></div></div><h3 id=带basic认证的仓库><strong>带basic认证的仓库</strong></h3><p>1、安装加密工具</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 clsn]# yum install httpd-tools  -y
+</code></pre></td></tr></table></div></div><p>2、设置认证密码</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>mkdir /opt/registry-var/auth/ -p
+htpasswd  -Bbn clsn 123456  &gt; /opt/registry-var/auth/htpasswd
+</code></pre></td></tr></table></div></div><p>3、启动容器，在启动时传入认证参数</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>docker run -d -p 5000:5000 -v /opt/registry-var/auth/:/auth/ -e &#34;REGISTRY_AUTH=htpasswd&#34; -e &#34;REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm&#34; -e REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd registry
+</code></pre></td></tr></table></div></div><p>4、使用验证用户测试</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 登陆用户
+[root@docker01 ~]# docker login 10.0.0.100:5000 
+Username: clsn  
+Password: 123456
+Login Succeeded
+# 推送镜像到仓库
+[root@docker01 ~]# docker push 10.0.0.100:5000/clsn/busybox 
+The push refers to repository [10.0.0.100:5000/clsn/busybox]
+4febd3792a1f: Pushed 
+1.0: digest: sha256:4cee1979ba0bf7db9fc5d28fb7b798ca69ae95a47c5fecf46327720df4ff352d size: 527
+#认证文件的保存位置
+[root@docker01 ~]# cat .docker/config.json 
+{
+    &#34;auths&#34;: {
+        &#34;10.0.0.100:5000&#34;: {
+            &#34;auth&#34;: &#34;Y2xzbjoxMjM0NTY=&#34;
+        },
+        &#34;https://index.docker.io/v1/&#34;: {
+            &#34;auth&#34;: &#34;Y2xzbjpIenNAMTk5Ng==&#34;
+        }
+    },
+    &#34;HttpHeaders&#34;: {
+        &#34;User-Agent&#34;: &#34;Docker-Client/17.12.0-ce (linux)&#34;
+    }
+}
+</code></pre></td></tr></table></div></div><p>至此，一个简单的docker镜像仓库搭建完成</p><h2 id=docker-compose编排工具><strong>docker-compose编排工具</strong></h2><h3 id=安装docker-compose><strong>安装docker-compose</strong></h3><p>安装docker-compose</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 下载pip软件
+yum install -y python2-pip
+# 下载 docker-compose
+pip install docker-compose
+</code></pre></td></tr></table></div></div><p>国内开启pip 下载加速：</p><p><a href=http://mirrors.aliyun.com/help/pypi>http://mirrors.aliyun.com/help/pypi</a></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>mkdir ~/.pip/
+cat &gt; ~/.pip/pip.conf &lt;&lt;&#39;EOF&#39;
+[global]
+index-url = https://mirrors.aliyun.com/pypi/simple/
+[install]
+trusted-host=mirrors.aliyun.com
+EOF
+</code></pre></td></tr></table></div></div><h3 id=编排启动镜像><strong>编排启动镜像</strong></h3><p>1、创建文件目录</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# mkdir /opt/my_wordpress/
+[root@docker01 ~]# cd /opt/my_wordpress/
+</code></pre></td></tr></table></div></div><p>2、编写编排文件</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 my_wordpress]# vim docker-compose.yml
+version: &#39;3&#39;
+services:
+   db:
+     image: mysql:5.7
+     volumes:
+       - /data/db_data:/var/lib/mysql
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: somewordpress
+       MYSQL_DATABASE: wordpress
+       MYSQL_USER: wordpress
+       MYSQL_PASSWORD: wordpress
+   wordpress:
+     depends_on:
+       - db
+     image: wordpress:latest
+     volumes:
+       - /data/web_data:/var/www/html
+     ports: 
+       - &#34;8000:80&#34;
+     restart: always
+     environment:
+       WORDPRESS_DB_HOST: db:3306
+       WORDPRESS_DB_USER: wordpress
+       WORDPRESS_DB_PASSWORD: wordpress
+</code></pre></td></tr></table></div></div><p>3、启动</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 my_wordpress]# docker-compose up
+　　#启动方法：docker-compose up
+　　#后台启动方法：docker-compose up -d
+</code></pre></td></tr></table></div></div><p>4、浏览器上访问http://10.0.0.100:8000</p><p>进行wordpress的安装即可</p><h3 id=haproxy代理后端docker容器><strong>haproxy代理后端docker容器</strong></h3><p>1、修改编排脚本</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 my_wordpress]# cat docker-compose.yml 
+version: &#39;3&#39;
+services:
+   db:
+     image: mysql:5.7
+     volumes:
+       - /data/db_data:/var/lib/mysql
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: somewordpress
+       MYSQL_DATABASE: wordpress
+       MYSQL_USER: wordpress
+       MYSQL_PASSWORD: wordpress
+   wordpress:
+     depends_on:
+       - db
+     image: wordpress:latest
+     volumes:
+       - /data/web_data:/var/www/html
+     ports: 
+       - &#34;80&#34;
+     restart: always
+     environment:
+       WORDPRESS_DB_HOST: db:3306
+       WORDPRESS_DB_USER: wordpress
+       WORDPRESS_DB_PASSWORD: wordpress
+</code></pre></td></tr></table></div></div><p>2、同时启动两台wordpress</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 my_wordpress]# docker-compose scale wordpress=2 
+WARNING: The scale command is deprecated. Use the up command with the --scale flag instead.
+Starting mywordpress_wordpress_1 ... done
+Creating mywordpress_wordpress_2 ... done
+</code></pre></td></tr></table></div></div><p>3、安装haproxy</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# yum install haproxy -y
+</code></pre></td></tr></table></div></div><p>4、修改haproxy配置文件</p><p>关于配置文件的详细说明，参考：</p><p><a href=https://www.cnblogs.com/MacoLee/p/5853413.html>https://www.cnblogs.com/MacoLee/p/5853413.html</a></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]#cp /etc/haproxy/haproxy.cfg{,.bak}
+[root@docker01 ~]# vim /etc/haproxy/haproxy.cfg
+global
+    log         127.0.0.1 local2
+    chroot      /var/lib/haproxy
+    pidfile     /var/run/haproxy.pid
+    maxconn     4000
+    user        haproxy
+    group       haproxy
+    daemon
+    stats socket /var/lib/haproxy/stats level admin  #支持命令行控制
+defaults
+    mode                    http
+    log                     global
+    option                  httplog
+    option                  dontlognull
+    option http-server-close
+    option forwardfor       except 127.0.0.0/8
+    option                  redispatch
+    retries                 3
+    timeout http-request    10s
+    timeout queue           1m
+    timeout connect         10s
+    timeout client          1m
+    timeout server          1m
+    timeout http-keep-alive 10s
+    timeout check           10s
+    maxconn                 3000
+listen stats
+    mode http
+    bind 0.0.0.0:8888
+    stats enable
+    stats uri     /haproxy-status 
+    stats auth    admin:123456
+frontend frontend_www_example_com
+    bind 10.0.0.100:8000
+    mode http
+    option httplog
+    log global
+    default_backend backend_www_example_com
+backend backend_www_example_com
+    option forwardfor header X-REAL-IP
+    option httpchk HEAD / HTTP/1.0
+    balance roundrobin
+    server web-node1  10.0.0.100:32768 check inter 2000 rise 30 fall 15
+    server web-node2  10.0.0.100:32769 check inter 2000 rise 30 fall 15
+</code></pre></td></tr></table></div></div><p>5、启动haproxy</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>systemctl start haproxy
+systemctl enable haproxy
+</code></pre></td></tr></table></div></div><p>6、使用浏览器访问hapeoxy监听的8000端口可以看到负载的情况</p><p><img class=lazyload src=/svg/loading.min.svg data-src=./images/640-20201220220642607.png data-srcset="./images/640-20201220220642607.png, ./images/640-20201220220642607.png 1.5x, ./images/640-20201220220642607.png 2x" data-sizes=auto alt=./images/640-20201220220642607.png title=图片></p><p>7、使用浏览器访问</p><p>http://10.0.0.100:8888/haproxy-status</p><p>可以看到后端节点的监控状况，</p><p><img class=lazyload src=/svg/loading.min.svg data-src=./images/640-20201220220639521.png data-srcset="./images/640-20201220220639521.png, ./images/640-20201220220639521.png 1.5x, ./images/640-20201220220639521.png 2x" data-sizes=auto alt=./images/640-20201220220639521.png title=图片></p><h3 id=安装socat-直接操作socket控制haproxy><strong>安装socat 直接操作socket控制haproxy</strong></h3><p>1、安装软件</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>yum install socat.x86_64 -y
+</code></pre></td></tr></table></div></div><p>2、查看帮助</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 web_data]# echo &#34;help&#34;|socat stdio /var/lib/haproxy/stats
+</code></pre></td></tr></table></div></div><p>3、下线后端节点</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>echo &#34;disable server backend_www_example_com/web-node2&#34;|socat stdio /var/lib/haproxy/stats
+</code></pre></td></tr></table></div></div><p>4、上线后端节点</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>echo &#34;enable server backend_www_example_com/web-node3&#34;|socat stdio /var/lib/haproxy/stats
+</code></pre></td></tr></table></div></div><p>5、编写php测试页，放到/data/web_data下，在浏览器中访问可以查看当前的节点</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 web_data]# vim check.php
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;PHP测试&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;?php  echo &#39;&lt;p&gt;Hello World &lt;/p&gt;&#39;; ?&gt;
+        &lt;?php  echo &#34;访问的服务器地址是:&#34;.&#34;&lt;fontcolor=red&gt;&#34;.$_SERVER[&#39;SERVER_ADDR&#39;].&#34;&lt;/font&gt;&#34;.&#34;&lt;br&gt;&#34;;
+        echo&#34;访问的服务器域名是:&#34;.&#34;&lt;fontcolor=red&gt;&#34;.$_SERVER[&#39;SERVER_NAME&#39;].&#34;&lt;/font&gt;&#34;.&#34;&lt;br&gt;&#34;;
+        ?&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></td></tr></table></div></div><h2 id=重启docker服务容器全部退出的解决办法>重启docker服务，容器全部退出的解决办法</h2><h3 id=在启动是指定自动重启><strong>在启动是指定自动重启</strong></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>docker run  --restart=always
+</code></pre></td></tr></table></div></div><h3 id=修改docker默认配置文件><strong>修改docker默认配置文件</strong></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 添加上下面这行
+&#34;live-restore&#34;: true
+</code></pre></td></tr></table></div></div><p>docker server配置文件 /etc/docker/daemon.json 参考</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker02 ~]# cat  /etc/docker/daemon.json 
+{
+  &#34;registry-mirrors&#34;: [&#34;https://registry.docker-cn.com&#34;],
+  &#34;graph&#34;: &#34;/opt/mydocker&#34;, # 修改数据的存放目录到/opt/mydocker/，原/var/lib/docker/
+  &#34;insecure-registries&#34;: [&#34;10.0.0.100:5000&#34;],
+  &#34;live-restore&#34;: true
+}
+</code></pre></td></tr></table></div></div><p>重启生效，只对在此之后启动的容器生效</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# systemctl restart  docker.service
+</code></pre></td></tr></table></div></div><h2 id=docker网络类型><strong>Docker网络类型</strong></h2><p><img class=lazyload src=/svg/loading.min.svg data-src=./images/640-20201220220646867.png data-srcset="./images/640-20201220220646867.png, ./images/640-20201220220646867.png 1.5x, ./images/640-20201220220646867.png 2x" data-sizes=auto alt=./images/640-20201220220646867.png title=图片></p><h3 id=docker的网络类型><strong>docker的网络类型</strong></h3><p><img class=lazyload src=/svg/loading.min.svg data-src=./images/640-20201220220648590.png data-srcset="./images/640-20201220220648590.png, ./images/640-20201220220648590.png 1.5x, ./images/640-20201220220648590.png 2x" data-sizes=auto alt=./images/640-20201220220648590.png title=图片></p><p>Bridge默认docker网络隔离基于网络命名空间，在物理机上创建docker容器时会为每一个docker容器分配网络命名空间，并且把容器IP桥接到物理机的虚拟网桥上。</p><h3 id=不为容器配置网络功能><strong>不为容器配置网络功能</strong></h3><p>此模式下创建容器是不会为容器配置任何网络参数的，如：容器网卡、IP、通信路由等，全部需要自己去配置。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker run  -it --network none busybox:latest  /bin/sh 
+/ # ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue 
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+</code></pre></td></tr></table></div></div><h3 id=与其他容器共享网络配置container><strong>与其他容器共享网络配置(Container）</strong></h3><p>此模式和host模式很类似，只是此模式创建容器共享的是其他容器的IP和端口而不是物理机，此模式容器自身是不会配置网络和端口，创建此模式容器进去后，你会发现里边的IP是你所指定的那个容器IP并且端口也是共享的，而且其它还是互相隔离的，如进程等。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker run  -it --network container:mywordpress_db_1  busybox:latest  /bin/sh 
+/ # ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue 
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+105: eth0@if106: &lt;BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN&gt; mtu 1500 qdisc noqueue 
+    link/ether 02:42:ac:12:00:03 brd ff:ff:ff:ff:ff:ff
+    inet 172.18.0.3/16 brd 172.18.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+</code></pre></td></tr></table></div></div><h3 id=使用宿主机网络><strong>使用宿主机网络</strong></h3><p>此模式创建的容器没有自己独立的网络命名空间，是和物理机共享一个Network Namespace，并且共享物理机的所有端口与IP，并且这个模式认为是不安全的。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker run  -it --network host  busybox:latest  /bin/sh
+</code></pre></td></tr></table></div></div><h3 id=查看网络列表><strong>查看网络列表</strong></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker network list 
+NETWORK ID          NAME                  DRIVER              SCOPE
+b15e8a720d3b        bridge                bridge              local
+345d65b4c2a0        host                  host                local
+bc5e2a32bb55        mywordpress_default   bridge              local
+ebf76eea91bb        none                  null                local
+</code></pre></td></tr></table></div></div><h3 id=用pipework为docker容器配置独立ip><strong>用PIPEWORK为docker容器配置独立IP</strong></h3><ul><li><p>参考文档：</p><p>blog.csdn.net/design321/article/details/48264825</p></li><li><p>官方网站：</p><p>github.com/jpetazzo/pipework</p></li><li><p>宿主环境：centos7.2</p></li></ul><p>1、安装pipework</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>wget https://github.com/jpetazzo/pipework/archive/master.zip
+unzip master.zip 
+cp pipework-master/pipework  /usr/local/bin/
+chmod +x /usr/local/bin/pipework
+</code></pre></td></tr></table></div></div><p>2、配置桥接网卡</p><p>安装桥接工具</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>yum install bridge-utils.x86_64 -y
+</code></pre></td></tr></table></div></div><p>修改网卡配置，实现桥接</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 修改eth0配置，让br0实现桥接
+[root@docker01 ~]# cat /etc/sysconfig/network-scripts/ifcfg-eth0 
+TYPE=Ethernet
+BOOTPROTO=static
+NAME=eth0
+DEVICE=eth0
+ONBOOT=yes
+BRIDGE=br0
+[root@docker01 ~]# cat /etc/sysconfig/network-scripts/ifcfg-br0 
+TYPE=Bridge
+BOOTPROTO=static
+NAME=br0
+DEVICE=br0
+ONBOOT=yes
+IPADDR=10.0.0.100
+NETMASK=255.255.255.0
+GATEWAY=10.0.0.254
+DNS1=223.5.5.5
+# 重启网络
+[root@docker01 ~]# /etc/init.d/network restart
+</code></pre></td></tr></table></div></div><p>3、运行一个容器镜像测试：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>pipework br0 $(docker run -d -it -p 6880:80 --name  httpd_pw httpd) 10.0.0.220/24@10.0.0.254
+</code></pre></td></tr></table></div></div><p>在其他主机上测试端口及连通性</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# curl 10.0.0.220
+&lt;html&gt;&lt;body&gt;&lt;h1&gt;It works!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;
+[root@docker01 ~]# ping 10.0.0.220 -c 1
+PING 10.0.0.220 (10.0.0.220) 56(84) bytes of data.
+64 bytes from 10.0.0.220: icmp_seq=1 ttl=64 time=0.043 ms
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>4、再运行一个容器，设置网路类型为none：
+pipework br0 $(docker run -d -it --net=none --name test httpd:2.4) 10.0.0.221/24@10.0.0.254
+</code></pre></td></tr></table></div></div><p>进行访问测试</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# curl 10.0.0.221
+&lt;html&gt;&lt;body&gt;&lt;h1&gt;It works!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;
+</code></pre></td></tr></table></div></div><p>5、重启容器后需要再次指定：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>pipework br0 testduliip  172.16.146.113/24@172.16.146.1
+pipework br0 testduliip01  172.16.146.112/24@172.16.146.1
+</code></pre></td></tr></table></div></div><p>Dcoker跨主机通信之overlay可以参考：</p><p>cnblogs.com/CloudMan6/p/7270551.html</p><h3 id=docker跨主机通信之macvlan><strong>Docker跨主机通信之macvlan</strong></h3><p>创建网络</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 ~]# docker network  create --driver macvlan  --subnet 10.1.0.0/24 --gateway 10.1.0.254 -o parent=eth0  macvlan_1
+33a1f41dcc074f91b5bd45e7dfedabfb2b8ec82db16542f05213839a119b62ca
+</code></pre></td></tr></table></div></div><p>设置网卡为混杂模式</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>ip link set eth0 promisc on
+</code></pre></td></tr></table></div></div><p>创建使用macvlan网络容器</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker02 ~]# docker run  -it --network macvlan_1  --ip=10.1.0.222 busybox /b
+</code></pre></td></tr></table></div></div><h2 id=docker企业级镜像仓库harbor><strong>docker企业级镜像仓库harbor</strong></h2><p>容器管理</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 harbor]# pwd
+/opt/harbor
+[root@docker01 harbor]# docker-compose stop
+</code></pre></td></tr></table></div></div><p>1、安装docker、docker-compose</p><p>下载 harbor</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>cd /opt &amp;&amp; https://storage.googleapis.com/harbor-releases/harbor-offline-installer-v1.3.0.tgz
+tar xf harbor-offline-installer-v1.3.0.tgz
+</code></pre></td></tr></table></div></div><p>2、修改主机及web界面密码</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 harbor]# vim harbor.cfg 
+    ···
+    hostname = 10.0.0.100
+    harbor_admin_password = Harbor12345
+    ···
+</code></pre></td></tr></table></div></div><p>3、执行安装脚本</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker01 harbor]# ./install.sh
+</code></pre></td></tr></table></div></div><p>浏览器访问 http://10.0.0.11</p><p><img class=lazyload src=/svg/loading.min.svg data-src=./images/640-20201220220659577.png data-srcset="./images/640-20201220220659577.png, ./images/640-20201220220659577.png 1.5x, ./images/640-20201220220659577.png 2x" data-sizes=auto alt=./images/640-20201220220659577.png title=图片></p><p>添加一个项目</p><p><img class=lazyload src=/svg/loading.min.svg data-src=./images/640-20201220220701991.png data-srcset="./images/640-20201220220701991.png, ./images/640-20201220220701991.png 1.5x, ./images/640-20201220220701991.png 2x" data-sizes=auto alt=./images/640-20201220220701991.png title=图片></p><p>4、镜像推送到仓库的指定项目</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker02 ~]# docker  tag centos:6.8  10.0.0.100/clsn/centos6.8:1.0
+[root@docker02 ~]#  
+[root@docker02 ~]# docker images 
+REPOSITORY                  TAG                 IMAGE ID            CREATED             SIZE
+busybox                     latest              5b0d59026729        8 days ago          1.15MB
+10.0.0.100/clsn/centos6.8   1.0                 6704d778b3ba        2 months ago        195MB
+centos                      6.8                 6704d778b3ba        2 months ago        195MB
+[root@docker02 ~]# docker login 10.0.0.100
+Username: admin
+Password: 
+Login Succeeded
+</code></pre></td></tr></table></div></div><p>5、推送镜像</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@docker02 ~]# docker push 10.0.0.100/clsn/centos6.8 
+The push refers to repository [10.0.0.100/clsn/centos6.8]
+e00c9229b481: Pushing  13.53MB/194.5MB
+</code></pre></td></tr></table></div></div><p>6、在web界面里查看</p><p><img class=lazyload src=/svg/loading.min.svg data-src=./images/640-20201220220704634.png data-srcset="./images/640-20201220220704634.png, ./images/640-20201220220704634.png 1.5x, ./images/640-20201220220704634.png 2x" data-sizes=auto alt=./images/640-20201220220704634.png title=图片></p><h3 id=使用容器的建议><strong>使用容器的建议</strong></h3><p>\1. 不要以拆分方式进行应用程序发布</p><p>\2. 不要创建大型镜像</p><p>\3. 不要在单个容器中运行多个进程</p><p>\4. 不要再镜像内保存凭证，不要依赖IP地址</p><p>\5. 以非root用户运行进程</p><p>\6. 不要使用“最新”标签</p><p>\7. 不要利用运行中的容器创建镜像</p><p>\8. 不要使用单层镜像</p><p>\9. 不要将数据存放在容器内</p><h3 id=关于docker容器的监控><strong>关于Docker容器的监控</strong></h3><p><strong>容器的基本信息</strong></p><ul><li>包括容器的数量、ID、名称、镜像、启动命令、端口等信息</li></ul><p><strong>容器的运行状态</strong></p><ul><li>统计各状态的容器的数量，包括运行中、暂停、停止及异常退出</li></ul><p><strong>容器的用量信息</strong></p><ul><li>统计容器的CPU使用率、内存使用量、块设备I/O使用量、网络使用情况等资源的使用情况</li></ul><h2 id=参考文献>参考文献</h2><ul><li>redhat.com/zh/topics/containers/whats-a-linux-container</li><li>redhat.com/zh/topics/containers/what-is-docker</li><li>blog.51cto.com/dihaifeng/1713512</li><li>cnblogs.com/Bourbon-tian/p/6867796.html</li><li>cnblogs.com/CloudMan6/p/6806193.html</li></ul></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2021-06-12&nbsp;<a class=git-hash href=https://github.com/dillonzq/LoveIt/commit/98b367a8fa7cf251f74e91e224ed99fc6ad9e17a target=_blank title="commit by liuzw(1413883407@qq.com) 98b367a8fa7cf251f74e91e224ed99fc6ad9e17a: init基础文件提交">
+<i class="fas fa-hashtag fa-fw"></i>98b367a</a></span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/06-docker-all/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/%E7%BC%96%E7%A8%8B/>编程</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/09-go-module/ class=prev rel=prev title="【Go】go mod 的基础使用"><i class="fas fa-angle-left fa-fw"></i>【Go】go mod 的基础使用</a>
+<a href=/07-redis-install/ class=next rel=next title="【redis】最简单的Redis学习环境部署- docker篇">【redis】最简单的Redis学习环境部署- docker篇<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2020 - 2021</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>coolliuzw</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:80},comment:{valine:{appId:"3VIPouKn5iFQMlbBf2EtE8Co-gzGzoHsz",appKey:"UbLTV7x8R6wlfF4XgAwBPsPn",avatar:"coolliuzw",el:"#valine",emojiCDN:"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/",emojiMaps:{100:"1f4af.png",alien:"1f47d.png",anger:"1f4a2.png",angry:"1f620.png",anguished:"1f627.png",astonished:"1f632.png",black_heart:"1f5a4.png",blue_heart:"1f499.png",blush:"1f60a.png",bomb:"1f4a3.png",boom:"1f4a5.png",broken_heart:"1f494.png",brown_heart:"1f90e.png",clown_face:"1f921.png",cold_face:"1f976.png",cold_sweat:"1f630.png",confounded:"1f616.png",confused:"1f615.png",cry:"1f622.png",crying_cat_face:"1f63f.png",cupid:"1f498.png",dash:"1f4a8.png",disappointed:"1f61e.png",disappointed_relieved:"1f625.png",dizzy:"1f4ab.png",dizzy_face:"1f635.png",drooling_face:"1f924.png",exploding_head:"1f92f.png",expressionless:"1f611.png",face_vomiting:"1f92e.png",face_with_cowboy_hat:"1f920.png",face_with_hand_over_mouth:"1f92d.png",face_with_head_bandage:"1f915.png",face_with_monocle:"1f9d0.png",face_with_raised_eyebrow:"1f928.png",face_with_rolling_eyes:"1f644.png",face_with_symbols_on_mouth:"1f92c.png",face_with_thermometer:"1f912.png",fearful:"1f628.png",flushed:"1f633.png",frowning:"1f626.png",ghost:"1f47b.png",gift_heart:"1f49d.png",green_heart:"1f49a.png",grimacing:"1f62c.png",grin:"1f601.png",grinning:"1f600.png",hankey:"1f4a9.png",hear_no_evil:"1f649.png",heart:"2764-fe0f.png",heart_decoration:"1f49f.png",heart_eyes:"1f60d.png",heart_eyes_cat:"1f63b.png",heartbeat:"1f493.png",heartpulse:"1f497.png",heavy_heart_exclamation_mark_ornament:"2763-fe0f.png",hole:"1f573-fe0f.png",hot_face:"1f975.png",hugging_face:"1f917.png",hushed:"1f62f.png",imp:"1f47f.png",innocent:"1f607.png",japanese_goblin:"1f47a.png",japanese_ogre:"1f479.png",joy:"1f602.png",joy_cat:"1f639.png",kiss:"1f48b.png",kissing:"1f617.png",kissing_cat:"1f63d.png",kissing_closed_eyes:"1f61a.png",kissing_heart:"1f618.png",kissing_smiling_eyes:"1f619.png",laughing:"1f606.png",left_speech_bubble:"1f5e8-fe0f.png",love_letter:"1f48c.png",lying_face:"1f925.png",mask:"1f637.png",money_mouth_face:"1f911.png",nauseated_face:"1f922.png",nerd_face:"1f913.png",neutral_face:"1f610.png",no_mouth:"1f636.png",open_mouth:"1f62e.png",orange_heart:"1f9e1.png",partying_face:"1f973.png",pensive:"1f614.png",persevere:"1f623.png",pleading_face:"1f97a.png",pouting_cat:"1f63e.png",purple_heart:"1f49c.png",rage:"1f621.png",relaxed:"263a-fe0f.png",relieved:"1f60c.png",revolving_hearts:"1f49e.png",right_anger_bubble:"1f5ef-fe0f.png",robot_face:"1f916.png",rolling_on_the_floor_laughing:"1f923.png",scream:"1f631.png",scream_cat:"1f640.png",see_no_evil:"1f648.png",shushing_face:"1f92b.png",skull:"1f480.png",skull_and_crossbones:"2620-fe0f.png",sleeping:"1f634.png",sleepy:"1f62a.png",slightly_frowning_face:"1f641.png",slightly_smiling_face:"1f642.png",smile:"1f604.png",smile_cat:"1f638.png",smiley:"1f603.png",smiley_cat:"1f63a.png",smiling_face_with_3_hearts:"1f970.png",smiling_imp:"1f608.png",smirk:"1f60f.png",smirk_cat:"1f63c.png",sneezing_face:"1f927.png",sob:"1f62d.png",space_invader:"1f47e.png",sparkling_heart:"1f496.png",speak_no_evil:"1f64a.png",speech_balloon:"1f4ac.png","star-struck":"1f929.png",stuck_out_tongue:"1f61b.png",stuck_out_tongue_closed_eyes:"1f61d.png",stuck_out_tongue_winking_eye:"1f61c.png",sunglasses:"1f60e.png",sweat:"1f613.png",sweat_drops:"1f4a6.png",sweat_smile:"1f605.png",thinking_face:"1f914.png",thought_balloon:"1f4ad.png",tired_face:"1f62b.png",triumph:"1f624.png",two_hearts:"1f495.png",unamused:"1f612.png",upside_down_face:"1f643.png",weary:"1f629.png",white_frowning_face:"2639-fe0f.png",white_heart:"1f90d.png",wink:"1f609.png",woozy_face:"1f974.png",worried:"1f61f.png",yawning_face:"1f971.png",yellow_heart:"1f49b.png",yum:"1f60b.png",zany_face:"1f92a.png",zipper_mouth_face:"1f910.png",zzz:"1f4a4.png"},enableQQ:!1,highlight:!0,lang:"zh-cn",pageSize:10,placeholder:"说点什么吧...",recordIP:!0,serverURLs:"https://3vipoukn.lc-cn-n1-shared.com",visitor:!0}},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},search:{algoliaAppID:"ZPFURTAVLE",algoliaIndex:"index",algoliaSearchKey:"8fb6ae6c4f71aeb5416dfb65477883e4",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"}}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

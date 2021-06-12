@@ -1,0 +1,2526 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>【vim】使用的vimrc配置保存，有需要的可以参考 - CoolLiuzw</title><meta name=Description content="使用的vimrc配置保存，有需要的可以参考"><meta property="og:title" content="【vim】使用的vimrc配置保存，有需要的可以参考"><meta property="og:description" content="使用的vimrc配置保存，有需要的可以参考"><meta property="og:type" content="article"><meta property="og:url" content="https://coder-user.github.io/12-vimrc-save/"><meta property="og:image" content="https://coder-user.github.io/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2021-01-17T20:35:00+08:00"><meta property="article:modified_time" content="2021-06-12T20:04:28+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://coder-user.github.io/logo.png"><meta name=twitter:title content="【vim】使用的vimrc配置保存，有需要的可以参考"><meta name=twitter:description content="使用的vimrc配置保存，有需要的可以参考"><meta name=application-name content="LoveIt"><meta name=apple-mobile-web-app-title content="LoveIt"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://coder-user.github.io/12-vimrc-save/><link rel=prev href=https://coder-user.github.io/19-go-mt-seckill/><link rel=next href=https://coder-user.github.io/20-go-range-%E5%88%86%E6%9E%90/><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"【vim】使用的vimrc配置保存，有需要的可以参考","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/coder-user.github.io\/12-vimrc-save\/"},"image":[{"@type":"ImageObject","url":"https:\/\/coder-user.github.io\/images\/Apple-Devices-Preview.png","width":3200,"height":2048}],"genre":"posts","keywords":"开发工具","wordcount":6429,"url":"https:\/\/coder-user.github.io\/12-vimrc-save\/","datePublished":"2021-01-17T20:35:00+08:00","dateModified":"2021-06-12T20:04:28+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"coolliuzw","logo":{"@type":"ImageObject","url":"https:\/\/coder-user.github.io\/images\/avatar_me.png","width":600,"height":600}},"author":{"@type":"Person","name":"coolliuzw"},"description":"使用的vimrc配置保存，有需要的可以参考"}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark')&&document.body.setAttribute('theme','dark')</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=CoolLiuzw><span class=header-title-pre><i class="far fa-kiss-wink-heart fa-fw"></i></span>CoolLiuzw</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>所有文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=CoolLiuzw><span class=header-title-pre><i class="far fa-kiss-wink-heart fa-fw"></i></span>CoolLiuzw</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/ title>所有文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">【vim】使用的vimrc配置保存，有需要的可以参考</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>coolliuzw</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/><i class="far fa-folder fa-fw"></i>开发工具</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-01-17>2021-01-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 6429 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 13 分钟&nbsp;<span id=/12-vimrc-save/ class=leancloud_visitors data-flag-title=【vim】使用的vimrc配置保存，有需要的可以参考>
+<i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#1-简述>1 简述</a></li><li><a href=#2-开始>2 开始</a><ul><li><a href=#21-vim的版本>2.1 Vim的版本</a></li><li><a href=#22-vimrc的配置>2.2 vimrc的配置</a></li><li><a href=#23-最新配置>2.3 最新配置</a></li></ul></li><li><a href=#总结>总结</a></li></ul></nav></div></div><div class=content id=content><h2 id=1-简述>1 简述</h2><p>​ Vim 号称<strong>编辑器之神</strong>，唯快不破，可扩展，插件遍天下。学习曲线虽然陡峭，但是学成之后，基本上就成肌肉记忆了，写程序双手不离键盘，上下翻飞，可谓快意编程。</p><p>​ 写过程序的人都知道，编程的时候双手大部分时间都放在键盘上，或编码、或插入、或移动、或定位、或查找，这种连续操作的时间和频率远远大于阅读、翻页、设置字体、摆弄样式等文案工作，而二者往往产生很多停顿和间隙，而编程时的停顿是非常影响编程效率的，所以 Vim 的设计理念就是通过模式的转换、命令的组合和数以万计的插件，保证程序员在编程的过程中，<strong>双手尽可能保留在键盘中央的区域</strong>，并且，不需要鼠标。</p><h2 id=2-开始>2 开始</h2><h3 id=21-vim的版本>2.1 Vim的版本</h3><p>使用Vim目前推荐的版本是vim8.0</p><h3 id=22-vimrc的配置>2.2 vimrc的配置</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span><span class=lnt>152
+</span><span class=lnt>153
+</span><span class=lnt>154
+</span><span class=lnt>155
+</span><span class=lnt>156
+</span><span class=lnt>157
+</span><span class=lnt>158
+</span><span class=lnt>159
+</span><span class=lnt>160
+</span><span class=lnt>161
+</span><span class=lnt>162
+</span><span class=lnt>163
+</span><span class=lnt>164
+</span><span class=lnt>165
+</span><span class=lnt>166
+</span><span class=lnt>167
+</span><span class=lnt>168
+</span><span class=lnt>169
+</span><span class=lnt>170
+</span><span class=lnt>171
+</span><span class=lnt>172
+</span><span class=lnt>173
+</span><span class=lnt>174
+</span><span class=lnt>175
+</span><span class=lnt>176
+</span><span class=lnt>177
+</span><span class=lnt>178
+</span><span class=lnt>179
+</span><span class=lnt>180
+</span><span class=lnt>181
+</span><span class=lnt>182
+</span><span class=lnt>183
+</span><span class=lnt>184
+</span><span class=lnt>185
+</span><span class=lnt>186
+</span><span class=lnt>187
+</span><span class=lnt>188
+</span><span class=lnt>189
+</span><span class=lnt>190
+</span><span class=lnt>191
+</span><span class=lnt>192
+</span><span class=lnt>193
+</span><span class=lnt>194
+</span><span class=lnt>195
+</span><span class=lnt>196
+</span><span class=lnt>197
+</span><span class=lnt>198
+</span><span class=lnt>199
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash><span class=s2>&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;</span>
+<span class=s2>&#34;                                  PlugList                                  &#34;</span>
+<span class=s2>&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;</span>
+<span class=s2>&#34; Specify a directory for plugins
+</span><span class=s2>&#34;</span> - For Neovim: <span class=s1>&#39;~/.config/nvim/plugged&#39;</span>
+<span class=s2>&#34; - Avoid using standard Vim directory names like &#39;plugin&#39;
+</span><span class=s2>call plug#begin(&#39;~/.config/nvim/plugged&#39;)
+</span><span class=s2>&#34;</span> Make sure you use single quotes
+<span class=s2>&#34;
+</span><span class=s2>&#34;</span> go
+Plug <span class=s1>&#39;fatih/vim-go&#39;</span>
+Plug <span class=s1>&#39;Blackrush/vim-gocode&#39;</span>
+
+<span class=s2>&#34; 美化
+</span><span class=s2>Plug &#39;flazz/vim-colorschemes&#39;
+</span><span class=s2>Plug &#39;bling/vim-airline&#39;
+</span><span class=s2>Plug &#39;vim-airline/vim-airline-themes&#39;
+</span><span class=s2>Plug &#39;mhinz/vim-startify&#39;
+</span><span class=s2>
+</span><span class=s2>&#34;</span> 目录插件
+Plug <span class=s1>&#39;scrooloose/nerdtree&#39;</span>
+
+<span class=s2>&#34; markdown插件
+</span><span class=s2>Plug &#39;dhruvasagar/vim-table-mode&#39;
+</span><span class=s2>Plug &#39;godlygeek/tabular&#39;
+</span><span class=s2>Plug &#39;plasticboy/vim-markdown&#39;
+</span><span class=s2>
+</span><span class=s2>call plug#end()
+</span><span class=s2>
+</span><span class=s2>&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;
+</span><span class=s2>&#34;</span>                              plugin settings                               <span class=s2>&#34;
+</span><span class=s2>&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;
+</span><span class=s2>
+</span><span class=s2>&#34;</span> Compile <span class=k>function</span>
+<span class=s2>&#34; map r :call CompileRunGcc()&lt;CR&gt;
+</span><span class=s2>&#34;</span> func! CompileRunGcc<span class=o>()</span>
+<span class=s2>&#34;   exec &#34;</span>w<span class=s2>&#34;
+</span><span class=s2>&#34;</span>   <span class=k>if</span> <span class=p>&amp;</span><span class=nv>filetype</span> <span class=o>==</span> <span class=s1>&#39;c&#39;</span>
+<span class=s2>&#34;     exec &#34;</span>!g++ % -o %&lt;<span class=s2>&#34;
+</span><span class=s2>&#34;</span>     <span class=nb>exec</span> <span class=s2>&#34;!time ./%&lt;&#34;</span>
+<span class=s2>&#34;   elseif &amp;filetype == &#39;cpp&#39;
+</span><span class=s2>&#34;</span>     <span class=nb>exec</span> <span class=s2>&#34;!g++ % -o %&lt;&#34;</span>
+<span class=s2>&#34;     exec &#34;</span>!time ./%&lt;<span class=s2>&#34;
+</span><span class=s2>&#34;</span>   elseif <span class=p>&amp;</span><span class=nv>filetype</span> <span class=o>==</span> <span class=s1>&#39;java&#39;</span>
+<span class=s2>&#34;     exec &#34;</span>!javac %<span class=s2>&#34;
+</span><span class=s2>&#34;</span>     <span class=nb>exec</span> <span class=s2>&#34;!time java %&lt;&#34;</span>
+<span class=s2>&#34;   elseif &amp;filetype == &#39;sh&#39;
+</span><span class=s2>&#34;</span>     :!time bash %
+<span class=s2>&#34;   elseif &amp;filetype == &#39;python&#39;
+</span><span class=s2>&#34;</span>     silent! <span class=nb>exec</span> <span class=s2>&#34;!clear&#34;</span>
+<span class=s2>&#34;     exec &#34;</span>!time python3 %<span class=s2>&#34;
+</span><span class=s2>&#34;</span>   elseif <span class=p>&amp;</span><span class=nv>filetype</span> <span class=o>==</span> <span class=s1>&#39;html&#39;</span>
+<span class=s2>&#34;     exec &#34;</span>!firefox % <span class=p>&amp;</span><span class=s2>&#34;
+</span><span class=s2>&#34;</span>   elseif <span class=p>&amp;</span><span class=nv>filetype</span> <span class=o>==</span> <span class=s1>&#39;markdown&#39;</span>
+<span class=s2>&#34;     exec &#34;</span>MarkdownPreview<span class=s2>&#34;
+</span><span class=s2>&#34;</span>   elseif <span class=p>&amp;</span><span class=nv>filetype</span> <span class=o>==</span> <span class=s1>&#39;vimwiki&#39;</span>
+<span class=s2>&#34;     exec &#34;</span>MarkdownPreview<span class=s2>&#34;
+</span><span class=s2>&#34;</span>   endif
+<span class=s2>&#34; endfunc
+</span><span class=s2>
+</span><span class=s2>&#34;</span> vim-markdown禁用折叠
+<span class=nb>let</span> g:vim_markdown_folding_disabled <span class=o>=</span> <span class=m>1</span>
+
+<span class=s2>&#34; markdown-preview.nvim
+</span><span class=s2>let g:mkdp_auto_start = 0
+</span><span class=s2>let g:mkdp_auto_close = 1
+</span><span class=s2>let g:mkdp_refresh_slow = 0
+</span><span class=s2>let g:mkdp_command_for_global = 0
+</span><span class=s2>let g:mkdp_open_to_the_world = 0
+</span><span class=s2>let g:mkdp_open_ip = &#39;&#39;
+</span><span class=s2>let g:mkdp_browser = &#39;&#39;
+</span><span class=s2>let g:mkdp_echo_preview_url = 0
+</span><span class=s2>let g:mkdp_browserfunc = &#39;&#39;
+</span><span class=s2>let g:mkdp_preview_options = {
+</span><span class=s2>    \ &#39;mkit&#39;: {},
+</span><span class=s2>    \ &#39;katex&#39;: {},
+</span><span class=s2>    \ &#39;uml&#39;: {},
+</span><span class=s2>    \ &#39;maid&#39;: {},
+</span><span class=s2>    \ &#39;disable_sync_scroll&#39;: 0,
+</span><span class=s2>    \ &#39;sync_scroll_type&#39;: &#39;middle&#39;,
+</span><span class=s2>    \ &#39;hide_yaml_meta&#39;: 1,
+</span><span class=s2>    \ &#39;sequence_diagrams&#39;: {},
+</span><span class=s2>    \ &#39;flowchart_diagrams&#39;: {},
+</span><span class=s2>    \ &#39;content_editable&#39;: v:false,
+</span><span class=s2>    \ &#39;disable_filename&#39;: 0
+</span><span class=s2>    \ }
+</span><span class=s2>let g:mkdp_markdown_css = &#39;&#39;
+</span><span class=s2>let g:mkdp_highlight_css = &#39;&#39;
+</span><span class=s2>let g:mkdp_port = &#39;&#39;
+</span><span class=s2>let g:mkdp_page_title = &#39;「</span><span class=si>${</span><span class=nv>name</span><span class=si>}</span><span class=s2>」&#39;
+</span><span class=s2>let g:mkdp_filetypes = [&#39;markdown&#39;]
+</span><span class=s2>
+</span><span class=s2>
+</span><span class=s2>&#34;</span> 去除VI一致性,必须要添加
+<span class=s2>&#34; 不要使用vi的键盘模式，而是vim自己的
+</span><span class=s2>&#34;</span> Set &lt;LEADER&gt; as &lt;SPACE&gt;
+<span class=nb>set</span> nocompatible
+<span class=nb>let</span> <span class=nv>mapleader</span><span class=o>=</span><span class=s2>&#34; &#34;</span>
+filetype on
+filetype indent on
+filetype plugin on
+filetype plugin indent on
+<span class=nb>set</span> <span class=nv>mouse</span><span class=o>=</span>a
+<span class=nb>set</span> <span class=nv>encoding</span><span class=o>=</span>utf-8
+
+<span class=s2>&#34; set clipboard=unnamed
+</span><span class=s2>
+</span><span class=s2>&#34;</span> 设置行号显示方式
+<span class=nb>set</span> number
+<span class=s2>&#34; 设置相对行号显示方式
+</span><span class=s2>set relativenumber
+</span><span class=s2>set ruler
+</span><span class=s2>set cursorline
+</span><span class=s2>set wrap
+</span><span class=s2>set showcmd
+</span><span class=s2>set wildmenu
+</span><span class=s2>
+</span><span class=s2>set hlsearch
+</span><span class=s2>exec &#34;</span>nohlsearch<span class=s2>&#34;
+</span><span class=s2>set incsearch
+</span><span class=s2>set ignorecase
+</span><span class=s2>set smartcase
+</span><span class=s2>
+</span><span class=s2>syntax enable
+</span><span class=s2>syntax on
+</span><span class=s2>
+</span><span class=s2>&#34;</span> 设置Tab长度为4空格
+<span class=nb>set</span> <span class=nv>tabstop</span><span class=o>=</span><span class=m>4</span>
+<span class=s2>&#34; 设置自动缩进长度为4空格
+</span><span class=s2>set shiftwidth=4
+</span><span class=s2>&#34;</span> 自动缩进,这个导致从外面拷贝多行以空格开头的内容时,会有多的缩进,先不设置
+<span class=s2>&#34; set autoindent
+</span><span class=s2>&#34;</span> 不要用空格代替制表符
+<span class=nb>set</span> noexpandtab
+<span class=s2>&#34; 输入tab制表符时，自动替换成空格
+</span><span class=s2>&#34;</span> <span class=nb>set</span> expandtab
+<span class=nb>set</span> <span class=nv>softtabstop</span><span class=o>=</span><span class=m>4</span>
+<span class=nb>set</span> list
+<span class=nb>set</span> <span class=nv>listchars</span><span class=o>=</span>tab:▸<span class=se>\ </span>,trail:▫
+<span class=nb>set</span> <span class=nv>scrolloff</span><span class=o>=</span><span class=m>5</span>
+
+<span class=s2>&#34; mac模式下才使用.
+</span><span class=s2>set backspace=2
+</span><span class=s2>
+</span><span class=s2>&#34;</span> 设置历史记录
+<span class=nb>set</span> <span class=nv>history</span><span class=o>=</span><span class=m>1024</span>
+
+<span class=s2>&#34; 大写s保存
+</span><span class=s2>map S :w&lt;CR&gt;
+</span><span class=s2>map Q :q&lt;CR&gt;
+</span><span class=s2>
+</span><span class=s2>&#34;</span> split the screens to up <span class=o>(</span>horizontal<span class=o>)</span>, down <span class=o>(</span>horizontal<span class=o>)</span>, left <span class=o>(</span>vertical<span class=o>)</span>, right <span class=o>(</span>vertical<span class=o>)</span>
+map zk :set nosplitbelow&lt;CR&gt;:vsplit&lt;CR&gt;
+map zj :set splitbelow&lt;CR&gt;:vsplit&lt;CR&gt;
+map zl :set nosplitright&lt;CR&gt;:vsplit&lt;CR&gt;
+map zh :set splitright&lt;CR&gt;:vsplit&lt;CR&gt;
+
+map tu :tabe&lt;CR&gt;
+map th :-tabnext&lt;CR&gt;
+map tl :+tabnext&lt;CR&gt;
+map tt :NERDTreeToggle&lt;CR&gt;
+
+map &lt;LEADER&gt;k &lt;C-w&gt;k
+map &lt;LEADER&gt;j &lt;C-w&gt;j
+map &lt;LEADER&gt;h &lt;C-w&gt;h
+map &lt;LEADER&gt;l &lt;C-w&gt;l
+
+
+<span class=s2>&#34; map W :wq&lt;CR&gt;
+</span><span class=s2>
+</span><span class=s2>imap &lt;F6&gt; &lt;C-x&gt;&lt;C-o&gt;
+</span><span class=s2>
+</span><span class=s2>noremap n nzz
+</span><span class=s2>noremap N Nzz
+</span><span class=s2>noremap &lt;LEADER&gt;&lt;CR&gt; :nohlsearch&lt;CR&gt;
+</span><span class=s2>noremap H 5k
+</span><span class=s2>noremap L 5j
+</span><span class=s2>noremap K &lt;C-v&gt;
+</span><span class=s2>
+</span><span class=s2>&#34;</span> 突出显示当前列
+<span class=s2>&#34; set cursorcolumn &#34;</span>等同于 <span class=nb>set</span> cuc
+
+<span class=s2>&#34; markdown config.
+</span><span class=s2>&#34;</span>autocmd Filetype markdown map &lt;leader&gt;w yiWi<span class=o>[</span>&lt;esc&gt;Ea<span class=o>](</span>&lt;esc&gt;pa<span class=o>)</span>
+autocmd Filetype markdown inoremap ,f &lt;Esc&gt;/&lt;++&gt;&lt;CR&gt;:nohlsearch&lt;CR&gt;c4l
+autocmd Filetype markdown inoremap ,n ---&lt;Enter&gt;&lt;Enter&gt;
+autocmd Filetype markdown inoremap ,b **** &lt;++&gt;&lt;Esc&gt;F*hi
+autocmd Filetype markdown inoremap ,s ~~~~ &lt;++&gt;&lt;Esc&gt;F~hi
+autocmd Filetype markdown inoremap ,i ** &lt;++&gt;&lt;Esc&gt;F*i
+autocmd Filetype markdown inoremap ,d <span class=sb>``</span> &lt;++&gt;&lt;Esc&gt;F<span class=sb>`</span>i
+autocmd Filetype markdown inoremap ,c <span class=sb>```</span>&lt;Enter&gt;&lt;++&gt;&lt;Enter&gt;<span class=sb>```</span>&lt;Enter&gt;&lt;Enter&gt;&lt;++&gt;&lt;Esc&gt;4kA
+autocmd Filetype markdown inoremap ,h <span class=o>====</span>&lt;Space&gt;&lt;++&gt;&lt;Esc&gt;F<span class=o>=</span>hi
+autocmd Filetype markdown inoremap ,p !<span class=o>[](</span>&lt;++&gt;<span class=o>)</span> &lt;++&gt;&lt;Esc&gt;F<span class=o>[</span>a
+autocmd Filetype markdown inoremap ,a <span class=o>[](</span>&lt;++&gt;<span class=o>)</span> &lt;++&gt;&lt;Esc&gt;F<span class=o>[</span>a
+autocmd Filetype markdown inoremap ,1 <span class=c1>#&lt;Space&gt;&lt;Enter&gt;&lt;++&gt;&lt;Esc&gt;kA</span>
+autocmd Filetype markdown inoremap ,2 <span class=c1>##&lt;Space&gt;&lt;Enter&gt;&lt;++&gt;&lt;Esc&gt;kA</span>
+autocmd Filetype markdown inoremap ,3 <span class=c1>###&lt;Space&gt;&lt;Enter&gt;&lt;++&gt;&lt;Esc&gt;kA</span>
+autocmd Filetype markdown inoremap ,4 <span class=c1>####&lt;Space&gt;&lt;Enter&gt;&lt;++&gt;&lt;Esc&gt;kA</span>
+autocmd Filetype markdown inoremap ,l --------&lt;Enter&gt;
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span><span class=lnt>152
+</span><span class=lnt>153
+</span><span class=lnt>154
+</span><span class=lnt>155
+</span><span class=lnt>156
+</span><span class=lnt>157
+</span><span class=lnt>158
+</span><span class=lnt>159
+</span><span class=lnt>160
+</span><span class=lnt>161
+</span><span class=lnt>162
+</span><span class=lnt>163
+</span><span class=lnt>164
+</span><span class=lnt>165
+</span><span class=lnt>166
+</span><span class=lnt>167
+</span><span class=lnt>168
+</span><span class=lnt>169
+</span><span class=lnt>170
+</span><span class=lnt>171
+</span><span class=lnt>172
+</span><span class=lnt>173
+</span><span class=lnt>174
+</span><span class=lnt>175
+</span><span class=lnt>176
+</span><span class=lnt>177
+</span><span class=lnt>178
+</span><span class=lnt>179
+</span><span class=lnt>180
+</span><span class=lnt>181
+</span><span class=lnt>182
+</span><span class=lnt>183
+</span><span class=lnt>184
+</span><span class=lnt>185
+</span><span class=lnt>186
+</span><span class=lnt>187
+</span><span class=lnt>188
+</span><span class=lnt>189
+</span><span class=lnt>190
+</span><span class=lnt>191
+</span><span class=lnt>192
+</span><span class=lnt>193
+</span><span class=lnt>194
+</span><span class=lnt>195
+</span><span class=lnt>196
+</span><span class=lnt>197
+</span><span class=lnt>198
+</span><span class=lnt>199
+</span><span class=lnt>200
+</span><span class=lnt>201
+</span><span class=lnt>202
+</span><span class=lnt>203
+</span><span class=lnt>204
+</span><span class=lnt>205
+</span><span class=lnt>206
+</span><span class=lnt>207
+</span><span class=lnt>208
+</span><span class=lnt>209
+</span><span class=lnt>210
+</span><span class=lnt>211
+</span><span class=lnt>212
+</span><span class=lnt>213
+</span><span class=lnt>214
+</span><span class=lnt>215
+</span><span class=lnt>216
+</span><span class=lnt>217
+</span><span class=lnt>218
+</span><span class=lnt>219
+</span><span class=lnt>220
+</span><span class=lnt>221
+</span><span class=lnt>222
+</span><span class=lnt>223
+</span><span class=lnt>224
+</span><span class=lnt>225
+</span><span class=lnt>226
+</span><span class=lnt>227
+</span><span class=lnt>228
+</span><span class=lnt>229
+</span><span class=lnt>230
+</span><span class=lnt>231
+</span><span class=lnt>232
+</span><span class=lnt>233
+</span><span class=lnt>234
+</span><span class=lnt>235
+</span><span class=lnt>236
+</span><span class=lnt>237
+</span><span class=lnt>238
+</span><span class=lnt>239
+</span><span class=lnt>240
+</span><span class=lnt>241
+</span><span class=lnt>242
+</span><span class=lnt>243
+</span><span class=lnt>244
+</span><span class=lnt>245
+</span><span class=lnt>246
+</span><span class=lnt>247
+</span><span class=lnt>248
+</span><span class=lnt>249
+</span><span class=lnt>250
+</span><span class=lnt>251
+</span><span class=lnt>252
+</span><span class=lnt>253
+</span><span class=lnt>254
+</span><span class=lnt>255
+</span><span class=lnt>256
+</span><span class=lnt>257
+</span><span class=lnt>258
+</span><span class=lnt>259
+</span><span class=lnt>260
+</span><span class=lnt>261
+</span><span class=lnt>262
+</span><span class=lnt>263
+</span><span class=lnt>264
+</span><span class=lnt>265
+</span><span class=lnt>266
+</span><span class=lnt>267
+</span><span class=lnt>268
+</span><span class=lnt>269
+</span><span class=lnt>270
+</span><span class=lnt>271
+</span><span class=lnt>272
+</span><span class=lnt>273
+</span><span class=lnt>274
+</span><span class=lnt>275
+</span><span class=lnt>276
+</span><span class=lnt>277
+</span><span class=lnt>278
+</span><span class=lnt>279
+</span><span class=lnt>280
+</span><span class=lnt>281
+</span><span class=lnt>282
+</span><span class=lnt>283
+</span><span class=lnt>284
+</span><span class=lnt>285
+</span><span class=lnt>286
+</span><span class=lnt>287
+</span><span class=lnt>288
+</span><span class=lnt>289
+</span><span class=lnt>290
+</span><span class=lnt>291
+</span><span class=lnt>292
+</span><span class=lnt>293
+</span><span class=lnt>294
+</span><span class=lnt>295
+</span><span class=lnt>296
+</span><span class=lnt>297
+</span><span class=lnt>298
+</span><span class=lnt>299
+</span><span class=lnt>300
+</span><span class=lnt>301
+</span><span class=lnt>302
+</span><span class=lnt>303
+</span><span class=lnt>304
+</span><span class=lnt>305
+</span><span class=lnt>306
+</span><span class=lnt>307
+</span><span class=lnt>308
+</span><span class=lnt>309
+</span><span class=lnt>310
+</span><span class=lnt>311
+</span><span class=lnt>312
+</span><span class=lnt>313
+</span><span class=lnt>314
+</span><span class=lnt>315
+</span><span class=lnt>316
+</span><span class=lnt>317
+</span><span class=lnt>318
+</span><span class=lnt>319
+</span><span class=lnt>320
+</span><span class=lnt>321
+</span><span class=lnt>322
+</span><span class=lnt>323
+</span><span class=lnt>324
+</span><span class=lnt>325
+</span><span class=lnt>326
+</span><span class=lnt>327
+</span><span class=lnt>328
+</span><span class=lnt>329
+</span><span class=lnt>330
+</span><span class=lnt>331
+</span><span class=lnt>332
+</span><span class=lnt>333
+</span><span class=lnt>334
+</span><span class=lnt>335
+</span><span class=lnt>336
+</span><span class=lnt>337
+</span><span class=lnt>338
+</span><span class=lnt>339
+</span><span class=lnt>340
+</span><span class=lnt>341
+</span><span class=lnt>342
+</span><span class=lnt>343
+</span><span class=lnt>344
+</span><span class=lnt>345
+</span><span class=lnt>346
+</span><span class=lnt>347
+</span><span class=lnt>348
+</span><span class=lnt>349
+</span><span class=lnt>350
+</span><span class=lnt>351
+</span><span class=lnt>352
+</span><span class=lnt>353
+</span><span class=lnt>354
+</span><span class=lnt>355
+</span><span class=lnt>356
+</span><span class=lnt>357
+</span><span class=lnt>358
+</span><span class=lnt>359
+</span><span class=lnt>360
+</span><span class=lnt>361
+</span><span class=lnt>362
+</span><span class=lnt>363
+</span><span class=lnt>364
+</span><span class=lnt>365
+</span><span class=lnt>366
+</span><span class=lnt>367
+</span><span class=lnt>368
+</span><span class=lnt>369
+</span><span class=lnt>370
+</span><span class=lnt>371
+</span><span class=lnt>372
+</span><span class=lnt>373
+</span><span class=lnt>374
+</span><span class=lnt>375
+</span><span class=lnt>376
+</span><span class=lnt>377
+</span><span class=lnt>378
+</span><span class=lnt>379
+</span><span class=lnt>380
+</span><span class=lnt>381
+</span><span class=lnt>382
+</span><span class=lnt>383
+</span><span class=lnt>384
+</span><span class=lnt>385
+</span><span class=lnt>386
+</span><span class=lnt>387
+</span><span class=lnt>388
+</span><span class=lnt>389
+</span><span class=lnt>390
+</span><span class=lnt>391
+</span><span class=lnt>392
+</span><span class=lnt>393
+</span><span class=lnt>394
+</span><span class=lnt>395
+</span><span class=lnt>396
+</span><span class=lnt>397
+</span><span class=lnt>398
+</span><span class=lnt>399
+</span><span class=lnt>400
+</span><span class=lnt>401
+</span><span class=lnt>402
+</span><span class=lnt>403
+</span><span class=lnt>404
+</span><span class=lnt>405
+</span><span class=lnt>406
+</span><span class=lnt>407
+</span><span class=lnt>408
+</span><span class=lnt>409
+</span><span class=lnt>410
+</span><span class=lnt>411
+</span><span class=lnt>412
+</span><span class=lnt>413
+</span><span class=lnt>414
+</span><span class=lnt>415
+</span><span class=lnt>416
+</span><span class=lnt>417
+</span><span class=lnt>418
+</span><span class=lnt>419
+</span><span class=lnt>420
+</span><span class=lnt>421
+</span><span class=lnt>422
+</span><span class=lnt>423
+</span><span class=lnt>424
+</span><span class=lnt>425
+</span><span class=lnt>426
+</span><span class=lnt>427
+</span><span class=lnt>428
+</span><span class=lnt>429
+</span><span class=lnt>430
+</span><span class=lnt>431
+</span><span class=lnt>432
+</span><span class=lnt>433
+</span><span class=lnt>434
+</span><span class=lnt>435
+</span><span class=lnt>436
+</span><span class=lnt>437
+</span><span class=lnt>438
+</span><span class=lnt>439
+</span><span class=lnt>440
+</span><span class=lnt>441
+</span><span class=lnt>442
+</span><span class=lnt>443
+</span><span class=lnt>444
+</span><span class=lnt>445
+</span><span class=lnt>446
+</span><span class=lnt>447
+</span><span class=lnt>448
+</span><span class=lnt>449
+</span><span class=lnt>450
+</span><span class=lnt>451
+</span><span class=lnt>452
+</span><span class=lnt>453
+</span><span class=lnt>454
+</span><span class=lnt>455
+</span><span class=lnt>456
+</span><span class=lnt>457
+</span><span class=lnt>458
+</span><span class=lnt>459
+</span><span class=lnt>460
+</span><span class=lnt>461
+</span><span class=lnt>462
+</span><span class=lnt>463
+</span><span class=lnt>464
+</span><span class=lnt>465
+</span><span class=lnt>466
+</span><span class=lnt>467
+</span><span class=lnt>468
+</span><span class=lnt>469
+</span><span class=lnt>470
+</span><span class=lnt>471
+</span><span class=lnt>472
+</span><span class=lnt>473
+</span><span class=lnt>474
+</span><span class=lnt>475
+</span><span class=lnt>476
+</span><span class=lnt>477
+</span><span class=lnt>478
+</span><span class=lnt>479
+</span><span class=lnt>480
+</span><span class=lnt>481
+</span><span class=lnt>482
+</span><span class=lnt>483
+</span><span class=lnt>484
+</span><span class=lnt>485
+</span><span class=lnt>486
+</span><span class=lnt>487
+</span><span class=lnt>488
+</span><span class=lnt>489
+</span><span class=lnt>490
+</span><span class=lnt>491
+</span><span class=lnt>492
+</span><span class=lnt>493
+</span><span class=lnt>494
+</span><span class=lnt>495
+</span><span class=lnt>496
+</span><span class=lnt>497
+</span><span class=lnt>498
+</span><span class=lnt>499
+</span><span class=lnt>500
+</span><span class=lnt>501
+</span><span class=lnt>502
+</span><span class=lnt>503
+</span><span class=lnt>504
+</span><span class=lnt>505
+</span><span class=lnt>506
+</span><span class=lnt>507
+</span><span class=lnt>508
+</span><span class=lnt>509
+</span><span class=lnt>510
+</span><span class=lnt>511
+</span><span class=lnt>512
+</span><span class=lnt>513
+</span><span class=lnt>514
+</span><span class=lnt>515
+</span><span class=lnt>516
+</span><span class=lnt>517
+</span><span class=lnt>518
+</span><span class=lnt>519
+</span><span class=lnt>520
+</span><span class=lnt>521
+</span><span class=lnt>522
+</span><span class=lnt>523
+</span><span class=lnt>524
+</span><span class=lnt>525
+</span><span class=lnt>526
+</span><span class=lnt>527
+</span><span class=lnt>528
+</span><span class=lnt>529
+</span><span class=lnt>530
+</span><span class=lnt>531
+</span><span class=lnt>532
+</span><span class=lnt>533
+</span><span class=lnt>534
+</span><span class=lnt>535
+</span><span class=lnt>536
+</span><span class=lnt>537
+</span><span class=lnt>538
+</span><span class=lnt>539
+</span><span class=lnt>540
+</span><span class=lnt>541
+</span><span class=lnt>542
+</span><span class=lnt>543
+</span><span class=lnt>544
+</span><span class=lnt>545
+</span><span class=lnt>546
+</span><span class=lnt>547
+</span><span class=lnt>548
+</span><span class=lnt>549
+</span><span class=lnt>550
+</span><span class=lnt>551
+</span><span class=lnt>552
+</span><span class=lnt>553
+</span><span class=lnt>554
+</span><span class=lnt>555
+</span><span class=lnt>556
+</span><span class=lnt>557
+</span><span class=lnt>558
+</span><span class=lnt>559
+</span><span class=lnt>560
+</span><span class=lnt>561
+</span><span class=lnt>562
+</span><span class=lnt>563
+</span><span class=lnt>564
+</span><span class=lnt>565
+</span><span class=lnt>566
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash><span class=s2>&#34; __  ____   __  _   ___     _____ __  __ ____   ____
+</span><span class=s2>&#34;</span><span class=p>|</span>  <span class=se>\/</span>  <span class=se>\ \ </span>/ / <span class=p>|</span> <span class=se>\ </span><span class=p>|</span> <span class=se>\ \ </span>  / /_ _<span class=p>|</span>  <span class=se>\/</span>  <span class=p>|</span>  _ <span class=se>\ </span>/ ___<span class=p>|</span>
+<span class=s2>&#34;| |\/| |\ V /  |  \| |\ \ / / | || |\/| | |_) | |
+</span><span class=s2>&#34;</span><span class=p>|</span> <span class=p>|</span>  <span class=p>|</span> <span class=p>|</span> <span class=p>|</span> <span class=p>|</span>   <span class=p>|</span> <span class=p>|</span><span class=se>\ </span> <span class=p>|</span> <span class=se>\ </span>V /  <span class=p>|</span> <span class=o>||</span> <span class=p>|</span>  <span class=p>|</span> <span class=p>|</span>  _ &lt;<span class=p>|</span> <span class=p>|</span>___
+<span class=s2>&#34;|_|  |_| |_|   |_| \_|  \_/  |___|_|  |_|_| \_\\____|
+</span><span class=s2>
+</span><span class=s2>&#34;</span> Author: @theniceboy
+
+<span class=s2>&#34; Checkout-list
+</span><span class=s2>&#34;</span> vim-esearch
+<span class=s2>&#34; fmoralesc/worldslice
+</span><span class=s2>&#34;</span> SidOfc/mkdx
+
+
+<span class=s2>&#34; ===
+</span><span class=s2>&#34;</span> <span class=o>===</span> Auto load <span class=k>for</span> first <span class=nb>time</span> uses
+<span class=s2>&#34; ===
+</span><span class=s2>&#34;</span> <span class=k>if</span> empty<span class=o>(</span>glob<span class=o>(</span><span class=s1>&#39;~/.config/nvim/autoload/plug.vim&#39;</span><span class=o>))</span>
+<span class=s2>&#34; 	silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+</span><span class=s2>&#34;</span> 				<span class=se>\ </span>https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+<span class=s2>&#34; 	autocmd VimEnter * PlugInstall --sync | source </span><span class=nv>$MYVIMRC</span><span class=s2>
+</span><span class=s2>&#34;</span> endif
+
+<span class=s2>&#34; =====
+</span><span class=s2>&#34;</span> <span class=o>=====</span> System
+<span class=s2>&#34; =====
+</span><span class=s2>&#34;</span> 不要使用vi的键盘模式，而是vim自己的
+<span class=s2>&#34; set clipboard=unnamedplus
+</span><span class=s2>let &amp;t_ut=&#39;&#39;
+</span><span class=s2>
+</span><span class=s2>set nocompatible
+</span><span class=s2>&#34;</span> 识别文件类型
+filetype on
+filetype indent on
+filetype plugin on
+filetype plugin indent on
+<span class=nb>set</span> <span class=nv>mouse</span><span class=o>=</span>a
+<span class=nb>set</span> <span class=nv>encoding</span><span class=o>=</span>utf-8
+
+<span class=s2>&#34; 默认复制到系统的剪切板
+</span><span class=s2>&#34;</span> <span class=nb>set</span> <span class=nv>clipboard</span><span class=o>=</span>unnamed
+
+<span class=s2>&#34; =====
+</span><span class=s2>&#34;</span> <span class=o>=====</span> display
+<span class=s2>&#34; =====
+</span><span class=s2>&#34;</span> 设置行号 <span class=nb>set</span> number
+<span class=nb>set</span> number
+<span class=s2>&#34; 设置相对行号
+</span><span class=s2>set relativenumber
+</span><span class=s2>&#34;</span> 左下角显示光标位置
+<span class=nb>set</span> ruler
+<span class=s2>&#34; 显示一条线
+</span><span class=s2>set cursorline
+</span><span class=s2>&#34;</span> 打开高亮
+syntax <span class=nb>enable</span>
+syntax on
+
+<span class=nb>set</span> splitright                  <span class=s2>&#34; Puts new vsplit windows to the right of the current
+</span><span class=s2>set splitbelow                  &#34;</span> Puts new split windows to the bottom of the current
+
+<span class=s2>&#34; =====
+</span><span class=s2>&#34;</span> <span class=o>=====</span> editor behavior
+<span class=s2>&#34; =====
+</span><span class=s2>
+</span><span class=s2>&#34;</span> 输入tab制表符时，自动替换成空格
+<span class=s2>&#34; set expandtab
+</span><span class=s2>&#34;</span> 设置缩进长度为4空格
+<span class=nb>set</span> <span class=nv>tabstop</span><span class=o>=</span><span class=m>4</span>
+<span class=s2>&#34; 设置自动缩进长度为4空格
+</span><span class=s2>set shiftwidth=4
+</span><span class=s2>set softtabstop=4
+</span><span class=s2>set list
+</span><span class=s2>set listchars=tab:▸\ ,trail:▫
+</span><span class=s2>&#34;</span> 设置最低，最顶空余的行数
+<span class=s2>&#34; set scrolloff=5
+</span><span class=s2>set scrolloff=3
+</span><span class=s2>&#34;</span> Prevent auto line split
+<span class=s2>&#34; 设置自动折行
+</span><span class=s2>set wrap
+</span><span class=s2>&#34;</span> 设置行宽
+<span class=nb>set</span> <span class=nv>tw</span><span class=o>=</span><span class=m>0</span>
+
+<span class=s2>&#34; 防止vim自动缩进行
+</span><span class=s2>&#34;</span> <span class=nb>set</span> <span class=nv>indentexpr</span><span class=o>=</span>
+
+<span class=s2>&#34; Better backspace
+</span><span class=s2>set backspace=indent,eol,start
+</span><span class=s2>
+</span><span class=s2>&#34;</span> 设置代码折叠功能，目前还不清楚有什么用
+<span class=nb>set</span> <span class=nv>foldmethod</span><span class=o>=</span>indent
+<span class=nb>set</span> <span class=nv>foldlevel</span><span class=o>=</span><span class=m>99</span>
+
+<span class=s2>&#34; 不同的模式下，使用不同的光标
+</span><span class=s2>let &amp;t_SI = &#34;</span><span class=se>\&lt;</span>Esc&gt;<span class=o>]</span>50<span class=p>;</span><span class=nv>CursorShape</span><span class=o>=</span>1<span class=se>\x</span>7<span class=s2>&#34;
+</span><span class=s2>let &amp;t_SR = &#34;</span><span class=se>\&lt;</span>Esc&gt;<span class=o>]</span>50<span class=p>;</span><span class=nv>CursorShape</span><span class=o>=</span>2<span class=se>\x</span>7<span class=s2>&#34;
+</span><span class=s2>let &amp;t_EI = &#34;</span><span class=se>\&lt;</span>Esc&gt;<span class=o>]</span>50<span class=p>;</span><span class=nv>CursorShape</span><span class=o>=</span>0<span class=se>\x</span>7<span class=s2>&#34;
+</span><span class=s2>
+</span><span class=s2>&#34;</span> <span class=o>===</span>
+<span class=s2>&#34; === Window behaviors
+</span><span class=s2>&#34;</span> <span class=o>===</span>
+<span class=s2>&#34; set splitright
+</span><span class=s2>&#34;</span> <span class=nb>set</span> splitbelow
+
+<span class=s2>&#34; ===
+</span><span class=s2>&#34;</span> <span class=o>===</span> Status/command bar
+<span class=s2>&#34; ===
+</span><span class=s2>set laststatus=2
+</span><span class=s2>set autochdir
+</span><span class=s2>set showcmd
+</span><span class=s2>set formatoptions-=tc
+</span><span class=s2>
+</span><span class=s2>&#34;</span> Show <span class=nb>command</span> autocomplete
+<span class=nb>set</span> <span class=nv>wildignore</span><span class=o>=</span>log/**,node_modules/**,target/**,tmp/**,*.rbc
+<span class=nb>set</span> wildmenu                                                 <span class=s2>&#34; show a navigable menu for tab completion
+</span><span class=s2>set wildmode=longest,list,full
+</span><span class=s2>
+</span><span class=s2>&#34;</span> Searching options
+<span class=nb>set</span> hlsearch
+<span class=nb>exec</span> <span class=s2>&#34;nohlsearch&#34;</span>
+<span class=nb>set</span> incsearch
+<span class=nb>set</span> ignorecase
+<span class=nb>set</span> smartcase
+
+<span class=s2>&#34; ===
+</span><span class=s2>&#34;</span> <span class=o>===</span> Restore Cursor Position
+<span class=s2>&#34; ===
+</span><span class=s2>&#34;</span> 打开文件在你上次退出的光标位置
+au BufReadPost * <span class=k>if</span> line<span class=o>(</span><span class=s2>&#34;&#39;\&#34;&#34;</span><span class=o>)</span> &gt; <span class=m>1</span> <span class=o>&amp;&amp;</span> line<span class=o>(</span><span class=s2>&#34;&#39;\&#34;&#34;</span><span class=o>)</span> &lt;<span class=o>=</span> line<span class=o>(</span><span class=s2>&#34;</span>$<span class=s2>&#34;</span><span class=o>)</span> <span class=p>|</span> exe <span class=s2>&#34;normal! g&#39;\&#34;&#34;</span> <span class=p>|</span> endif
+
+
+<span class=s2>&#34; ===
+</span><span class=s2>&#34;</span> <span class=o>===</span> Basic Mappings
+<span class=s2>&#34; ===
+</span><span class=s2>
+</span><span class=s2>&#34;</span> Set &lt;LEADER&gt; as &lt;SPACE&gt;
+<span class=nb>let</span> <span class=nv>mapleader</span><span class=o>=</span><span class=s2>&#34; &#34;</span>
+
+<span class=s2>&#34; 保存
+</span><span class=s2>map ;s :w&lt;CR&gt;
+</span><span class=s2>
+</span><span class=s2>&#34;</span> Duplicate words
+<span class=s2>&#34; map &lt;LEADER&gt;fd /\(\&lt;\w\+\&gt;\)\_s*\1
+</span><span class=s2>
+</span><span class=s2>&#34;</span> <span class=o>===</span>
+<span class=s2>&#34; === Searching
+</span><span class=s2>&#34;</span> <span class=o>===</span>
+<span class=s2>&#34; 设置搜索相关
+</span><span class=s2>map &lt;LEADER&gt;&lt;CR&gt; :nohlsearch&lt;CR&gt;
+</span><span class=s2>&#34;</span> 搜索跳转
+<span class=nv>noremap</span> <span class=o>=</span> nzz
+noremap - Nzz
+noremap n nzz
+noremap N Nzz
+
+<span class=s2>&#34; ===
+</span><span class=s2>&#34;</span> <span class=o>===</span> Cursor Movement
+<span class=s2>&#34; ===
+</span><span class=s2>&#34;</span> 按键映射
+noremap H 5k
+noremap L 5j
+noremap W 5w
+noremap B 5b
+noremap K &lt;C-v&gt;
+
+<span class=s2>&#34; 分屏
+</span><span class=s2>&#34;</span> split the screens to up <span class=o>(</span>horizontal<span class=o>)</span>, down <span class=o>(</span>horizontal<span class=o>)</span>, left <span class=o>(</span>vertical<span class=o>)</span>, right <span class=o>(</span>vertical<span class=o>)</span>
+map zk :set nosplitbelow&lt;CR&gt;:split&lt;CR&gt;
+map zj :set splitbelow&lt;CR&gt;:split&lt;CR&gt;
+map zl :set nosplitright&lt;CR&gt;:vsplit&lt;CR&gt;
+map zh :set splitright&lt;CR&gt;:vsplit&lt;CR&gt;
+
+<span class=s2>&#34; 分屏切换
+</span><span class=s2>&#34;</span> j k 为什么失效了，需要判断一下
+map &lt;LEADER&gt;k &lt;C-w&gt;k
+map &lt;LEADER&gt;j &lt;C-w&gt;j
+map &lt;LEADER&gt;h &lt;C-w&gt;h
+map &lt;LEADER&gt;l &lt;C-w&gt;l
+
+<span class=s2>&#34; 标签
+</span><span class=s2>map tu :tabe&lt;CR&gt;
+</span><span class=s2>map th :-tabnext&lt;CR&gt;
+</span><span class=s2>map tl :+tabnext&lt;CR&gt;
+</span><span class=s2>&#34;</span> Move the tabs with tmn and tmi
+map tmh :-tabmove&lt;CR&gt;
+map tml :+tabmove&lt;CR&gt;
+map tt :NERDTreeToggle&lt;CR&gt;
+
+<span class=s2>&#34; Copy to system clipboard
+</span><span class=s2>vnoremap Y &#34;</span>+y
+
+<span class=s2>&#34; Indentation
+</span><span class=s2>&#34;</span> nnoremap &lt; &lt;&lt;
+<span class=s2>&#34; nnoremap &gt; &gt;&gt;
+</span><span class=s2>
+</span><span class=s2>&#34;</span> Space to Tab
+<span class=s2>&#34; nnoremap &lt;LEADER&gt;tt :%s/    /\t/g
+</span><span class=s2>&#34;</span> vnoremap &lt;LEADER&gt;tt :s/    /<span class=se>\t</span>/g
+
+<span class=s2>&#34; ===
+</span><span class=s2>&#34;</span> <span class=o>===</span> Other useful stuff
+<span class=s2>&#34; ===
+</span><span class=s2>&#34;</span> Press space twice to jump to the next <span class=s1>&#39;&lt;++&gt;&#39;</span> and edit it
+<span class=s2>&#34; map &lt;LEADER&gt;&lt;LEADER&gt; &lt;Esc&gt;/&lt;++&gt;&lt;CR&gt;:nohlsearch&lt;CR&gt;c4i
+</span><span class=s2>&#34;</span> 退出
+map Q :q&lt;CR&gt;
+<span class=s2>&#34; 保存
+</span><span class=s2>&#34;</span> map W :w&lt;CR&gt;
+<span class=s2>&#34; esc config.
+</span><span class=s2>inoremap kj &lt;ESC&gt;
+</span><span class=s2>
+</span><span class=s2>
+</span><span class=s2>
+</span><span class=s2>
+</span><span class=s2>map &lt;LEADER&gt;md :MarkdownPreview&lt;CR&gt;
+</span><span class=s2>
+</span><span class=s2>&#34;</span> Compile <span class=k>function</span>
+map &lt;LEADER&gt;r :call CompileRunGcc<span class=o>()</span>&lt;CR&gt;
+func! CompileRunGcc<span class=o>()</span>
+  <span class=nb>exec</span> <span class=s2>&#34;w&#34;</span>
+  <span class=k>if</span> <span class=p>&amp;</span><span class=nv>filetype</span> <span class=o>==</span> <span class=s1>&#39;c&#39;</span>
+    <span class=nb>exec</span> <span class=s2>&#34;!g++ % -o %&lt;&#34;</span>
+    <span class=nb>exec</span> <span class=s2>&#34;!time ./%&lt;&#34;</span>
+  elseif <span class=p>&amp;</span><span class=nv>filetype</span> <span class=o>==</span> <span class=s1>&#39;cpp&#39;</span>
+    <span class=nb>exec</span> <span class=s2>&#34;!g++ % -o %&lt;&#34;</span>
+    <span class=nb>exec</span> <span class=s2>&#34;!time ./%&lt;&#34;</span>
+  elseif <span class=p>&amp;</span><span class=nv>filetype</span> <span class=o>==</span> <span class=s1>&#39;java&#39;</span>
+    <span class=nb>exec</span> <span class=s2>&#34;!javac %&#34;</span>
+    <span class=nb>exec</span> <span class=s2>&#34;!time java %&lt;&#34;</span>
+  elseif <span class=p>&amp;</span><span class=nv>filetype</span> <span class=o>==</span> <span class=s1>&#39;sh&#39;</span>
+    :!time bash %
+  elseif <span class=p>&amp;</span><span class=nv>filetype</span> <span class=o>==</span> <span class=s1>&#39;python&#39;</span>
+    silent! <span class=nb>exec</span> <span class=s2>&#34;!clear&#34;</span>
+    <span class=nb>exec</span> <span class=s2>&#34;!time python3 %&#34;</span>
+  elseif <span class=p>&amp;</span><span class=nv>filetype</span> <span class=o>==</span> <span class=s1>&#39;html&#39;</span>
+    <span class=nb>exec</span> <span class=s2>&#34;!firefox % &amp;&#34;</span>
+  elseif <span class=p>&amp;</span><span class=nv>filetype</span> <span class=o>==</span> <span class=s1>&#39;markdown&#39;</span>
+    <span class=nb>exec</span> <span class=s2>&#34;MarkdownPreview&#34;</span>
+  elseif <span class=p>&amp;</span><span class=nv>filetype</span> <span class=o>==</span> <span class=s1>&#39;vimwiki&#39;</span>
+    <span class=nb>exec</span> <span class=s2>&#34;MarkdownPreview&#34;</span>
+  endif
+endfunc
+
+<span class=s2>&#34; 设置历史记录
+</span><span class=s2>set history=1024
+</span><span class=s2>
+</span><span class=s2>&#34;</span> 自动缩进,这个导致从外面拷贝多行以空格开头的内容时,会有多的缩进,先不设置
+<span class=s2>&#34; set autoindent
+</span><span class=s2>&#34;</span> 不要用空格代替制表符
+<span class=s2>&#34; set noexpandtab
+</span><span class=s2>
+</span><span class=s2>&#34;</span> vim plug
+
+<span class=s2>&#34; Specify a directory for plugins
+</span><span class=s2>&#34;</span> - For Neovim: stdpath<span class=o>(</span><span class=s1>&#39;data&#39;</span><span class=o>)</span> . <span class=s1>&#39;/plugged&#39;</span>
+<span class=s2>&#34; - Avoid using standard Vim directory names like &#39;plugin&#39;
+</span><span class=s2>call plug#begin(&#39;~/.vim/plugged&#39;)
+</span><span class=s2>
+</span><span class=s2>&#34;</span> 主题
+Plug <span class=s1>&#39;connorholyday/vim-snazzy&#39;</span>
+<span class=s2>&#34; 显示状态栏
+</span><span class=s2>Plug &#39;bling/vim-airline&#39;
+</span><span class=s2>&#34;</span> go
+Plug <span class=s1>&#39;fatih/vim-go&#39;</span>
+<span class=s2>&#34; 代码自动补全
+</span><span class=s2>&#34;</span> Plug <span class=s1>&#39;Valloric/YouCompleteMe&#39;</span>
+<span class=s2>&#34; Plug &#39;Tagbar&#39;
+</span><span class=s2>Plug &#39;scrooloose/nerdtree&#39;, { &#39;on&#39;: &#39;NERDTreeToggle&#39; }
+</span><span class=s2>
+</span><span class=s2>&#34;</span> Use release branch <span class=o>(</span>recommend<span class=o>)</span>
+Plug <span class=s1>&#39;neoclide/coc.nvim&#39;</span>, <span class=o>{</span><span class=s1>&#39;branch&#39;</span>: <span class=s1>&#39;release&#39;</span><span class=o>}</span>
+
+Plug <span class=s1>&#39;Xuyuanp/nerdtree-git-plugin&#39;</span>
+Plug <span class=s1>&#39;jiangmiao/auto-pairs&#39;</span>
+
+<span class=s2>&#34; markdown
+</span><span class=s2>Plug &#39;godlygeek/tabular&#39;
+</span><span class=s2>&#34;</span> Plug <span class=s1>&#39;plasticboy/vim-markdown&#39;</span>
+
+Plug <span class=s1>&#39;suan/vim-instant-markdown&#39;</span>, <span class=o>{</span><span class=s1>&#39;for&#39;</span>: <span class=s1>&#39;markdown&#39;</span><span class=o>}</span>
+Plug <span class=s1>&#39;dhruvasagar/vim-table-mode&#39;</span>, <span class=o>{</span> <span class=s1>&#39;on&#39;</span>: <span class=s1>&#39;TableModeToggle&#39;</span>, <span class=s1>&#39;for&#39;</span>: <span class=o>[</span><span class=s1>&#39;text&#39;</span>, <span class=s1>&#39;markdown&#39;</span>, <span class=s1>&#39;vim-plug&#39;</span><span class=o>]</span> <span class=o>}</span>
+Plug <span class=s1>&#39;mzlogin/vim-markdown-toc&#39;</span>, <span class=o>{</span> <span class=s1>&#39;for&#39;</span>: <span class=o>[</span><span class=s1>&#39;gitignore&#39;</span>, <span class=s1>&#39;markdown&#39;</span>, <span class=s1>&#39;vim-plug&#39;</span><span class=o>]</span> <span class=o>}</span>
+Plug <span class=s1>&#39;dkarter/bullets.vim&#39;</span>
+Plug <span class=s1>&#39;iamcco/markdown-preview.nvim&#39;</span>, <span class=o>{</span> <span class=s1>&#39;do&#39;</span>: <span class=o>{</span> -&gt; mkdp#util#install<span class=o>()</span> <span class=o>}</span>, <span class=s1>&#39;for&#39;</span>: <span class=o>[</span><span class=s1>&#39;markdown&#39;</span>, <span class=s1>&#39;vim-plug&#39;</span><span class=o>]}</span>
+Plug <span class=s1>&#39;easymotion/vim-easymotion&#39;</span>
+
+
+<span class=s2>&#34; Initialize plugin system
+</span><span class=s2>call plug#end()
+</span><span class=s2>
+</span><span class=s2>&#34;</span> coc-translator
+nmap ts &lt;Plug&gt;<span class=o>(</span>coc-translator-p<span class=o>)</span>
+
+<span class=s2>&#34; 透明化处理
+</span><span class=s2>&#34;</span> <span class=nb>let</span> g:SnazzyTransparent <span class=o>=</span> <span class=m>1</span>
+
+<span class=s2>&#34; go 代码高亮
+</span><span class=s2>let g:go_highlight_types = 1
+</span><span class=s2>let g:go_highlight_fields = 1
+</span><span class=s2>let g:go_highlight_functions = 1
+</span><span class=s2>let g:go_highlight_function_calls = 1
+</span><span class=s2>let g:go_highlight_operators = 1
+</span><span class=s2>let g:go_highlight_extra_types = 1
+</span><span class=s2>
+</span><span class=s2>&#34;</span> 主题设置
+colorscheme snazzy
+
+<span class=s2>&#34; ===
+</span><span class=s2>&#34;</span> coc.vim
+<span class=s2>&#34; Set internal encoding of vim, not needed on neovim, since coc.nvim using some
+</span><span class=s2>&#34;</span> unicode characters in the file autoload/float.vim
+<span class=s2>&#34; set encoding=utf-8
+</span><span class=s2>
+</span><span class=s2>&#34;</span> TextEdit might fail <span class=k>if</span> hidden is not set.
+<span class=nb>set</span> hidden
+
+<span class=s2>&#34; Some servers have issues with backup files, see #649.
+</span><span class=s2>&#34;</span> <span class=nb>set</span> nobackup
+<span class=s2>&#34; set nowritebackup
+</span><span class=s2>
+</span><span class=s2>&#34;</span> Give more space <span class=k>for</span> displaying messages.
+<span class=nb>set</span> <span class=nv>cmdheight</span><span class=o>=</span><span class=m>2</span>
+
+
+<span class=s2>&#34; Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+</span><span class=s2>&#34;</span> delays and poor user experience.
+<span class=nb>set</span> <span class=nv>updatetime</span><span class=o>=</span><span class=m>10</span>
+
+<span class=s2>&#34; Don&#39;t pass messages to |ins-completion-menu|.
+</span><span class=s2>set shortmess+=c
+</span><span class=s2>
+</span><span class=s2>&#34;</span> Always show the signcolumn, otherwise it would <span class=nb>shift</span> the text each <span class=nb>time</span>
+<span class=s2>&#34; diagnostics appear/become resolved.
+</span><span class=s2>if has(&#34;</span>patch-8.1.1564<span class=s2>&#34;)
+</span><span class=s2>  &#34;</span> Recently vim can merge signcolumn and number column into one
+  <span class=nb>set</span> <span class=nv>signcolumn</span><span class=o>=</span>number
+<span class=k>else</span>
+  <span class=nb>set</span> <span class=nv>signcolumn</span><span class=o>=</span>yes
+endif
+
+<span class=s2>&#34; Use tab for trigger completion with characters ahead and navigate.
+</span><span class=s2>&#34;</span> NOTE: Use <span class=nb>command</span> <span class=s1>&#39;:verbose imap &lt;tab&gt;&#39;</span> to make sure tab is not mapped by
+<span class=s2>&#34; other plugin before putting this into your config.
+</span><span class=s2>inoremap &lt;silent&gt;&lt;expr&gt; &lt;TAB&gt;
+</span><span class=s2>      \ pumvisible() ? &#34;</span><span class=se>\&lt;</span>C-n&gt;<span class=s2>&#34; :
+</span><span class=s2>      \ &lt;SID&gt;check_back_space() ? &#34;</span><span class=se>\&lt;</span>TAB&gt;<span class=s2>&#34; :
+</span><span class=s2>      \ coc#refresh()
+</span><span class=s2>inoremap &lt;expr&gt;&lt;S-TAB&gt; pumvisible() ? &#34;</span><span class=se>\&lt;</span>C-p&gt;<span class=s2>&#34; : &#34;</span><span class=se>\&lt;</span>C-h&gt;<span class=s2>&#34;
+</span><span class=s2>
+</span><span class=s2>function! s:check_back_space() abort
+</span><span class=s2>  let col = col(&#39;.&#39;) - 1
+</span><span class=s2>  return !col || getline(&#39;.&#39;)[col - 1]  =~# &#39;\s&#39;
+</span><span class=s2>endfunction
+</span><span class=s2>
+</span><span class=s2>&#34;</span> Use &lt;c-space&gt; to trigger completion.
+<span class=k>if</span> has<span class=o>(</span><span class=s1>&#39;nvim&#39;</span><span class=o>)</span>
+  inoremap &lt;silent&gt;&lt;expr&gt; &lt;c-space&gt; coc#refresh<span class=o>()</span>
+<span class=k>else</span>
+  inoremap &lt;silent&gt;&lt;expr&gt; &lt;c-@&gt; coc#refresh<span class=o>()</span>
+endif
+
+<span class=s2>&#34; Make &lt;CR&gt; auto-select the first completion item and notify coc.nvim to
+</span><span class=s2>&#34;</span> format on enter, &lt;cr&gt; could be remapped by other vim plugin
+inoremap &lt;silent&gt;&lt;expr&gt; &lt;cr&gt; pumvisible<span class=o>()</span> ? coc#_select_confirm<span class=o>()</span>
+                              <span class=se>\:</span> <span class=s2>&#34;\&lt;C-g&gt;u\&lt;CR&gt;\&lt;c-r&gt;=coc#on_enter()\&lt;CR&gt;&#34;</span>
+
+<span class=s2>&#34; Use `[g` and `]g` to navigate diagnostics
+</span><span class=s2>&#34;</span> Use <span class=sb>`</span>:CocDiagnostics<span class=sb>`</span> to get all diagnostics of current buffer in location list.
+nmap &lt;silent&gt; <span class=o>[</span>g &lt;Plug&gt;<span class=o>(</span>coc-diagnostic-prev<span class=o>)</span>
+nmap &lt;silent&gt; <span class=o>]</span>g &lt;Plug&gt;<span class=o>(</span>coc-diagnostic-next<span class=o>)</span>
+
+<span class=s2>&#34; GoTo code navigation.
+</span><span class=s2>nmap &lt;silent&gt; gd &lt;Plug&gt;(coc-definition)
+</span><span class=s2>nmap &lt;silent&gt; gy &lt;Plug&gt;(coc-type-definition)
+</span><span class=s2>nmap &lt;silent&gt; gi &lt;Plug&gt;(coc-implementation)
+</span><span class=s2>nmap &lt;silent&gt; gr &lt;Plug&gt;(coc-references)
+</span><span class=s2>
+</span><span class=s2>&#34;</span> Use K to show documentation in preview window.
+nnoremap &lt;silent&gt; K :call &lt;SID&gt;show_documentation<span class=o>()</span>&lt;CR&gt;
+
+<span class=k>function</span>! s:show_documentation<span class=o>()</span>
+  <span class=k>if</span> <span class=o>(</span>index<span class=o>([</span><span class=s1>&#39;vim&#39;</span>,<span class=s1>&#39;help&#39;</span><span class=o>]</span>, <span class=p>&amp;</span>filetype<span class=o>)</span> &gt;<span class=o>=</span> 0<span class=o>)</span>
+    execute <span class=s1>&#39;h &#39;</span>.expand<span class=o>(</span><span class=s1>&#39;&lt;cword&gt;&#39;</span><span class=o>)</span>
+  elseif <span class=o>(</span>coc#rpc#ready<span class=o>())</span>
+    call CocActionAsync<span class=o>(</span><span class=s1>&#39;doHover&#39;</span><span class=o>)</span>
+  <span class=k>else</span>
+    execute <span class=s1>&#39;!&#39;</span> . <span class=p>&amp;</span>keywordprg . <span class=s2>&#34; &#34;</span> . expand<span class=o>(</span><span class=s1>&#39;&lt;cword&gt;&#39;</span><span class=o>)</span>
+  endif
+endfunction
+
+<span class=s2>&#34; Highlight the symbol and its references when holding the cursor.
+</span><span class=s2>autocmd CursorHold * silent call CocActionAsync(&#39;highlight&#39;)
+</span><span class=s2>
+</span><span class=s2>&#34;</span> Symbol renaming.
+nmap &lt;leader&gt;rn &lt;Plug&gt;<span class=o>(</span>coc-rename<span class=o>)</span>
+
+<span class=s2>&#34; Formatting selected code.
+</span><span class=s2>xmap &lt;leader&gt;f  &lt;Plug&gt;(coc-format-selected)
+</span><span class=s2>nmap &lt;leader&gt;f  &lt;Plug&gt;(coc-format-selected)
+</span><span class=s2>
+</span><span class=s2>augroup mygroup
+</span><span class=s2>  autocmd!
+</span><span class=s2>  &#34;</span> Setup formatexpr specified filetype<span class=o>(</span>s<span class=o>)</span>.
+  autocmd FileType typescript,json setl <span class=nv>formatexpr</span><span class=o>=</span>CocAction<span class=o>(</span><span class=s1>&#39;formatSelected&#39;</span><span class=o>)</span>
+  <span class=s2>&#34; Update signature help on jump placeholder.
+</span><span class=s2>  autocmd User CocJumpPlaceholder call CocActionAsync(&#39;showSignatureHelp&#39;)
+</span><span class=s2>augroup end
+</span><span class=s2>
+</span><span class=s2>&#34;</span> Applying codeAction to the selected region.
+<span class=s2>&#34; Example: `&lt;leader&gt;aap` for current paragraph
+</span><span class=s2>xmap &lt;leader&gt;a  &lt;Plug&gt;(coc-codeaction-selected)
+</span><span class=s2>nmap &lt;leader&gt;a  &lt;Plug&gt;(coc-codeaction-selected)
+</span><span class=s2>
+</span><span class=s2>&#34;</span> Remap keys <span class=k>for</span> applying codeAction to the current buffer.
+nmap &lt;leader&gt;ac  &lt;Plug&gt;<span class=o>(</span>coc-codeaction<span class=o>)</span>
+<span class=s2>&#34; Apply AutoFix to problem on the current line.
+</span><span class=s2>nmap &lt;leader&gt;qf  &lt;Plug&gt;(coc-fix-current)
+</span><span class=s2>
+</span><span class=s2>&#34;</span> Map <span class=k>function</span> and class text objects
+<span class=s2>&#34; NOTE: Requires &#39;textDocument.documentSymbol&#39; support from the language server.
+</span><span class=s2>xmap if &lt;Plug&gt;(coc-funcobj-i)
+</span><span class=s2>omap if &lt;Plug&gt;(coc-funcobj-i)
+</span><span class=s2>xmap af &lt;Plug&gt;(coc-funcobj-a)
+</span><span class=s2>omap af &lt;Plug&gt;(coc-funcobj-a)
+</span><span class=s2>xmap ic &lt;Plug&gt;(coc-classobj-i)
+</span><span class=s2>omap ic &lt;Plug&gt;(coc-classobj-i)
+</span><span class=s2>xmap ac &lt;Plug&gt;(coc-classobj-a)
+</span><span class=s2>omap ac &lt;Plug&gt;(coc-classobj-a)
+</span><span class=s2>
+</span><span class=s2>&#34;</span> Remap &lt;C-f&gt; and &lt;C-b&gt; <span class=k>for</span> scroll float windows/popups.
+<span class=k>if</span> has<span class=o>(</span><span class=s1>&#39;nvim-0.4.0&#39;</span><span class=o>)</span> <span class=o>||</span> has<span class=o>(</span><span class=s1>&#39;patch-8.2.0750&#39;</span><span class=o>)</span>
+  nnoremap &lt;silent&gt;&lt;nowait&gt;&lt;expr&gt; &lt;C-f&gt; coc#float#has_scroll<span class=o>()</span> ? coc#float#scroll<span class=o>(</span>1<span class=o>)</span> : <span class=s2>&#34;\&lt;C-f&gt;&#34;</span>
+  nnoremap &lt;silent&gt;&lt;nowait&gt;&lt;expr&gt; &lt;C-b&gt; coc#float#has_scroll<span class=o>()</span> ? coc#float#scroll<span class=o>(</span>0<span class=o>)</span> : <span class=s2>&#34;\&lt;C-b&gt;&#34;</span>
+  inoremap &lt;silent&gt;&lt;nowait&gt;&lt;expr&gt; &lt;C-f&gt; coc#float#has_scroll<span class=o>()</span> ? <span class=s2>&#34;\&lt;c-r&gt;=coc#float#scroll(1)\&lt;cr&gt;&#34;</span> : <span class=s2>&#34;\&lt;Right&gt;&#34;</span>
+  inoremap &lt;silent&gt;&lt;nowait&gt;&lt;expr&gt; &lt;C-b&gt; coc#float#has_scroll<span class=o>()</span> ? <span class=s2>&#34;\&lt;c-r&gt;=coc#float#scroll(0)\&lt;cr&gt;&#34;</span> : <span class=s2>&#34;\&lt;Left&gt;&#34;</span>
+  vnoremap &lt;silent&gt;&lt;nowait&gt;&lt;expr&gt; &lt;C-f&gt; coc#float#has_scroll<span class=o>()</span> ? coc#float#scroll<span class=o>(</span>1<span class=o>)</span> : <span class=s2>&#34;\&lt;C-f&gt;&#34;</span>
+  vnoremap &lt;silent&gt;&lt;nowait&gt;&lt;expr&gt; &lt;C-b&gt; coc#float#has_scroll<span class=o>()</span> ? coc#float#scroll<span class=o>(</span>0<span class=o>)</span> : <span class=s2>&#34;\&lt;C-b&gt;&#34;</span>
+endif
+
+<span class=s2>&#34; Use CTRL-S for selections ranges.
+</span><span class=s2>&#34;</span> Requires <span class=s1>&#39;textDocument/selectionRange&#39;</span> support of language server.
+nmap &lt;silent&gt; &lt;C-s&gt; &lt;Plug&gt;<span class=o>(</span>coc-range-select<span class=o>)</span>
+xmap &lt;silent&gt; &lt;C-s&gt; &lt;Plug&gt;<span class=o>(</span>coc-range-select<span class=o>)</span>
+
+<span class=s2>&#34; Add `:Format` command to format current buffer.
+</span><span class=s2>command! -nargs=0 Format :call CocAction(&#39;format&#39;)
+</span><span class=s2>
+</span><span class=s2>&#34;</span> Add <span class=sb>`</span>:Fold<span class=sb>`</span> <span class=nb>command</span> to fold current buffer.
+command! -nargs<span class=o>=</span>? Fold :call     CocAction<span class=o>(</span><span class=s1>&#39;fold&#39;</span>, &lt;f-args&gt;<span class=o>)</span>
+
+<span class=s2>&#34; Add `:OR` command for organize imports of the current buffer.
+</span><span class=s2>command! -nargs=0 OR   :call     CocAction(&#39;runCommand&#39;, &#39;editor.action.organizeImport&#39;)
+</span><span class=s2>
+</span><span class=s2>&#34;</span> Add <span class=o>(</span>Neo<span class=o>)</span>Vim<span class=s1>&#39;s native statusline support.
+</span><span class=s1>&#34; NOTE: Please see `:h coc-status` for integrations with external plugins that
+</span><span class=s1>&#34; provide custom statusline: lightline.vim, vim-airline.
+</span><span class=s1>set statusline^=%{coc#status()}%{get(b:,&#39;</span>coc_current_function<span class=s1>&#39;,&#39;&#39;)}
+</span><span class=s1>
+</span><span class=s1>&#34; Mappings for CoCList
+</span><span class=s1>&#34; Show all diagnostics.
+</span><span class=s1>nnoremap &lt;silent&gt;&lt;nowait&gt; &lt;space&gt;a  :&lt;C-u&gt;CocList diagnostics&lt;cr&gt;
+</span><span class=s1>&#34; Manage extensions.
+</span><span class=s1>nnoremap &lt;silent&gt;&lt;nowait&gt; &lt;space&gt;e  :&lt;C-u&gt;CocList extensions&lt;cr&gt;
+</span><span class=s1>&#34; Show commands.
+</span><span class=s1>nnoremap &lt;silent&gt;&lt;nowait&gt; &lt;space&gt;c  :&lt;C-u&gt;CocList commands&lt;cr&gt;
+</span><span class=s1>&#34; Find symbol of current document.
+</span><span class=s1>nnoremap &lt;silent&gt;&lt;nowait&gt; &lt;space&gt;o  :&lt;C-u&gt;CocList outline&lt;cr&gt;
+</span><span class=s1>&#34; Search workspace symbols.
+</span><span class=s1>nnoremap &lt;silent&gt;&lt;nowait&gt; &lt;space&gt;s  :&lt;C-u&gt;CocList -I symbols&lt;cr&gt;
+</span><span class=s1>&#34; Do default action for next item.
+</span><span class=s1>nnoremap &lt;silent&gt;&lt;nowait&gt; &lt;space&gt;j  :&lt;C-u&gt;CocNext&lt;CR&gt;
+</span><span class=s1>&#34; Do default action for previous item.
+</span><span class=s1>nnoremap &lt;silent&gt;&lt;nowait&gt; &lt;space&gt;k  :&lt;C-u&gt;CocPrev&lt;CR&gt;
+</span><span class=s1>&#34; Resume latest coc list.
+</span><span class=s1>nnoremap &lt;silent&gt;&lt;nowait&gt; &lt;space&gt;p  :&lt;C-u&gt;CocListResume&lt;CR&gt;
+</span><span class=s1>
+</span><span class=s1>&#34; =======================
+</span><span class=s1>&#34; ========MarkdownConfig
+</span><span class=s1>&#34; =======================
+</span><span class=s1>source ~/.config/nvim/markdown.vim
+</span><span class=s1>
+</span><span class=s1>&#34; =======================
+</span><span class=s1>&#34; ========MarkdownPreview
+</span><span class=s1>&#34; =======================
+</span><span class=s1>let g:mkdp_auto_start = 0
+</span><span class=s1>let g:mkdp_auto_close = 1
+</span><span class=s1>let g:mkdp_refresh_slow = 0
+</span><span class=s1>let g:mkdp_command_for_global = 0
+</span><span class=s1>let g:mkdp_open_to_the_world = 0
+</span><span class=s1>let g:mkdp_open_ip = &#39;&#39;
+</span><span class=s1>let g:mkdp_browser = &#39;</span>safari<span class=s1>&#39;
+</span><span class=s1>let g:mkdp_echo_preview_url = 0
+</span><span class=s1>let g:mkdp_browserfunc = &#39;&#39;
+</span><span class=s1>let g:mkdp_preview_options = {
+</span><span class=s1>    \ &#39;</span>mkit<span class=s1>&#39;: {},
+</span><span class=s1>    \ &#39;</span>katex<span class=s1>&#39;: {},
+</span><span class=s1>    \ &#39;</span>uml<span class=s1>&#39;: {},
+</span><span class=s1>    \ &#39;</span>maid<span class=s1>&#39;: {},
+</span><span class=s1>    \ &#39;</span>disable_sync_scroll<span class=s1>&#39;: 0,
+</span><span class=s1>    \ &#39;</span>sync_scroll_type<span class=s1>&#39;: &#39;</span>middle<span class=s1>&#39;,
+</span><span class=s1>    \ &#39;</span>hide_yaml_meta<span class=s1>&#39;: 1,
+</span><span class=s1>    \ &#39;</span>sequence_diagrams<span class=s1>&#39;: {},
+</span><span class=s1>    \ &#39;</span>flowchart_diagrams<span class=s1>&#39;: {},
+</span><span class=s1>    \ &#39;</span>content_editable<span class=s1>&#39;: v:false,
+</span><span class=s1>    \ &#39;</span>disable_filename<span class=s1>&#39;: 0
+</span><span class=s1>    \ }
+</span><span class=s1>let g:mkdp_markdown_css = &#39;&#39;
+</span><span class=s1>let g:mkdp_highlight_css = &#39;&#39;
+</span><span class=s1>let g:mkdp_port = &#39;&#39;
+</span><span class=s1>let g:mkdp_page_title = &#39;</span>「<span class=si>${</span><span class=nv>name</span><span class=si>}</span>」<span class=s1>&#39;
+</span><span class=s1>let g:mkdp_filetypes = [&#39;</span>markdown<span class=s1>&#39;]
+</span><span class=s1>
+</span><span class=s1>
+</span><span class=s1>&#34; ===
+</span><span class=s1>&#34; === vim-instant-markdown
+</span><span class=s1>&#34; ===
+</span><span class=s1>let g:instant_markdown_slow = 0
+</span><span class=s1>let g:instant_markdown_autostart = 0
+</span><span class=s1>&#34; let g:instant_markdown_open_to_the_world = 1
+</span><span class=s1>&#34; let g:instant_markdown_allow_unsafe_content = 1
+</span><span class=s1>&#34; let g:instant_markdown_allow_external_content = 0
+</span><span class=s1>&#34; let g:instant_markdown_mathjax = 1
+</span><span class=s1>let g:instant_markdown_autoscroll = 1
+</span><span class=s1>
+</span><span class=s1>&#34; ===
+</span><span class=s1>&#34; === vim-table-mode
+</span><span class=s1>&#34; ===
+</span><span class=s1>noremap &lt;LEADER&gt;tm :TableModeToggle&lt;CR&gt;
+</span><span class=s1>&#34;let g:table_mode_disable_mappings = 1
+</span><span class=s1>let g:table_mode_cell_text_object_i_map = &#39;</span>k&lt;Bar&gt;<span class=s1>&#39;
+</span><span class=s1>
+</span><span class=s1>&#34; ===
+</span><span class=s1>&#34; === vim-markdown-toc
+</span><span class=s1>&#34; ===
+</span><span class=s1>&#34;let g:vmt_auto_update_on_save = 0
+</span><span class=s1>&#34;let g:vmt_dont_insert_fence = 1
+</span><span class=s1>let g:vmt_cycle_list_item_markers = 1
+</span><span class=s1>let g:vmt_fence_text = &#39;</span>TOC<span class=s1>&#39;
+</span><span class=s1>let g:vmt_fence_closing_text = &#39;</span>/TOC<span class=s1>&#39;
+</span><span class=s1>
+</span><span class=s1>&#34; ===
+</span><span class=s1>&#34; === Bullets.vim
+</span><span class=s1>&#34; ===
+</span><span class=s1>&#34; let g:bullets_set_mappings = 0
+</span><span class=s1>let g:bullets_enabled_file_types = [
+</span><span class=s1>			\ &#39;</span>markdown<span class=s1>&#39;,
+</span><span class=s1>			\ &#39;</span>text<span class=s1>&#39;,
+</span><span class=s1>			\ &#39;</span>gitcommit<span class=s1>&#39;,
+</span><span class=s1>			\ &#39;</span>scratch<span class=err>&#39;</span>
+			<span class=se>\]</span>
+
+
+<span class=s2>&#34; ===
+</span><span class=s2>&#34;</span> <span class=o>===</span> easymotion
+<span class=s2>&#34; ===
+</span><span class=s2>let g:EasyMotion_do_mapping = 0 &#34;</span> Disable default mappings
+<span class=s2>&#34; `s{char}{char}{label}`
+</span><span class=s2>&#34;</span> Need one more keystroke, but on average, it may be more comfortable.
+nmap &lt;Leader&gt;s &lt;Plug&gt;<span class=o>(</span>easymotion-overwin-f2<span class=o>)</span>
+
+<span class=s2>&#34; Turn on case-insensitive feature
+</span><span class=s2>let g:EasyMotion_smartcase = 1
+</span><span class=s2>
+</span><span class=s2>&#34;</span> JK motions: Line motions
+map &lt;Leader&gt;j &lt;Plug&gt;<span class=o>(</span>easymotion-j<span class=o>)</span>
+map &lt;Leader&gt;k &lt;Plug&gt;<span class=o>(</span>easymotion-k<span class=o>)</span>
+
+</code></pre></td></tr></table></div></div><ul><li>markdown.vim</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash><span class=s2>&#34;autocmd Filetype markdown map &lt;leader&gt;w yiWi[&lt;esc&gt;Ea](&lt;esc&gt;pa)
+</span><span class=s2>autocmd Filetype markdown inoremap ,f &lt;Esc&gt;/&lt;++&gt;&lt;CR&gt;:nohlsearch&lt;CR&gt;c4l
+</span><span class=s2>autocmd Filetype markdown inoremap ,n ---&lt;Enter&gt;&lt;Enter&gt;
+</span><span class=s2>autocmd Filetype markdown inoremap ,b ****&lt;++&gt;&lt;Esc&gt;F*hi
+</span><span class=s2>autocmd Filetype markdown inoremap ,s ~~~~&lt;++&gt;&lt;Esc&gt;F~hi
+</span><span class=s2>autocmd Filetype markdown inoremap ,i **&lt;++&gt;&lt;Esc&gt;F*i
+</span><span class=s2>autocmd Filetype markdown inoremap ,d ``&lt;++&gt;&lt;Esc&gt;F`i
+</span><span class=s2>autocmd Filetype markdown inoremap ,c ```&lt;Enter&gt;&lt;++&gt;&lt;Enter&gt;```&lt;Enter&gt;&lt;Enter&gt;&lt;++&gt;&lt;Esc&gt;4kA
+</span><span class=s2>autocmd Filetype markdown inoremap ,h ====&lt;Space&gt;&lt;++&gt;&lt;Esc&gt;F=hi
+</span><span class=s2>autocmd Filetype markdown inoremap ,p ![](&lt;++&gt;)&lt;++&gt;&lt;Esc&gt;F[a
+</span><span class=s2>autocmd Filetype markdown inoremap ,a [](&lt;++&gt;)&lt;++&gt;&lt;Esc&gt;F[a
+</span><span class=s2>autocmd Filetype markdown inoremap ,1 #&lt;Space&gt;&lt;Enter&gt;&lt;++&gt;&lt;Esc&gt;kA
+</span><span class=s2>autocmd Filetype markdown inoremap ,2 ##&lt;Space&gt;&lt;Enter&gt;&lt;++&gt;&lt;Esc&gt;kA
+</span><span class=s2>autocmd Filetype markdown inoremap ,3 ###&lt;Space&gt;&lt;Enter&gt;&lt;++&gt;&lt;Esc&gt;kA
+</span><span class=s2>autocmd Filetype markdown inoremap ,4 ####&lt;Space&gt;&lt;Enter&gt;&lt;++&gt;&lt;Esc&gt;kA
+</span><span class=s2>autocmd Filetype markdown inoremap ,l --------&lt;Enter&gt;
+</span><span class=s2>
+</span><span class=s2>autocmd Filetype markdown setlocal cc=120 tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+</span><span class=s2>
+</span><span class=s2>&#34;</span> setlocal <span class=nv>cc</span><span class=o>=</span><span class=m>90</span>
+autocmd Filetype markdown noremap j gj
+autocmd Filetype markdown noremap k gk
+<span class=s2>&#34; autocmd Filetype markdown setlocal shiftwidth=2
+</span><span class=s2>&#34;</span> autocmd Filetype markdown setlocal <span class=nv>softtabstop</span><span class=o>=</span><span class=m>2</span>
+<span class=s2>&#34; autocmd Filetype markdown setlocal expandtab
+</span><span class=s2>
+</span><span class=s2>&#34;</span> autocmd Filetype markdown setlocal <span class=nv>tw</span><span class=o>=</span><span class=m>80</span>
+<span class=s2>&#34; autocmd Filetype markdown setlocal wm=4
+</span><span class=s2>&#34;</span> autocmd Filetype markdown setlocal <span class=nv>fo</span><span class=o>=</span>cat
+
+</code></pre></td></tr></table></div></div><h3 id=23-最新配置>2.3 最新配置</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span><span class=lnt>152
+</span><span class=lnt>153
+</span><span class=lnt>154
+</span><span class=lnt>155
+</span><span class=lnt>156
+</span><span class=lnt>157
+</span><span class=lnt>158
+</span><span class=lnt>159
+</span><span class=lnt>160
+</span><span class=lnt>161
+</span><span class=lnt>162
+</span><span class=lnt>163
+</span><span class=lnt>164
+</span><span class=lnt>165
+</span><span class=lnt>166
+</span><span class=lnt>167
+</span><span class=lnt>168
+</span><span class=lnt>169
+</span><span class=lnt>170
+</span><span class=lnt>171
+</span><span class=lnt>172
+</span><span class=lnt>173
+</span><span class=lnt>174
+</span><span class=lnt>175
+</span><span class=lnt>176
+</span><span class=lnt>177
+</span><span class=lnt>178
+</span><span class=lnt>179
+</span><span class=lnt>180
+</span><span class=lnt>181
+</span><span class=lnt>182
+</span><span class=lnt>183
+</span><span class=lnt>184
+</span><span class=lnt>185
+</span><span class=lnt>186
+</span><span class=lnt>187
+</span><span class=lnt>188
+</span><span class=lnt>189
+</span><span class=lnt>190
+</span><span class=lnt>191
+</span><span class=lnt>192
+</span><span class=lnt>193
+</span><span class=lnt>194
+</span><span class=lnt>195
+</span><span class=lnt>196
+</span><span class=lnt>197
+</span><span class=lnt>198
+</span><span class=lnt>199
+</span><span class=lnt>200
+</span><span class=lnt>201
+</span><span class=lnt>202
+</span><span class=lnt>203
+</span><span class=lnt>204
+</span><span class=lnt>205
+</span><span class=lnt>206
+</span><span class=lnt>207
+</span><span class=lnt>208
+</span><span class=lnt>209
+</span><span class=lnt>210
+</span><span class=lnt>211
+</span><span class=lnt>212
+</span><span class=lnt>213
+</span><span class=lnt>214
+</span><span class=lnt>215
+</span><span class=lnt>216
+</span><span class=lnt>217
+</span><span class=lnt>218
+</span><span class=lnt>219
+</span><span class=lnt>220
+</span><span class=lnt>221
+</span><span class=lnt>222
+</span><span class=lnt>223
+</span><span class=lnt>224
+</span><span class=lnt>225
+</span><span class=lnt>226
+</span><span class=lnt>227
+</span><span class=lnt>228
+</span><span class=lnt>229
+</span><span class=lnt>230
+</span><span class=lnt>231
+</span><span class=lnt>232
+</span><span class=lnt>233
+</span><span class=lnt>234
+</span><span class=lnt>235
+</span><span class=lnt>236
+</span><span class=lnt>237
+</span><span class=lnt>238
+</span><span class=lnt>239
+</span><span class=lnt>240
+</span><span class=lnt>241
+</span><span class=lnt>242
+</span><span class=lnt>243
+</span><span class=lnt>244
+</span><span class=lnt>245
+</span><span class=lnt>246
+</span><span class=lnt>247
+</span><span class=lnt>248
+</span><span class=lnt>249
+</span><span class=lnt>250
+</span><span class=lnt>251
+</span><span class=lnt>252
+</span><span class=lnt>253
+</span><span class=lnt>254
+</span><span class=lnt>255
+</span><span class=lnt>256
+</span><span class=lnt>257
+</span><span class=lnt>258
+</span><span class=lnt>259
+</span><span class=lnt>260
+</span><span class=lnt>261
+</span><span class=lnt>262
+</span><span class=lnt>263
+</span><span class=lnt>264
+</span><span class=lnt>265
+</span><span class=lnt>266
+</span><span class=lnt>267
+</span><span class=lnt>268
+</span><span class=lnt>269
+</span><span class=lnt>270
+</span><span class=lnt>271
+</span><span class=lnt>272
+</span><span class=lnt>273
+</span><span class=lnt>274
+</span><span class=lnt>275
+</span><span class=lnt>276
+</span><span class=lnt>277
+</span><span class=lnt>278
+</span><span class=lnt>279
+</span><span class=lnt>280
+</span><span class=lnt>281
+</span><span class=lnt>282
+</span><span class=lnt>283
+</span><span class=lnt>284
+</span><span class=lnt>285
+</span><span class=lnt>286
+</span><span class=lnt>287
+</span><span class=lnt>288
+</span><span class=lnt>289
+</span><span class=lnt>290
+</span><span class=lnt>291
+</span><span class=lnt>292
+</span><span class=lnt>293
+</span><span class=lnt>294
+</span><span class=lnt>295
+</span><span class=lnt>296
+</span><span class=lnt>297
+</span><span class=lnt>298
+</span><span class=lnt>299
+</span><span class=lnt>300
+</span><span class=lnt>301
+</span><span class=lnt>302
+</span><span class=lnt>303
+</span><span class=lnt>304
+</span><span class=lnt>305
+</span><span class=lnt>306
+</span><span class=lnt>307
+</span><span class=lnt>308
+</span><span class=lnt>309
+</span><span class=lnt>310
+</span><span class=lnt>311
+</span><span class=lnt>312
+</span><span class=lnt>313
+</span><span class=lnt>314
+</span><span class=lnt>315
+</span><span class=lnt>316
+</span><span class=lnt>317
+</span><span class=lnt>318
+</span><span class=lnt>319
+</span><span class=lnt>320
+</span><span class=lnt>321
+</span><span class=lnt>322
+</span><span class=lnt>323
+</span><span class=lnt>324
+</span><span class=lnt>325
+</span><span class=lnt>326
+</span><span class=lnt>327
+</span><span class=lnt>328
+</span><span class=lnt>329
+</span><span class=lnt>330
+</span><span class=lnt>331
+</span><span class=lnt>332
+</span><span class=lnt>333
+</span><span class=lnt>334
+</span><span class=lnt>335
+</span><span class=lnt>336
+</span><span class=lnt>337
+</span><span class=lnt>338
+</span><span class=lnt>339
+</span><span class=lnt>340
+</span><span class=lnt>341
+</span><span class=lnt>342
+</span><span class=lnt>343
+</span><span class=lnt>344
+</span><span class=lnt>345
+</span><span class=lnt>346
+</span><span class=lnt>347
+</span><span class=lnt>348
+</span><span class=lnt>349
+</span><span class=lnt>350
+</span><span class=lnt>351
+</span><span class=lnt>352
+</span><span class=lnt>353
+</span><span class=lnt>354
+</span><span class=lnt>355
+</span><span class=lnt>356
+</span><span class=lnt>357
+</span><span class=lnt>358
+</span><span class=lnt>359
+</span><span class=lnt>360
+</span><span class=lnt>361
+</span><span class=lnt>362
+</span><span class=lnt>363
+</span><span class=lnt>364
+</span><span class=lnt>365
+</span><span class=lnt>366
+</span><span class=lnt>367
+</span><span class=lnt>368
+</span><span class=lnt>369
+</span><span class=lnt>370
+</span><span class=lnt>371
+</span><span class=lnt>372
+</span><span class=lnt>373
+</span><span class=lnt>374
+</span><span class=lnt>375
+</span><span class=lnt>376
+</span><span class=lnt>377
+</span><span class=lnt>378
+</span><span class=lnt>379
+</span><span class=lnt>380
+</span><span class=lnt>381
+</span><span class=lnt>382
+</span><span class=lnt>383
+</span><span class=lnt>384
+</span><span class=lnt>385
+</span><span class=lnt>386
+</span><span class=lnt>387
+</span><span class=lnt>388
+</span><span class=lnt>389
+</span><span class=lnt>390
+</span><span class=lnt>391
+</span><span class=lnt>392
+</span><span class=lnt>393
+</span><span class=lnt>394
+</span><span class=lnt>395
+</span><span class=lnt>396
+</span><span class=lnt>397
+</span><span class=lnt>398
+</span><span class=lnt>399
+</span><span class=lnt>400
+</span><span class=lnt>401
+</span><span class=lnt>402
+</span><span class=lnt>403
+</span><span class=lnt>404
+</span><span class=lnt>405
+</span><span class=lnt>406
+</span><span class=lnt>407
+</span><span class=lnt>408
+</span><span class=lnt>409
+</span><span class=lnt>410
+</span><span class=lnt>411
+</span><span class=lnt>412
+</span><span class=lnt>413
+</span><span class=lnt>414
+</span><span class=lnt>415
+</span><span class=lnt>416
+</span><span class=lnt>417
+</span><span class=lnt>418
+</span><span class=lnt>419
+</span><span class=lnt>420
+</span><span class=lnt>421
+</span><span class=lnt>422
+</span><span class=lnt>423
+</span><span class=lnt>424
+</span><span class=lnt>425
+</span><span class=lnt>426
+</span><span class=lnt>427
+</span><span class=lnt>428
+</span><span class=lnt>429
+</span><span class=lnt>430
+</span><span class=lnt>431
+</span><span class=lnt>432
+</span><span class=lnt>433
+</span><span class=lnt>434
+</span><span class=lnt>435
+</span><span class=lnt>436
+</span><span class=lnt>437
+</span><span class=lnt>438
+</span><span class=lnt>439
+</span><span class=lnt>440
+</span><span class=lnt>441
+</span><span class=lnt>442
+</span><span class=lnt>443
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>&#34; __  ____   __  _   ___     _____ __  __ ____   ____
+&#34;|  \/  \ \ / / | \ | \ \   / /_ _|  \/  |  _ \ / ___|
+&#34;| |\/| |\ V /  |  \| |\ \ / / | || |\/| | |_) | |
+&#34;| |  | | | |   | |\  | \ V /  | || |  | |  _ &lt;| |___
+&#34;|_|  |_| |_|   |_| \_|  \_/  |___|_|  |_|_| \_\\____|
+
+&#34; Author: @coolliuzw
+
+&#34; ===
+&#34; === Auto load for first time uses
+&#34; ===
+if empty(glob(&#39;~/.config/nvim/autoload/plug.vim&#39;))
+	silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+				\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+
+&#34; ===
+&#34; === Create a _machine_specific.vim file to adjust machine specific stuff, like python interpreter location
+&#34; ===
+&#34; let has_machine_specific_file = 1
+&#34; if empty(glob(&#39;~/.config/nvim/_machine_specific.vim&#39;))
+&#34; 	let has_machine_specific_file = 0
+&#34; 	silent! exec &#34;!cp ~/.config/nvim/default_configs/_machine_specific_default.vim ~/.config/nvim/_machine_specific.vim&#34;
+&#34; endif
+&#34; source /root/.config/nvim/_machine_specific.vim
+
+&#34; ===
+&#34; === Editor behavior
+&#34; ===
+set exrc
+set secure
+set number
+set relativenumber
+set cursorline
+set hidden
+set noexpandtab
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set autoindent
+set list
+set listchars=tab:\|\ ,trail:▫
+set scrolloff=4
+set ttimeoutlen=0
+set notimeout
+set viewoptions=cursor,folds,slash,unix
+set wrap
+set tw=0
+set indentexpr=
+set foldmethod=indent
+set foldlevel=99
+set foldenable
+set formatoptions-=tc
+set splitright
+set splitbelow
+set noshowmode
+set showcmd
+set wildmenu
+set ignorecase
+set smartcase
+set shortmess+=c
+set inccommand=split
+set completeopt=longest,noinsert,menuone,noselect,preview
+set ttyfast &#34;should make scrolling faster
+set lazyredraw &#34;same as above
+set visualbell
+silent !mkdir -p ~/.config/nvim/tmp/backup
+silent !mkdir -p ~/.config/nvim/tmp/undo
+&#34;silent !mkdir -p ~/.config/nvim/tmp/sessions
+set backupdir=~/.config/nvim/tmp/backup,.
+set directory=~/.config/nvim/tmp/backup,.
+if has(&#39;persistent_undo&#39;)
+	set undofile
+	set undodir=~/.config/nvim/tmp/undo,.
+endif
+set colorcolumn=100
+set updatetime=100
+set virtualedit=block
+
+au BufReadPost * if line(&#34;&#39;\&#34;&#34;) &gt; 1 &amp;&amp; line(&#34;&#39;\&#34;&#34;) &lt;= line(&#34;$&#34;) | exe &#34;normal! g&#39;\&#34;&#34; | endif
+
+&#34; ===
+&#34; === Basic Mappings
+&#34; ===
+&#34; Set &lt;LEADER&gt; as &lt;SPACE&gt;, ; as :
+let mapleader=&#34; &#34;
+
+nnoremap &lt;c-[&gt; &lt;c-i&gt;
+nnoremap &lt;c-]&gt; &lt;c-o&gt;
+&#34; Open the vimrc file anytime
+noremap &lt;LEADER&gt;rc :e ~/.config/nvim/init.vim&lt;CR&gt;
+
+&#34; Save &amp; quit
+noremap Q :q&lt;CR&gt;
+noremap &lt;C-q&gt; :qa&lt;CR&gt;
+noremap ;s :w&lt;CR&gt;
+
+&#34; Wrapped lines goes down/up to next row, rather than next line in file.
+noremap j gj
+noremap k gk
+inoremap kj &lt;ESC&gt;
+
+&#34; make Y to copy till the end of the line
+nnoremap Y y$
+
+&#34; Copy to system clipboard
+vnoremap Y &#34;+y
+
+&#34; Indentation
+nnoremap &lt; &lt;&lt;
+nnoremap &gt; &gt;&gt;
+
+&#34; Search
+noremap &lt;LEADER&gt;&lt;CR&gt; :nohlsearch&lt;CR&gt;
+
+&#34; Adjacent duplicate words
+noremap &lt;LEADER&gt;dw /\(\&lt;\w\+\&gt;\)\_s*\1
+
+&#34; Space to Tab
+nnoremap &lt;LEADER&gt;tt :%s/    /\t/g
+vnoremap &lt;LEADER&gt;tt :s/    /\t/g
+
+&#34; Folding
+noremap &lt;silent&gt; &lt;LEADER&gt;o za
+
+
+&#34; ===
+&#34; === Cursor Movement
+&#34; ===
+&#34; Faster in-line navigation
+noremap W 5w
+noremap B 5b
+noremap L 5j
+noremap H 5k
+
+&#34; ===
+&#34; === Searching
+&#34; ===
+noremap - N
+noremap = n
+
+&#34; ===
+&#34; === Window management
+&#34; ===
+&#34; Use &lt;space&gt; + new arrow keys for moving the cursor around windows
+noremap &lt;LEADER&gt;w &lt;C-w&gt;w
+noremap &lt;LEADER&gt;k &lt;C-w&gt;k
+noremap &lt;LEADER&gt;j &lt;C-w&gt;j
+noremap &lt;LEADER&gt;h &lt;C-w&gt;h
+noremap &lt;LEADER&gt;l &lt;C-w&gt;l
+noremap qf &lt;C-w&gt;o
+
+&#34; split the screens to up (horizontal), down (horizontal), left (vertical), right (vertical)
+noremap zj :set nosplitbelow&lt;CR&gt;:split&lt;CR&gt;:set splitbelow&lt;CR&gt;
+noremap zk :set splitbelow&lt;CR&gt;:split&lt;CR&gt;
+noremap zl :set nosplitright&lt;CR&gt;:vsplit&lt;CR&gt;:set splitright&lt;CR&gt;
+noremap zh :set splitright&lt;CR&gt;:vsplit&lt;CR&gt;
+
+&#34; Resize splits with arrow keys
+noremap &lt;up&gt; :res +5&lt;CR&gt;
+noremap &lt;down&gt; :res -5&lt;CR&gt;
+noremap &lt;left&gt; :vertical resize-5&lt;CR&gt;
+noremap &lt;right&gt; :vertical resize+5&lt;CR&gt;
+
+&#34; Press &lt;SPACE&gt; + q to close the window below the current window
+noremap &lt;LEADER&gt;q &lt;C-w&gt;j:q&lt;CR&gt;
+
+&#34; ===
+&#34; === Tab management
+&#34; ===
+&#34; Create a new tab with tu
+noremap tu :tabe&lt;CR&gt;
+&#34; Move around tabs with tn and ti
+noremap th :-tabnext&lt;CR&gt;
+noremap tl :+tabnext&lt;CR&gt;
+&#34; Move the tabs with tmn and tmi
+noremap tmh :-tabmove&lt;CR&gt;
+noremap tml :+tabmove&lt;CR&gt;
+
+
+&#34; ===
+&#34; === Markdown Settings
+&#34; ===
+&#34; Snippets
+source /home/coolliuzw/.config/nvim/md-snippets.vim
+&#34; auto spell
+&#34; autocmd BufRead,BufNewFile *.md setlocal spell
+
+
+&#34; ===
+&#34; === Other useful stuff
+&#34; ===
+&#34; Open a new instance of st with the cwd
+nnoremap \t :tabe&lt;CR&gt;:-tabmove&lt;CR&gt;:term sh -c &#39;st&#39;&lt;CR&gt;&lt;C-\&gt;&lt;C-N&gt;:q&lt;CR&gt;
+
+&#34; Opening a terminal window
+noremap &lt;LEADER&gt;/ :set splitbelow&lt;CR&gt;:split&lt;CR&gt;:res -10&lt;CR&gt;:term&lt;CR&gt;
+
+&#34; Press space twice to jump to the next &#39;&lt;++&gt;&#39; and edit it
+noremap &lt;LEADER&gt;&lt;LEADER&gt; &lt;Esc&gt;/&lt;++&gt;&lt;CR&gt;:nohlsearch&lt;CR&gt;c4l
+
+&#34; Spelling Check with &lt;space&gt;sc
+noremap &lt;LEADER&gt;sc :set spell!&lt;CR&gt;
+
+&#34; Auto change directory to current dir
+autocmd BufEnter * silent! lcd %:p:h
+
+&#34; Call figlet
+noremap tx :r !figlet 
+
+&#34; find and replace
+noremap \s :%s//g&lt;left&gt;&lt;left&gt;
+
+&#34; set wrap
+noremap &lt;LEADER&gt;sw :set wrap&lt;CR&gt;
+
+&#34; Compile function
+noremap &lt;LEADER&gt;r :call CompileRunGcc()&lt;CR&gt;
+func! CompileRunGcc()
+	exec &#34;w&#34;
+	if &amp;filetype == &#39;c&#39;
+		exec &#34;!g++ % -o %&lt;&#34;
+		exec &#34;!time ./%&lt;&#34;
+	elseif &amp;filetype == &#39;cpp&#39;
+		set splitbelow
+		exec &#34;!g++ -std=c++11 % -Wall -o %&lt;&#34;
+		:sp
+		:res -15
+		:term ./%&lt;
+	elseif &amp;filetype == &#39;java&#39;
+		set splitbelow_2  = &#39;#50FA7B&#39;
+		:sp
+		:res -5
+		term javac % &amp;&amp; time java %&lt;
+	elseif &amp;filetype == &#39;sh&#39;
+		:!time bash %
+	elseif &amp;filetype == &#39;python&#39;
+		set splitbelow
+		:sp
+		:term python3 %
+	elseif &amp;filetype == &#39;html&#39;
+		silent! exec &#34;!&#34;.g:mkdp_browser.&#34; % &amp;&#34;
+	elseif &amp;filetype == &#39;markdown&#39;
+		exec &#34;InstantMarkdownPreview&#34;
+	elseif &amp;filetype == &#39;tex&#39;
+		silent! exec &#34;VimtexStop&#34;
+		silent! exec &#34;VimtexCompile&#34;
+	elseif &amp;filetype == &#39;dart&#39;
+		exec &#34;CocCommand flutter.run -d &#34;.g:flutter_default_device.&#34; &#34;.g:flutter_run_args
+		silent! exec &#34;CocCommand flutter.dev.openDevLog&#34;
+	elseif &amp;filetype == &#39;javascript&#39;
+		set splitbelow
+		:sp
+		:term export DEBUG=&#34;INFO,ERROR,WARNING&#34;; node --trace-warnings .
+	elseif &amp;filetype == &#39;go&#39;
+		set splitbelow
+		:sp
+		:term go run .
+	endif
+endfunc
+
+&#34; ===
+&#34; === Install Plugins with Vim-Plug
+&#34; ===
+call plug#begin(&#39;~/.config/nvim/plugged&#39;)
+&#34; Status line
+Plug &#39;liuchengxu/eleline.vim&#39;
+Plug &#39;ojroques/vim-scrollstatus&#39;
+
+&#34; General Highlighter
+&#34; 相同单词高亮
+&#34; Plug &#39;RRethy/vim-illuminate&#39;
+
+&#34; Auto Complete
+Plug &#39;neoclide/coc.nvim&#39;, {&#39;branch&#39;: &#39;release&#39;}
+
+&#34; Go
+&#34; Plug &#39;fatih/vim-go&#39;, { &#39;do&#39;: &#39;:GoUpdateBinaries&#39; }
+
+&#34; markdown
+Plug &#39;dhruvasagar/vim-table-mode&#39;, { &#39;on&#39;: &#39;TableModeToggle&#39;, &#39;for&#39;: [&#39;text&#39;, &#39;markdown&#39;, &#39;vim-plug&#39;] }
+Plug &#39;mzlogin/vim-markdown-toc&#39;, { &#39;for&#39;: [&#39;gitignore&#39;, &#39;markdown&#39;, &#39;vim-plug&#39;] }
+Plug &#39;dkarter/bullets.vim&#39;
+Plug &#39;godlygeek/tabular&#39;
+
+&#34; File navigation
+&#34; Plug &#39;junegunn/fzf&#39;, { &#39;dir&#39;: &#39;~/.fzf&#39;, &#39;do&#39;: &#39;./install --all&#39; }
+&#34; Plug &#39;junegunn/fzf.vim&#39;
+&#34;Plug &#39;Yggdroot/LeaderF&#39;, { &#39;do&#39;: &#39;./install.sh&#39; }
+&#34;Plug &#39;airblade/vim-rooter&#39;
+
+
+Plug &#39;jiangmiao/auto-pairs&#39;
+Plug &#39;mg979/vim-visual-multi&#39;
+Plug &#39;tpope/vim-surround&#39;
+Plug &#39;gcmt/wildfire.vim&#39;
+
+Plug &#39;iamcco/markdown-preview.nvim&#39;, { &#39;do&#39;: { -&gt; mkdp#util#install() }, &#39;for&#39;: [&#39;markdown&#39;, &#39;vim-plug&#39;]}
+
+call plug#end()
+
+&#34;===
+&#34;=== coc.nvim
+&#34;===
+let g:coc_global_extensions = [
+	\ &#39;coc-explorer&#39;,
+	\ &#39;coc-json&#39;,
+	\ &#39;coc-vimlsp&#39;]
+inoremap &lt;silent&gt;&lt;expr&gt; &lt;TAB&gt;
+	\ pumvisible() ? &#34;\&lt;C-n&gt;&#34; :
+	\ &lt;SID&gt;check_back_space() ? &#34;\&lt;TAB&gt;&#34; :
+	\ coc#refresh()
+inoremap &lt;expr&gt;&lt;S-TAB&gt; pumvisible() ? &#34;\&lt;C-p&gt;&#34; : &#34;\&lt;C-h&gt;&#34;
+inoremap &lt;expr&gt; &lt;cr&gt; complete_info()[&#34;selected&#34;] != &#34;-1&#34; ? &#34;\&lt;C-y&gt;&#34; : &#34;\&lt;C-g&gt;u\&lt;CR&gt;&#34;
+function! s:check_back_space() abort
+	let col = col(&#39;.&#39;) - 1
+	return !col || getline(&#39;.&#39;)[col - 1]  =~# &#39;\s&#39;
+endfunction
+
+&#34; Useful commands
+&#34; nnoremap &lt;silent&gt; &lt;space&gt;y :&lt;C-u&gt;CocList -A --normal yank&lt;cr&gt;
+&#34; nmap &lt;silent&gt; gd &lt;Plug&gt;(coc-definition)
+&#34; nmap &lt;silent&gt; &lt;C-b&gt; &lt;Plug&gt;(coc-definition)
+&#34; nmap &lt;silent&gt; gD :tab sp&lt;CR&gt;&lt;Plug&gt;(coc-definition)
+&#34; nmap &lt;silent&gt; gy &lt;Plug&gt;(coc-type-definition)
+&#34; nmap &lt;silent&gt; gi &lt;Plug&gt;(coc-implementation)
+&#34; nmap &lt;silent&gt; gr &lt;Plug&gt;(coc-references)
+
+&#34; nmap &lt;leader&gt;rn &lt;Plug&gt;(coc-rename)
+
+&#34; coc-explorer
+nmap tt :CocCommand explorer&lt;CR&gt;
+
+&#34; coc-translator
+&#34; nmap ts &lt;Plug&gt;(coc-translator-p)
+
+let g:snips_author = &#39;coolliuzw&#39;
+autocmd BufRead,BufNewFile tsconfig.json set filetype=jsonc
+&#34; Make &lt;CR&gt; auto-select the first completion item and notify coc.nvim to
+&#34; format on enter, &lt;cr&gt; could be remapped by other vim plugin
+inoremap &lt;silent&gt;&lt;expr&gt; &lt;cr&gt; pumvisible() ? coc#_select_confirm()
+                              \: &#34;\&lt;C-g&gt;u\&lt;CR&gt;\&lt;c-r&gt;=coc#on_enter()\&lt;CR&gt;&#34;
+
+&#34; Use `[g` and `]g` to navigate diagnostics
+&#34; Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+&#34; nmap &lt;silent&gt; [g &lt;Plug&gt;(coc-diagnostic-prev)
+&#34; nmap &lt;silent&gt; ]g &lt;Plug&gt;(coc-diagnostic-next)
+
+&#34; markdown
+&#34; ===
+&#34; === Bullets.vim
+&#34; ===
+&#34; let g:bullets_set_mappings = 0
+let g:bullets_enabled_file_types = [
+			\ &#39;markdown&#39;,
+			\ &#39;text&#39;,
+			\ &#39;gitcommit&#39;,
+			\ &#39;scratch&#39;
+			\]
+
+&#34; ===
+&#34; === vim-instant-markdown
+&#34; ===
+let g:instant_markdown_slow = 0
+let g:instant_markdown_autostart = 0
+let g:instant_markdown_autoscroll = 1
+
+
+&#34; ===
+&#34; === vim-table-mode
+&#34; ===
+noremap &lt;LEADER&gt;tm :TableModeToggle&lt;CR&gt;
+let g:table_mode_cell_text_object_i_map = &#39;k&lt;Bar&gt;&#39;
+
+&#34; ===
+&#34; === vim-markdown-toc
+&#34; ===
+let g:vmt_cycle_list_item_markers = 1
+let g:vmt_fence_text = &#39;TOC&#39;
+let g:vmt_fence_closing_text = &#39;/TOC&#39;
+
+&#34; ===
+&#34; === vim-go
+&#34; ===
+&#34; let g:go_echo_go_info = 0
+&#34; let g:go_doc_popup_window = 1
+&#34; let g:go_def_mapping_enabled = 0
+&#34; let g:go_template_autocreate = 0
+&#34; let g:go_textobj_enabled = 0
+&#34; let g:go_auto_type_info = 1
+&#34; let g:go_def_mapping_enabled = 0
+&#34; let g:go_highlight_array_whitespace_error = 1
+&#34; let g:go_highlight_build_constraints = 1
+&#34; let g:go_highlight_chan_whitespace_error = 1
+&#34; let g:go_highlight_extra_types = 1
+&#34; let g:go_highlight_fields = 1
+&#34; let g:go_highlight_format_strings = 1
+&#34; let g:go_highlight_function_calls = 1
+&#34; let g:go_highlight_function_parameters = 1
+&#34; let g:go_highlight_functions = 1
+&#34; let g:go_highlight_generate_tags = 1
+&#34; let g:go_highlight_methods = 1
+&#34; let g:go_highlight_operators = 1
+&#34; let g:go_highlight_space_tab_error = 1
+&#34; let g:go_highlight_string_spellcheck = 1
+&#34; let g:go_highlight_structs = 1
+&#34; let g:go_highlight_trailing_whitespace_error = 1
+&#34; let g:go_highlight_types = 1
+&#34; let g:go_highlight_variable_assignments = 0
+&#34; let g:go_highlight_variable_declarations = 0
+&#34; let g:go_doc_keywordprg_enabled = 0
+
+&#34; fzf
+&#34; noremap &lt;leader&gt;; :History:&lt;CR&gt;
+&#34; let g:fzf_preview_window = [&#39;right:50%&#39;]
+&#34; noremap &lt;silent&gt; &lt;C-p&gt; :Files&lt;CR&gt;
+&#34; noremap &lt;silent&gt; &lt;C-e&gt; :Buffers&lt;CR&gt;
+&#34; noremap &lt;silent&gt; &lt;C-f&gt; :Rg&lt;CR&gt;
+&#34; noremap &lt;silent&gt; &lt;C-e&gt; :History&lt;CR&gt;
+&#34; noremap &lt;silent&gt; &lt;C-w&gt; :Buffers&lt;CR&gt;
+&#34; 
+&#34; function! s:list_buffers()
+&#34;   redir =&gt; list
+&#34;   silent ls
+&#34;   redir END
+&#34;   return split(list, &#34;\n&#34;)
+&#34; endfunction
+&#34; 
+&#34; function! s:delete_buffers(lines)
+&#34;   execute &#39;bwipeout&#39; join(map(a:lines, {_, line -&gt; split(line)[0]}))
+&#34; endfunction
+&#34; 
+&#34; command! BD call fzf#run(fzf#wrap({
+&#34;   \ &#39;source&#39;: s:list_buffers(),
+&#34;   \ &#39;sink*&#39;: { lines -&gt; s:delete_buffers(lines) },
+&#34;   \ &#39;options&#39;: &#39;--multi --reverse --bind ctrl-a:select-all+accept&#39;
+&#34; \ }))
+&#34; 
+&#34; noremap &lt;c-d&gt; :BD&lt;CR&gt;
+&#34; 
+&#34; let g:fzf_layout = { &#39;window&#39;: { &#39;width&#39;: 0.9, &#39;height&#39;: 0.8 } }
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>&#34;autocmd Filetype markdown map &lt;leader&gt;w yiWi[&lt;esc&gt;Ea](&lt;esc&gt;pa)
+autocmd Filetype markdown inoremap &lt;buffer&gt; ,f &lt;Esc&gt;/&lt;++&gt;&lt;CR&gt;:nohlsearch&lt;CR&gt;&#34;_c4l
+autocmd Filetype markdown inoremap &lt;buffer&gt; ,w &lt;Esc&gt;/ &lt;++&gt;&lt;CR&gt;:nohlsearch&lt;CR&gt;&#34;_c5l&lt;CR&gt;
+autocmd Filetype markdown inoremap &lt;buffer&gt; ,n ---&lt;Enter&gt;&lt;Enter&gt;
+autocmd Filetype markdown inoremap &lt;buffer&gt; ,b **** &lt;++&gt;&lt;Esc&gt;F*hi
+autocmd Filetype markdown inoremap &lt;buffer&gt; ,s ~~~~ &lt;++&gt;&lt;Esc&gt;F~hi
+autocmd Filetype markdown inoremap &lt;buffer&gt; ,i ** &lt;++&gt;&lt;Esc&gt;F*i
+autocmd Filetype markdown inoremap &lt;buffer&gt; ,d `` &lt;++&gt;&lt;Esc&gt;F`i
+autocmd Filetype markdown inoremap &lt;buffer&gt; ,c ```&lt;Enter&gt;&lt;++&gt;&lt;Enter&gt;```&lt;Enter&gt;&lt;Enter&gt;&lt;++&gt;&lt;Esc&gt;4kA
+autocmd Filetype markdown inoremap &lt;buffer&gt; ,m - [ ] 
+autocmd Filetype markdown inoremap &lt;buffer&gt; ,p ![](&lt;++&gt;) &lt;++&gt;&lt;Esc&gt;F[a
+autocmd Filetype markdown inoremap &lt;buffer&gt; ,a [](&lt;++&gt;) &lt;++&gt;&lt;Esc&gt;F[a
+autocmd Filetype markdown inoremap &lt;buffer&gt; ,1 #&lt;Space&gt;&lt;Enter&gt;&lt;++&gt;&lt;Esc&gt;kA
+autocmd Filetype markdown inoremap &lt;buffer&gt; ,2 ##&lt;Space&gt;&lt;Enter&gt;&lt;++&gt;&lt;Esc&gt;kA
+autocmd Filetype markdown inoremap &lt;buffer&gt; ,3 ###&lt;Space&gt;&lt;Enter&gt;&lt;++&gt;&lt;Esc&gt;kA
+autocmd Filetype markdown inoremap &lt;buffer&gt; ,4 ####&lt;Space&gt;&lt;Enter&gt;&lt;++&gt;&lt;Esc&gt;kA
+autocmd Filetype markdown inoremap &lt;buffer&gt; ,l --------&lt;Enter&gt;
+</code></pre></td></tr></table></div></div><h2 id=总结>总结</h2><p>主要记录，本人vimrc的配置信息，防止vim系统重新安装的情况，配置丢失。有需要的可以参考vimrc的配置信息。</p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2021-06-12&nbsp;<a class=git-hash href=https://github.com/dillonzq/LoveIt/commit/98b367a8fa7cf251f74e91e224ed99fc6ad9e17a target=_blank title="commit by liuzw(1413883407@qq.com) 98b367a8fa7cf251f74e91e224ed99fc6ad9e17a: init基础文件提交">
+<i class="fas fa-hashtag fa-fw"></i>98b367a</a></span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/12-vimrc-save/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/>开发工具</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/19-go-mt-seckill/ class=prev rel=prev title="【Go】jd_mtSeckill 的抢购程序使用教程"><i class="fas fa-angle-left fa-fw"></i>【Go】jd_mtSeckill 的抢购程序使用教程</a>
+<a href=/20-go-range-%E5%88%86%E6%9E%90/ class=next rel=next title="【Go】for range 高频次使用，你懂它的原理吗？">【Go】for range 高频次使用，你懂它的原理吗？<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2020 - 2021</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>coolliuzw</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:80},comment:{valine:{appId:"3VIPouKn5iFQMlbBf2EtE8Co-gzGzoHsz",appKey:"UbLTV7x8R6wlfF4XgAwBPsPn",avatar:"coolliuzw",el:"#valine",emojiCDN:"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/",emojiMaps:{100:"1f4af.png",alien:"1f47d.png",anger:"1f4a2.png",angry:"1f620.png",anguished:"1f627.png",astonished:"1f632.png",black_heart:"1f5a4.png",blue_heart:"1f499.png",blush:"1f60a.png",bomb:"1f4a3.png",boom:"1f4a5.png",broken_heart:"1f494.png",brown_heart:"1f90e.png",clown_face:"1f921.png",cold_face:"1f976.png",cold_sweat:"1f630.png",confounded:"1f616.png",confused:"1f615.png",cry:"1f622.png",crying_cat_face:"1f63f.png",cupid:"1f498.png",dash:"1f4a8.png",disappointed:"1f61e.png",disappointed_relieved:"1f625.png",dizzy:"1f4ab.png",dizzy_face:"1f635.png",drooling_face:"1f924.png",exploding_head:"1f92f.png",expressionless:"1f611.png",face_vomiting:"1f92e.png",face_with_cowboy_hat:"1f920.png",face_with_hand_over_mouth:"1f92d.png",face_with_head_bandage:"1f915.png",face_with_monocle:"1f9d0.png",face_with_raised_eyebrow:"1f928.png",face_with_rolling_eyes:"1f644.png",face_with_symbols_on_mouth:"1f92c.png",face_with_thermometer:"1f912.png",fearful:"1f628.png",flushed:"1f633.png",frowning:"1f626.png",ghost:"1f47b.png",gift_heart:"1f49d.png",green_heart:"1f49a.png",grimacing:"1f62c.png",grin:"1f601.png",grinning:"1f600.png",hankey:"1f4a9.png",hear_no_evil:"1f649.png",heart:"2764-fe0f.png",heart_decoration:"1f49f.png",heart_eyes:"1f60d.png",heart_eyes_cat:"1f63b.png",heartbeat:"1f493.png",heartpulse:"1f497.png",heavy_heart_exclamation_mark_ornament:"2763-fe0f.png",hole:"1f573-fe0f.png",hot_face:"1f975.png",hugging_face:"1f917.png",hushed:"1f62f.png",imp:"1f47f.png",innocent:"1f607.png",japanese_goblin:"1f47a.png",japanese_ogre:"1f479.png",joy:"1f602.png",joy_cat:"1f639.png",kiss:"1f48b.png",kissing:"1f617.png",kissing_cat:"1f63d.png",kissing_closed_eyes:"1f61a.png",kissing_heart:"1f618.png",kissing_smiling_eyes:"1f619.png",laughing:"1f606.png",left_speech_bubble:"1f5e8-fe0f.png",love_letter:"1f48c.png",lying_face:"1f925.png",mask:"1f637.png",money_mouth_face:"1f911.png",nauseated_face:"1f922.png",nerd_face:"1f913.png",neutral_face:"1f610.png",no_mouth:"1f636.png",open_mouth:"1f62e.png",orange_heart:"1f9e1.png",partying_face:"1f973.png",pensive:"1f614.png",persevere:"1f623.png",pleading_face:"1f97a.png",pouting_cat:"1f63e.png",purple_heart:"1f49c.png",rage:"1f621.png",relaxed:"263a-fe0f.png",relieved:"1f60c.png",revolving_hearts:"1f49e.png",right_anger_bubble:"1f5ef-fe0f.png",robot_face:"1f916.png",rolling_on_the_floor_laughing:"1f923.png",scream:"1f631.png",scream_cat:"1f640.png",see_no_evil:"1f648.png",shushing_face:"1f92b.png",skull:"1f480.png",skull_and_crossbones:"2620-fe0f.png",sleeping:"1f634.png",sleepy:"1f62a.png",slightly_frowning_face:"1f641.png",slightly_smiling_face:"1f642.png",smile:"1f604.png",smile_cat:"1f638.png",smiley:"1f603.png",smiley_cat:"1f63a.png",smiling_face_with_3_hearts:"1f970.png",smiling_imp:"1f608.png",smirk:"1f60f.png",smirk_cat:"1f63c.png",sneezing_face:"1f927.png",sob:"1f62d.png",space_invader:"1f47e.png",sparkling_heart:"1f496.png",speak_no_evil:"1f64a.png",speech_balloon:"1f4ac.png","star-struck":"1f929.png",stuck_out_tongue:"1f61b.png",stuck_out_tongue_closed_eyes:"1f61d.png",stuck_out_tongue_winking_eye:"1f61c.png",sunglasses:"1f60e.png",sweat:"1f613.png",sweat_drops:"1f4a6.png",sweat_smile:"1f605.png",thinking_face:"1f914.png",thought_balloon:"1f4ad.png",tired_face:"1f62b.png",triumph:"1f624.png",two_hearts:"1f495.png",unamused:"1f612.png",upside_down_face:"1f643.png",weary:"1f629.png",white_frowning_face:"2639-fe0f.png",white_heart:"1f90d.png",wink:"1f609.png",woozy_face:"1f974.png",worried:"1f61f.png",yawning_face:"1f971.png",yellow_heart:"1f49b.png",yum:"1f60b.png",zany_face:"1f92a.png",zipper_mouth_face:"1f910.png",zzz:"1f4a4.png"},enableQQ:!1,highlight:!0,lang:"zh-cn",pageSize:10,placeholder:"说点什么吧...",recordIP:!0,serverURLs:"https://3vipoukn.lc-cn-n1-shared.com",visitor:!0}},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},search:{algoliaAppID:"ZPFURTAVLE",algoliaIndex:"index",algoliaSearchKey:"8fb6ae6c4f71aeb5416dfb65477883e4",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"}}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

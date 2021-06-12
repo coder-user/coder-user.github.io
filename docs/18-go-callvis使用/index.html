@@ -1,0 +1,149 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>【Go】go-callvis 查看代码调用关系图 - CoolLiuzw</title><meta name=Description content="为了提高阅读代码的效率使用，使用可以查看代码调用关系图的工具是一个非常好的方式."><meta property="og:title" content="【Go】go-callvis 查看代码调用关系图"><meta property="og:description" content="为了提高阅读代码的效率使用，使用可以查看代码调用关系图的工具是一个非常好的方式."><meta property="og:type" content="article"><meta property="og:url" content="https://coder-user.github.io/18-go-callvis%E4%BD%BF%E7%94%A8/"><meta property="og:image" content="https://coder-user.github.io/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2021-01-09T09:29:06+08:00"><meta property="article:modified_time" content="2021-01-09T09:29:06+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://coder-user.github.io/logo.png"><meta name=twitter:title content="【Go】go-callvis 查看代码调用关系图"><meta name=twitter:description content="为了提高阅读代码的效率使用，使用可以查看代码调用关系图的工具是一个非常好的方式."><meta name=application-name content="LoveIt"><meta name=apple-mobile-web-app-title content="LoveIt"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://coder-user.github.io/18-go-callvis%E4%BD%BF%E7%94%A8/><link rel=prev href=https://coder-user.github.io/04-mac%E5%88%87%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/><link rel=next href=https://coder-user.github.io/19-go-mt-seckill/><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"【Go】go-callvis 查看代码调用关系图","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/coder-user.github.io\/18-go-callvis%E4%BD%BF%E7%94%A8\/"},"image":[{"@type":"ImageObject","url":"https:\/\/coder-user.github.io\/images\/Apple-Devices-Preview.png","width":3200,"height":2048}],"genre":"posts","keywords":"开发工具","wordcount":1240,"url":"https:\/\/coder-user.github.io\/18-go-callvis%E4%BD%BF%E7%94%A8\/","datePublished":"2021-01-09T09:29:06+08:00","dateModified":"2021-01-09T09:29:06+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"coolliuzw","logo":{"@type":"ImageObject","url":"https:\/\/coder-user.github.io\/images\/avatar_me.png","width":600,"height":600}},"author":{"@type":"Person","name":"coolliuzw"},"description":"为了提高阅读代码的效率使用，使用可以查看代码调用关系图的工具是一个非常好的方式."}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark')&&document.body.setAttribute('theme','dark')</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=CoolLiuzw><span class=header-title-pre><i class="far fa-kiss-wink-heart fa-fw"></i></span>CoolLiuzw</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>所有文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=CoolLiuzw><span class=header-title-pre><i class="far fa-kiss-wink-heart fa-fw"></i></span>CoolLiuzw</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/ title>所有文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">【Go】go-callvis 查看代码调用关系图</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>coolliuzw</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/><i class="far fa-folder fa-fw"></i>开发工具</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-01-09>2021-01-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1240 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;<span id=/18-go-callvis%E4%BD%BF%E7%94%A8/ class=leancloud_visitors data-flag-title="【Go】go-callvis 查看代码调用关系图">
+<i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#1-简述>1 简述</a></li><li><a href=#2-开始>2 开始</a><ul><li><a href=#21-go-callvis说明>2.1 Go callvis说明</a></li><li><a href=#22-安装>2.2 安装</a></li><li><a href=#23-工具参数说明>2.3 工具参数说明</a></li><li><a href=#24-demo样例实操>2.4 demo样例实操</a></li></ul></li><li><a href=#3-相关问题解决方法>3 相关问题解决方法</a></li></ul></nav></div></div><div class=content id=content><h2 id=1-简述>1 简述</h2><p>阅读Go项目的情况，理清pkg之前的调用和函数之前的调用需要花费一定的时间，那么怎么提高我们阅读 开源 或 新代码的效率呢？</p><p>今天学习的就是使用 <a href=https://github.com/ofabry/go-callvis target=_blank rel="noopener noreffer">go-callvis</a>生成代码函数调用图。</p><p><code>go-callvis</code>是一个开发工具，用于使用交互式视图帮助可视化Go程序的调用图。</p><p>该工具的<strong>目的</strong>是使用调用图中的数据及其与包和类型的关系为开发人员提供Go程序的<strong>可视化概述</strong>。</p><p>这在大型项目中特别有用，在大型项目中代码的复杂性要高得多，或者您只是试图理解其他人的代码。</p><p><strong>特征</strong></p><ul><li>支持Go module的模式</li><li>Focus重点关注程序中的特定程序包</li><li>单击程序包以使用交互式查看器快速切换焦点</li><li>按包将功能分组和/或将方法按类型分组</li><li>将程序包筛选为特定的导入路径前缀</li><li>忽略标准库中的函数</li><li>省略各种类型的函数调用</li></ul><h2 id=2-开始>2 开始</h2><h3 id=21-go-callvis说明>2.1 Go callvis说明</h3><p><strong>图片说明：</strong></p><p><strong>Packages / Types</strong></p><table><thead><tr><th style=text-align:right>Represents</th><th style=text-align:left>Style</th></tr></thead><tbody><tr><td style=text-align:right><code>focused</code></td><td style=text-align:left><strong>blue</strong> color</td></tr><tr><td style=text-align:right><code>stdlib</code></td><td style=text-align:left><strong>green</strong> color</td></tr><tr><td style=text-align:right><code>other</code></td><td style=text-align:left><strong>yellow</strong> color</td></tr></tbody></table><p><strong>Functions / Methods</strong></p><table><thead><tr><th style=text-align:right>Represents</th><th style=text-align:left>Style</th></tr></thead><tbody><tr><td style=text-align:right><code>exported</code></td><td style=text-align:left><strong>bold</strong> border</td></tr><tr><td style=text-align:right><code>unexported</code></td><td style=text-align:left><strong>normal</strong> border</td></tr><tr><td style=text-align:right><code>anonymous</code></td><td style=text-align:left><strong>dotted</strong> border</td></tr></tbody></table><p><strong>Calls</strong></p><table><thead><tr><th style=text-align:right>Represents</th><th style=text-align:left>Style</th></tr></thead><tbody><tr><td style=text-align:right><code>internal</code></td><td style=text-align:left><strong>black</strong> color</td></tr><tr><td style=text-align:right><code>external</code></td><td style=text-align:left><strong>brown</strong> color</td></tr><tr><td style=text-align:right><code>static</code></td><td style=text-align:left><strong>solid</strong> line</td></tr><tr><td style=text-align:right><code>dynamic</code></td><td style=text-align:left><strong>dashed</strong> line</td></tr><tr><td style=text-align:right><code>regular</code></td><td style=text-align:left><strong>simple</strong> arrow</td></tr><tr><td style=text-align:right><code>concurrent</code></td><td style=text-align:left>arrow with <strong>circle</strong></td></tr><tr><td style=text-align:right><code>deferred</code></td><td style=text-align:left>arrow with <strong>diamond</strong></td></tr></tbody></table><h3 id=22-安装>2.2 安装</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sh data-lang=sh>go get -u github.com/ofabry/go-callvis
+<span class=c1># or</span>
+git clone https://github.com/ofabry/go-callvis.git
+<span class=nb>cd</span> go-callvis <span class=o>&amp;&amp;</span> make install
+
+// Graphviz 工具安装，这个是可选的，生成的时候添加 -graphviz 参数的时候需要使用到.
+brew install graphviz
+</code></pre></td></tr></table></div></div><h3 id=23-工具参数说明>2.3 工具参数说明</h3><p><strong>命令格式</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>go-callvis &lt;target package&gt;
+</code></pre></td></tr></table></div></div><p><strong>参数说明</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>Options
+Usage of go-callvis:
+  -debug
+    	Enable verbose log.
+    	启用详细日志.
+  -file string
+    	output filename - omit to use server mode
+    	输出文件名-省略使用服务器模式.
+  -cacheDir string
+    	Enable caching to avoid unnecessary re-rendering.
+    	启用缓存以避免不必要的重新渲染.
+  -focus string
+    	Focus specific package using name or import path. <span class=o>(</span>default <span class=s2>&#34;main&#34;</span><span class=o>)</span>
+    	使用名称或导入路径关注特定的程序包。 （默认为“main”）.
+  -format string
+    	output file format <span class=o>[</span>svg <span class=p>|</span> png <span class=p>|</span> jpg <span class=p>|</span> ...<span class=o>]</span> <span class=o>(</span>default <span class=s2>&#34;svg&#34;</span><span class=o>)</span>
+    	输出文件格式<span class=o>[</span>svg <span class=p>|</span> png <span class=p>|</span> jpg <span class=p>|</span> ...<span class=o>]</span>（默认为“ svg”）.
+  -graphviz
+    	Use Graphviz<span class=err>&#39;</span>s dot program to render images.
+    	使用Graphviz的点程序来渲染图像.
+  -group string
+    	Grouping functions by packages and/or types <span class=o>[</span>pkg, type<span class=o>]</span> <span class=o>(</span>separated by comma<span class=o>)</span> <span class=o>(</span>default <span class=s2>&#34;pkg&#34;</span><span class=o>)</span>
+    	按软件包和/或类型<span class=o>[</span>pkg，type<span class=o>]</span>（用逗号分隔）（默认为“ pkg”）
+  -http string
+    	HTTP service address. <span class=o>(</span>default <span class=s2>&#34;:7878&#34;</span><span class=o>)</span>
+    	HTTP服务地址。 （默认为“：7878”）.
+  -ignore string
+    	Ignore package paths containing given prefixes <span class=o>(</span>separated by comma<span class=o>)</span>
+    	忽略包含给定前缀（用逗号分隔）的包路径.
+  -include string
+    	Include package paths with given prefixes <span class=o>(</span>separated by comma<span class=o>)</span>
+    	包含具有给定前缀的软件包路径（以逗号分隔）.
+  -limit string
+    	Limit package paths to given prefixes <span class=o>(</span>separated by comma<span class=o>)</span>
+    	将包路径限制为给定的前缀（以逗号分隔）.
+  -minlen uint
+    	Minimum edge length <span class=o>(</span><span class=k>for</span> wider output<span class=o>)</span>. <span class=o>(</span>default 2<span class=o>)</span>
+    	最小边长（用于更宽的输出）。 （默认2）.
+  -nodesep float
+    	Minimum space between two adjacent nodes in the same rank <span class=o>(</span><span class=k>for</span> taller output<span class=o>)</span>. <span class=o>(</span>default 0.35<span class=o>)</span>
+    	同一等级中两个相邻节点之间的最小间距（用于更高的输出）.
+  -nointer
+    	Omit calls to unexported functions.
+    	忽略对未导出函数的调用.
+  -nostd
+    	Omit calls to/from packages in standard library.
+    	忽略对标准库中程序包的调用.
+  -skipbrowser
+    	Skip opening browser.
+    	跳过打开浏览器.
+  -tags build tags
+    	a list of build tags to consider satisfied during the build. For more information about build tags, see the description of build constraints in the documentation <span class=k>for</span> the go/build package
+    	在构建期间要考虑满意的构建标记列表. 有关构建标记的更多信息，请参阅go / build软件包的文档中的构建约束说明.
+  -tests
+    	Include <span class=nb>test</span> code.
+    	包括测试代码.
+  -version
+    	Show version and exit.
+    	显示版本并退出.
+</code></pre></td></tr></table></div></div><h3 id=24-demo样例实操>2.4 demo样例实操</h3><ul><li><p><a href=https://github.com/ofabry/go-callvis/tree/master/examples target=_blank rel="noopener noreffer">demo样例实操</a></p></li><li><p>eg:</p><ul><li><code>go-callvis -focus {pkg_name} -group pkg,type ./ | dot -Tpng -o /tmp/out.png</code></li></ul></li></ul><h2 id=3-相关问题解决方法>3 相关问题解决方法</h2><ul><li><p>no main packages？</p><ul><li>go callvis 只能适用于程序代码，<a href=https://github.com/ofabry/go-callvis/issues/19 target=_blank rel="noopener noreffer">isuue</a></li><li>Main package is required for the analysis used, because all the calls in the callgraph tree begins in main (and inits).</li></ul></li><li><p>使用pkg包的方式</p><p><code>go-callvis -group pkg,type -limit github.com/knq/xo github.com/knq/xo/examples/sqlite3 | dot -Tpng -o /tmp/out.png</code></p></li></ul></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2021-01-09</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/18-go-callvis%E4%BD%BF%E7%94%A8/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/>开发工具</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/04-mac%E5%88%87%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/ class=prev rel=prev title="【Brew】Mac 下 brew 切换为国内源"><i class="fas fa-angle-left fa-fw"></i>【Brew】Mac 下 brew 切换为国内源</a>
+<a href=/19-go-mt-seckill/ class=next rel=next title="【Go】jd_mtSeckill 的抢购程序使用教程">【Go】jd_mtSeckill 的抢购程序使用教程<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2020 - 2021</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>coolliuzw</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:80},comment:{valine:{appId:"3VIPouKn5iFQMlbBf2EtE8Co-gzGzoHsz",appKey:"UbLTV7x8R6wlfF4XgAwBPsPn",avatar:"coolliuzw",el:"#valine",emojiCDN:"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/",emojiMaps:{100:"1f4af.png",alien:"1f47d.png",anger:"1f4a2.png",angry:"1f620.png",anguished:"1f627.png",astonished:"1f632.png",black_heart:"1f5a4.png",blue_heart:"1f499.png",blush:"1f60a.png",bomb:"1f4a3.png",boom:"1f4a5.png",broken_heart:"1f494.png",brown_heart:"1f90e.png",clown_face:"1f921.png",cold_face:"1f976.png",cold_sweat:"1f630.png",confounded:"1f616.png",confused:"1f615.png",cry:"1f622.png",crying_cat_face:"1f63f.png",cupid:"1f498.png",dash:"1f4a8.png",disappointed:"1f61e.png",disappointed_relieved:"1f625.png",dizzy:"1f4ab.png",dizzy_face:"1f635.png",drooling_face:"1f924.png",exploding_head:"1f92f.png",expressionless:"1f611.png",face_vomiting:"1f92e.png",face_with_cowboy_hat:"1f920.png",face_with_hand_over_mouth:"1f92d.png",face_with_head_bandage:"1f915.png",face_with_monocle:"1f9d0.png",face_with_raised_eyebrow:"1f928.png",face_with_rolling_eyes:"1f644.png",face_with_symbols_on_mouth:"1f92c.png",face_with_thermometer:"1f912.png",fearful:"1f628.png",flushed:"1f633.png",frowning:"1f626.png",ghost:"1f47b.png",gift_heart:"1f49d.png",green_heart:"1f49a.png",grimacing:"1f62c.png",grin:"1f601.png",grinning:"1f600.png",hankey:"1f4a9.png",hear_no_evil:"1f649.png",heart:"2764-fe0f.png",heart_decoration:"1f49f.png",heart_eyes:"1f60d.png",heart_eyes_cat:"1f63b.png",heartbeat:"1f493.png",heartpulse:"1f497.png",heavy_heart_exclamation_mark_ornament:"2763-fe0f.png",hole:"1f573-fe0f.png",hot_face:"1f975.png",hugging_face:"1f917.png",hushed:"1f62f.png",imp:"1f47f.png",innocent:"1f607.png",japanese_goblin:"1f47a.png",japanese_ogre:"1f479.png",joy:"1f602.png",joy_cat:"1f639.png",kiss:"1f48b.png",kissing:"1f617.png",kissing_cat:"1f63d.png",kissing_closed_eyes:"1f61a.png",kissing_heart:"1f618.png",kissing_smiling_eyes:"1f619.png",laughing:"1f606.png",left_speech_bubble:"1f5e8-fe0f.png",love_letter:"1f48c.png",lying_face:"1f925.png",mask:"1f637.png",money_mouth_face:"1f911.png",nauseated_face:"1f922.png",nerd_face:"1f913.png",neutral_face:"1f610.png",no_mouth:"1f636.png",open_mouth:"1f62e.png",orange_heart:"1f9e1.png",partying_face:"1f973.png",pensive:"1f614.png",persevere:"1f623.png",pleading_face:"1f97a.png",pouting_cat:"1f63e.png",purple_heart:"1f49c.png",rage:"1f621.png",relaxed:"263a-fe0f.png",relieved:"1f60c.png",revolving_hearts:"1f49e.png",right_anger_bubble:"1f5ef-fe0f.png",robot_face:"1f916.png",rolling_on_the_floor_laughing:"1f923.png",scream:"1f631.png",scream_cat:"1f640.png",see_no_evil:"1f648.png",shushing_face:"1f92b.png",skull:"1f480.png",skull_and_crossbones:"2620-fe0f.png",sleeping:"1f634.png",sleepy:"1f62a.png",slightly_frowning_face:"1f641.png",slightly_smiling_face:"1f642.png",smile:"1f604.png",smile_cat:"1f638.png",smiley:"1f603.png",smiley_cat:"1f63a.png",smiling_face_with_3_hearts:"1f970.png",smiling_imp:"1f608.png",smirk:"1f60f.png",smirk_cat:"1f63c.png",sneezing_face:"1f927.png",sob:"1f62d.png",space_invader:"1f47e.png",sparkling_heart:"1f496.png",speak_no_evil:"1f64a.png",speech_balloon:"1f4ac.png","star-struck":"1f929.png",stuck_out_tongue:"1f61b.png",stuck_out_tongue_closed_eyes:"1f61d.png",stuck_out_tongue_winking_eye:"1f61c.png",sunglasses:"1f60e.png",sweat:"1f613.png",sweat_drops:"1f4a6.png",sweat_smile:"1f605.png",thinking_face:"1f914.png",thought_balloon:"1f4ad.png",tired_face:"1f62b.png",triumph:"1f624.png",two_hearts:"1f495.png",unamused:"1f612.png",upside_down_face:"1f643.png",weary:"1f629.png",white_frowning_face:"2639-fe0f.png",white_heart:"1f90d.png",wink:"1f609.png",woozy_face:"1f974.png",worried:"1f61f.png",yawning_face:"1f971.png",yellow_heart:"1f49b.png",yum:"1f60b.png",zany_face:"1f92a.png",zipper_mouth_face:"1f910.png",zzz:"1f4a4.png"},enableQQ:!1,highlight:!0,lang:"zh-cn",pageSize:10,placeholder:"说点什么吧...",recordIP:!0,serverURLs:"https://3vipoukn.lc-cn-n1-shared.com",visitor:!0}},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},search:{algoliaAppID:"ZPFURTAVLE",algoliaIndex:"index",algoliaSearchKey:"8fb6ae6c4f71aeb5416dfb65477883e4",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"}}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

@@ -1,0 +1,360 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>【Go】用ErrorGroup替代你的WaitGroup - CoolLiuzw</title><meta name=Description content="ErrorGroup的简介和学习探索."><meta property="og:title" content="【Go】用ErrorGroup替代你的WaitGroup"><meta property="og:description" content="ErrorGroup的简介和学习探索."><meta property="og:type" content="article"><meta property="og:url" content="https://coder-user.github.io/13-err-group/"><meta property="og:image" content="https://coder-user.github.io/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2020-12-26T17:40:06+08:00"><meta property="article:modified_time" content="2021-06-12T20:04:28+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://coder-user.github.io/logo.png"><meta name=twitter:title content="【Go】用ErrorGroup替代你的WaitGroup"><meta name=twitter:description content="ErrorGroup的简介和学习探索."><meta name=application-name content="LoveIt"><meta name=apple-mobile-web-app-title content="LoveIt"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://coder-user.github.io/13-err-group/><link rel=prev href=https://coder-user.github.io/12-go-%E5%B9%B6%E5%8F%91%E9%99%B7%E9%98%B1/><link rel=next href=https://coder-user.github.io/01-mysql%E5%AD%A6%E4%B9%A0%E5%8A%A8%E6%9C%BA/><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"【Go】用ErrorGroup替代你的WaitGroup","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/coder-user.github.io\/13-err-group\/"},"image":[{"@type":"ImageObject","url":"https:\/\/coder-user.github.io\/images\/Apple-Devices-Preview.png","width":3200,"height":2048}],"genre":"posts","keywords":"go","wordcount":2554,"url":"https:\/\/coder-user.github.io\/13-err-group\/","datePublished":"2020-12-26T17:40:06+08:00","dateModified":"2021-06-12T20:04:28+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"coolliuzw","logo":{"@type":"ImageObject","url":"https:\/\/coder-user.github.io\/images\/avatar_me.png","width":600,"height":600}},"author":{"@type":"Person","name":"coolliuzw"},"description":"ErrorGroup的简介和学习探索."}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark')&&document.body.setAttribute('theme','dark')</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=CoolLiuzw><span class=header-title-pre><i class="far fa-kiss-wink-heart fa-fw"></i></span>CoolLiuzw</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>所有文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=CoolLiuzw><span class=header-title-pre><i class="far fa-kiss-wink-heart fa-fw"></i></span>CoolLiuzw</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/ title>所有文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">【Go】用ErrorGroup替代你的WaitGroup</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>coolliuzw</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/go/><i class="far fa-folder fa-fw"></i>go</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2020-12-26>2020-12-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2554 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;<span id=/13-err-group/ class=leancloud_visitors data-flag-title=【Go】用ErrorGroup替代你的WaitGroup>
+<i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#简介>简介</a></li><li><a href=#waitgroup简单介绍>WaitGroup简单介绍</a></li><li><a href=#waitgroup存在的问题>WaitGroup存在的问题</a></li><li><a href=#errorgroup介绍>ErrorGroup介绍</a></li><li><a href=#使用errorgroup>使用ErrorGroup</a></li><li><a href=#errorgroup的实现原理>ErrorGroup的实现原理</a></li><li><a href=#总结>总结</a></li></ul></nav></div></div><div class=content id=content><blockquote><p>引用文章<a href=https://juejin.cn/post/6909348887450877960 target=_blank rel="noopener noreffer">觉得WaitGroup不好用？试试ErrorGroup吧！</a></p></blockquote><h2 id=简介>简介</h2><p><code>sync.WaitGroup</code>在并发编程里面使用频率非常高，通常用于协同等待的场景，学习基础的Go并发编程的同学应该没有不懂它的使用方法。</p><h2 id=waitgroup简单介绍>WaitGroup简单介绍</h2><ul><li><p>看看下面这个代码：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=nx>cost</span> <span class=o>:=</span> <span class=nx>time</span><span class=p>.</span><span class=nf>Now</span><span class=p>()</span>
+	<span class=k>for</span> <span class=nx>i</span> <span class=o>:=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span> <span class=p>&lt;</span> <span class=mi>5</span><span class=p>;</span> <span class=nx>i</span><span class=o>++</span> <span class=p>{</span>
+      <span class=k>go</span> <span class=kd>func</span><span class=p>(</span><span class=nx>i</span> <span class=kt>int</span><span class=p>)</span> <span class=p>{</span>
+          <span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>i</span><span class=p>)</span>
+      <span class=p>}(</span><span class=nx>i</span><span class=p>)</span>
+	<span class=p>}</span>
+
+  <span class=c1>// time.Sleep 具体什么作用呢？
+</span><span class=c1></span>	<span class=nx>time</span><span class=p>.</span><span class=nf>Sleep</span><span class=p>(</span><span class=nx>time</span><span class=p>.</span><span class=nx>Second</span> <span class=o>*</span> <span class=mi>1</span><span class=p>)</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;cost:%v ms&#34;</span><span class=p>,</span> <span class=nx>time</span><span class=p>.</span><span class=nf>Since</span><span class=p>(</span><span class=nx>cost</span><span class=p>).</span><span class=nf>Milliseconds</span><span class=p>())</span>
+<span class=p>}</span>
+
+<span class=mi>0</span>
+<span class=mi>4</span>
+<span class=mi>1</span>
+<span class=mi>2</span>
+<span class=mi>3</span>
+<span class=nx>cost</span><span class=p>:</span><span class=mi>1004</span> <span class=nx>ms</span>
+</code></pre></td></tr></table></div></div><p>我相信大家应该很清楚，<code>time.Sleep()</code>在这边的作用。同样的<code>sync.WaitGroup</code>也是起到等待完成的作用。</p><p>一个<code>goroutine</code>在检查点(Check Point)等待一组执行任务的 worker <code>goroutine</code> 全部完成，如果在执行任务的这些worker <code>goroutine</code> 还没全部完成，等待的 <code>goroutine</code> 就会阻塞在检查点，直到所有woker <code>goroutine</code> 都完成后才能继续执行。</p></li><li><p>改改代码使用<code>sync.WaitGroup</code>的方式</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=nx>cost</span> <span class=o>:=</span> <span class=nx>time</span><span class=p>.</span><span class=nf>Now</span><span class=p>()</span>
+	<span class=nx>wg</span> <span class=o>:=</span> <span class=nx>sync</span><span class=p>.</span><span class=nx>WaitGroup</span><span class=p>{}</span>
+	<span class=k>for</span> <span class=nx>i</span> <span class=o>:=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span> <span class=p>&lt;</span> <span class=mi>5</span><span class=p>;</span> <span class=nx>i</span><span class=o>++</span> <span class=p>{</span>
+      <span class=nx>wg</span><span class=p>.</span><span class=nf>Add</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+      <span class=k>go</span> <span class=kd>func</span><span class=p>(</span><span class=nx>i</span> <span class=kt>int</span><span class=p>)</span> <span class=p>{</span>
+          <span class=k>defer</span> <span class=nx>wg</span><span class=p>.</span><span class=nf>Done</span><span class=p>()</span>
+          <span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>i</span><span class=p>)</span>
+      <span class=p>}(</span><span class=nx>i</span><span class=p>)</span>
+	<span class=p>}</span>
+
+	<span class=nx>wg</span><span class=p>.</span><span class=nf>Wait</span><span class=p>()</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;cost:%v ms&#34;</span><span class=p>,</span> <span class=nx>time</span><span class=p>.</span><span class=nf>Since</span><span class=p>(</span><span class=nx>cost</span><span class=p>).</span><span class=nf>Milliseconds</span><span class=p>())</span>
+<span class=p>}</span>
+
+<span class=c1>// 输出
+</span><span class=c1></span><span class=mi>4</span>
+<span class=mi>1</span>
+<span class=mi>0</span>
+<span class=mi>2</span>
+<span class=mi>3</span>
+<span class=nx>cost</span><span class=p>:</span><span class=mi>0</span> <span class=nx>ms</span>
+</code></pre></td></tr></table></div></div></li></ul><p>为什么两个程序时间差距这么大，你应该明白了，原因在于怎么实现等的操作。怎么保证可靠性的等待。</p><h2 id=waitgroup存在的问题>WaitGroup存在的问题</h2><p>​ 如果在woker <code>goroutine</code>的执行过程中遇到错误想要通知在检查点等待的协程处理该怎么办呢？<code>WaitGroup</code>并没有提供传播错误的功能。</p><h2 id=errorgroup介绍>ErrorGroup介绍</h2><p>​ <code>Go</code>语言在扩展库提供的<code>ErrorGroup</code>并发原语正好适合在这种场景下使用，它在<code>WaitGroup</code>的功能基础上还提供了，<strong>错误传播以及上下文取消的功能</strong>。</p><p><code>Go</code>扩展库通过<code>errorgroup.Group</code>提供<code>ErrorGroup</code>原语的功能，它有三个方法可调用：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nf>WithContext</span><span class=p>(</span><span class=nx>ctx</span> <span class=nx>context</span><span class=p>.</span><span class=nx>Context</span><span class=p>)</span> <span class=p>(</span><span class=o>*</span><span class=nx>Group</span><span class=p>,</span> <span class=nx>context</span><span class=p>.</span><span class=nx>Context</span><span class=p>)</span>
+<span class=kd>func</span> <span class=p>(</span><span class=nx>g</span> <span class=o>*</span><span class=nx>Group</span><span class=p>)</span> <span class=nf>Go</span><span class=p>(</span><span class=nx>f</span> <span class=kd>func</span><span class=p>()</span> <span class=kt>error</span><span class=p>)</span>
+<span class=kd>func</span> <span class=p>(</span><span class=nx>g</span> <span class=o>*</span><span class=nx>Group</span><span class=p>)</span> <span class=nf>Wait</span><span class=p>()</span> <span class=kt>error</span>
+</code></pre></td></tr></table></div></div><ul><li>调用<code>errorgroup</code>包的<code>WithContext</code>方法会返回一个<code>Group</code> 实例，同时还会返回一个使用 <code>context.WithCancel</code> 生成的新<code>Context</code>。一旦有一个子任务返回错误，或者是<code>Wait</code> 调用返回，这个新 <code>Context</code> 就会被 <code>cancel</code>。</li><li><code>Go</code>方法，接收类型为<code>func() error</code> 的函数作为子任务函数，如果任务执行成功，就返回<code>nil</code>，否则就返回 <code>error</code>，并且会<code>cancel</code> 那个新的<code>Context</code>。</li><li><code>Wait</code>方法，类似<code>WaitGroup</code>的 <code>Wait</code> 方法，调用后会阻塞地等待所有的子任务都完成，它才会返回。如果有多个子任务返回错误，它<strong>只会返回第一个出现的错误</strong>，如果所有的子任务都执行成功，就返回<code>nil</code>。</li></ul><h2 id=使用errorgroup>使用ErrorGroup</h2><p><code>go get -u</code></p><p>接下来我们让主<code>goroutine</code>使用<code>ErrorGroup</code>代替<code>WaitGroup</code>等待所有子任务的完成，<code>ErrorGroup</code>有一个特点是会返回所有执行任务的<code>goroutine</code>遇到的第一个错误。我们试着执行一下下面的程序，注意观察程序的输出。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kn>package</span> <span class=nx>main</span>
+
+<span class=kn>import</span> <span class=p>(</span>
+	<span class=s>&#34;fmt&#34;</span>
+	<span class=s>&#34;log&#34;</span>
+	<span class=s>&#34;time&#34;</span>
+
+	<span class=s>&#34;golang.org/x/sync/errgroup&#34;</span>
+<span class=p>)</span>
+
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=kd>var</span> <span class=nx>eg</span> <span class=nx>errgroup</span><span class=p>.</span><span class=nx>Group</span>
+	<span class=k>for</span> <span class=nx>i</span> <span class=o>:=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span> <span class=p>&lt;</span> <span class=mi>100</span><span class=p>;</span> <span class=nx>i</span><span class=o>++</span> <span class=p>{</span>
+		<span class=nx>i</span> <span class=o>:=</span> <span class=nx>i</span>
+		<span class=nx>eg</span><span class=p>.</span><span class=nf>Go</span><span class=p>(</span><span class=kd>func</span><span class=p>()</span> <span class=kt>error</span> <span class=p>{</span>
+			<span class=nx>time</span><span class=p>.</span><span class=nf>Sleep</span><span class=p>(</span><span class=mi>2</span> <span class=o>*</span> <span class=nx>time</span><span class=p>.</span><span class=nx>Second</span><span class=p>)</span>
+			<span class=k>if</span> <span class=nx>i</span> <span class=p>&gt;</span> <span class=mi>90</span> <span class=p>{</span>
+				<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;Error:&#34;</span><span class=p>,</span> <span class=nx>i</span><span class=p>)</span>
+				<span class=k>return</span> <span class=nx>fmt</span><span class=p>.</span><span class=nf>Errorf</span><span class=p>(</span><span class=s>&#34;Error occurred: %d&#34;</span><span class=p>,</span> <span class=nx>i</span><span class=p>)</span>
+			<span class=p>}</span>
+			<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;End:&#34;</span><span class=p>,</span> <span class=nx>i</span><span class=p>)</span>
+			<span class=k>return</span> <span class=kc>nil</span>
+		<span class=p>})</span>
+	<span class=p>}</span>
+	<span class=k>if</span> <span class=nx>err</span> <span class=o>:=</span> <span class=nx>eg</span><span class=p>.</span><span class=nf>Wait</span><span class=p>();</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+		<span class=nx>log</span><span class=p>.</span><span class=nf>Fatal</span><span class=p>(</span><span class=nx>err</span><span class=p>)</span>
+	<span class=p>}</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><p>上面程序，遇到i大于90的都会产生错误结束执行，但是只有第一个执行时产生的错误被<code>ErrorGroup</code>返回，程序的输出大概如下：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=o>......</span>
+<span class=nx>End</span><span class=p>:</span> <span class=mi>49</span>
+<span class=nx>End</span><span class=p>:</span> <span class=mi>26</span>
+<span class=nx>Error</span><span class=p>:</span> <span class=mi>98</span>
+<span class=nx>End</span><span class=p>:</span> <span class=mi>63</span>
+<span class=nx>End</span><span class=p>:</span> <span class=mi>39</span>
+<span class=nx>End</span><span class=p>:</span> <span class=mi>50</span>
+<span class=nx>End</span><span class=p>:</span> <span class=mi>38</span>
+<span class=nx>Error</span><span class=p>:</span> <span class=mi>95</span>
+<span class=nx>End</span><span class=p>:</span> <span class=mi>67</span>
+<span class=nx>End</span><span class=p>:</span> <span class=mi>65</span>
+<span class=nx>End</span><span class=p>:</span> <span class=mi>57</span>
+<span class=nx>End</span><span class=p>:</span> <span class=mi>64</span>
+<span class=mi>2020</span><span class=o>/</span><span class=mi>12</span><span class=o>/</span><span class=mi>17</span> <span class=mi>18</span><span class=p>:</span><span class=mi>11</span><span class=p>:</span><span class=mi>40</span> <span class=nx>Error</span> <span class=nx>occurred</span><span class=p>:</span> <span class=mi>98</span>
+<span class=nx>复制代码</span>
+</code></pre></td></tr></table></div></div><p>最早执行遇到错误的<code>goroutine</code>输出了<code>Error: 98</code>但是所有未执行完的其他任务并没有停止执行。那么想让程序遇到错误就终止其他子任务该怎么办呢？我们可以用<code>errgroup.Group</code>提供的<code>WithContext</code>方法创建一个带可取消上下文功能的<code>ErrorGroup</code>。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kn>package</span> <span class=nx>main</span>
+
+<span class=kn>import</span> <span class=p>(</span>
+	<span class=s>&#34;context&#34;</span>
+	<span class=s>&#34;fmt&#34;</span>
+	<span class=s>&#34;log&#34;</span>
+	<span class=s>&#34;time&#34;</span>
+
+	<span class=s>&#34;golang.org/x/sync/errgroup&#34;</span>
+<span class=p>)</span>
+
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=nx>eg</span><span class=p>,</span> <span class=nx>ctx</span> <span class=o>:=</span> <span class=nx>errgroup</span><span class=p>.</span><span class=nf>WithContext</span><span class=p>(</span><span class=nx>context</span><span class=p>.</span><span class=nf>Background</span><span class=p>())</span>
+
+	<span class=k>for</span> <span class=nx>i</span> <span class=o>:=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span> <span class=p>&lt;</span> <span class=mi>100</span><span class=p>;</span> <span class=nx>i</span><span class=o>++</span> <span class=p>{</span>
+		<span class=nx>i</span> <span class=o>:=</span> <span class=nx>i</span>
+		<span class=nx>eg</span><span class=p>.</span><span class=nf>Go</span><span class=p>(</span><span class=kd>func</span><span class=p>()</span> <span class=kt>error</span> <span class=p>{</span>
+			<span class=nx>time</span><span class=p>.</span><span class=nf>Sleep</span><span class=p>(</span><span class=mi>2</span> <span class=o>*</span> <span class=nx>time</span><span class=p>.</span><span class=nx>Second</span><span class=p>)</span> 
+
+			<span class=k>select</span> <span class=p>{</span>
+			<span class=k>case</span> <span class=o>&lt;-</span><span class=nx>ctx</span><span class=p>.</span><span class=nf>Done</span><span class=p>():</span>
+				<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;Canceled:&#34;</span><span class=p>,</span> <span class=nx>i</span><span class=p>)</span>
+				<span class=k>return</span> <span class=kc>nil</span>
+			<span class=k>default</span><span class=p>:</span>
+				<span class=k>if</span> <span class=nx>i</span> <span class=p>&gt;</span> <span class=mi>90</span> <span class=p>{</span>
+					<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;Error:&#34;</span><span class=p>,</span> <span class=nx>i</span><span class=p>)</span>
+					<span class=k>return</span> <span class=nx>fmt</span><span class=p>.</span><span class=nf>Errorf</span><span class=p>(</span><span class=s>&#34;Error: %d&#34;</span><span class=p>,</span> <span class=nx>i</span><span class=p>)</span>
+				<span class=p>}</span>
+				<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;End:&#34;</span><span class=p>,</span> <span class=nx>i</span><span class=p>)</span>
+				<span class=k>return</span> <span class=kc>nil</span>
+			<span class=p>}</span>
+		<span class=p>})</span>
+	<span class=p>}</span>
+	<span class=k>if</span> <span class=nx>err</span> <span class=o>:=</span> <span class=nx>eg</span><span class=p>.</span><span class=nf>Wait</span><span class=p>();</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+		<span class=nx>log</span><span class=p>.</span><span class=nf>Fatal</span><span class=p>(</span><span class=nx>err</span><span class=p>)</span>
+	<span class=p>}</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><p><code>Go</code>方法单独开启的<code>goroutine</code>在执行参数传递进来的函数时，如果函数返回了错误，会对<code>ErrorGroup</code>持有的<code>err</code>字段进行赋值并及时调用<code>cancel</code>函数，通过上下文通知其他子任务取消执行任务。所以上面更新后的程序会有如下类似的输出。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=o>......</span>
+<span class=nx>Error</span><span class=p>:</span> <span class=mi>99</span>
+<span class=nx>Canceled</span><span class=p>:</span> <span class=mi>68</span>
+<span class=nx>Canceled</span><span class=p>:</span> <span class=mi>85</span>
+<span class=nx>End</span><span class=p>:</span> <span class=mi>57</span>
+<span class=nx>End</span><span class=p>:</span> <span class=mi>51</span>
+<span class=nx>Canceled</span><span class=p>:</span> <span class=mi>66</span>
+<span class=nx>Canceled</span><span class=p>:</span> <span class=mi>93</span>
+<span class=nx>Canceled</span><span class=p>:</span> <span class=mi>72</span>
+<span class=nx>Canceled</span><span class=p>:</span> <span class=mi>78</span>
+<span class=nx>End</span><span class=p>:</span> <span class=mi>55</span>
+<span class=nx>Canceled</span><span class=p>:</span> <span class=mi>74</span>
+<span class=mi>2020</span><span class=o>/</span><span class=mi>12</span><span class=o>/</span><span class=mi>17</span> <span class=mi>18</span><span class=p>:</span><span class=mi>23</span><span class=p>:</span><span class=mi>12</span> <span class=nx>Error</span><span class=p>:</span> <span class=mi>99</span>
+</code></pre></td></tr></table></div></div><p>了解<code>ErrorGroup</code>的使用方法后，我们再来看看这个并发同步原语的实现原理。</p><h2 id=errorgroup的实现原理>ErrorGroup的实现原理</h2><p><code>ErrorGroup</code>原语的结构体类型<code>errorgroup.Group</code>定义如下：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>type</span> <span class=nx>Group</span> <span class=kd>struct</span> <span class=p>{</span>
+	<span class=nx>cancel</span> <span class=kd>func</span><span class=p>()</span>
+
+	<span class=nx>wg</span> <span class=nx>sync</span><span class=p>.</span><span class=nx>WaitGroup</span>
+
+	<span class=nx>errOnce</span> <span class=nx>sync</span><span class=p>.</span><span class=nx>Once</span>
+	<span class=nx>err</span>     <span class=kt>error</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li><code>cancel</code> — 创建 <a href=https://draveness.me/golang/tree/context.Context target=_blank rel="noopener noreffer"><code>context.Context</code></a> 时返回的取消函数，用于在多个 <code>goroutine</code> 之间同步取消信号；</li><li><code>wg</code> — 用于等待一组 <code>goroutine</code> 完成子任务的同步原语；</li><li><code>errOnce</code> — 用于保证只接收一个子任务返回的错误的同步原语；</li></ul><p>通过 <code>errgroup.WithContext</code>构造器创建<code>errgroup.Group</code> 结构体：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nf>WithContext</span><span class=p>(</span><span class=nx>ctx</span> <span class=nx>context</span><span class=p>.</span><span class=nx>Context</span><span class=p>)</span> <span class=p>(</span><span class=o>*</span><span class=nx>Group</span><span class=p>,</span> <span class=nx>context</span><span class=p>.</span><span class=nx>Context</span><span class=p>)</span> <span class=p>{</span>
+	<span class=nx>ctx</span><span class=p>,</span> <span class=nx>cancel</span> <span class=o>:=</span> <span class=nx>context</span><span class=p>.</span><span class=nf>WithCancel</span><span class=p>(</span><span class=nx>ctx</span><span class=p>)</span>
+	<span class=k>return</span> <span class=o>&amp;</span><span class=nx>Group</span><span class=p>{</span><span class=nx>cancel</span><span class=p>:</span> <span class=nx>cancel</span><span class=p>},</span> <span class=nx>ctx</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><p>运行新的并行子任务需要使用<code>errgroup.Group.Go</code>方法，这个方法的执行过程如下：</p><ol><li>调用 <code>sync.WaitGroup.Add</code> 增加待处理的任务数；</li><li>创建一个新的 <code>goroutine</code> 并在 <code>goroutine</code> 内部运行子任务；</li><li>返回错误时及时调用 <code>cancel</code> 并对 <code>err</code> 赋值，只有最早返回的错误才会被上游感知到，后续的错误都会被舍弃：</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=p>(</span><span class=nx>g</span> <span class=o>*</span><span class=nx>Group</span><span class=p>)</span> <span class=nf>Go</span><span class=p>(</span><span class=nx>f</span> <span class=kd>func</span><span class=p>()</span> <span class=kt>error</span><span class=p>)</span> <span class=p>{</span>
+	<span class=nx>g</span><span class=p>.</span><span class=nx>wg</span><span class=p>.</span><span class=nf>Add</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+
+	<span class=k>go</span> <span class=kd>func</span><span class=p>()</span> <span class=p>{</span>
+		<span class=k>defer</span> <span class=nx>g</span><span class=p>.</span><span class=nx>wg</span><span class=p>.</span><span class=nf>Done</span><span class=p>()</span>
+
+		<span class=k>if</span> <span class=nx>err</span> <span class=o>:=</span> <span class=nf>f</span><span class=p>();</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+			<span class=nx>g</span><span class=p>.</span><span class=nx>errOnce</span><span class=p>.</span><span class=nf>Do</span><span class=p>(</span><span class=kd>func</span><span class=p>()</span> <span class=p>{</span>
+				<span class=nx>g</span><span class=p>.</span><span class=nx>err</span> <span class=p>=</span> <span class=nx>err</span>
+				<span class=k>if</span> <span class=nx>g</span><span class=p>.</span><span class=nx>cancel</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+					<span class=nx>g</span><span class=p>.</span><span class=nf>cancel</span><span class=p>()</span>
+				<span class=p>}</span>
+			<span class=p>})</span>
+		<span class=p>}</span>
+	<span class=p>}()</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><p>用于等待的<code>errgroup.Group.Wait</code>方法只是调用了 <code>sync.WaitGroup.Wait</code>方法，阻塞地等待所有子任务完成。在子任务全部完成时会通过调用在<code>errorgroup.WithContext</code>创建<code>Group</code>和<code>Context</code>对象时存放在<code>Group.cancel</code>字段里的函数，取消<code>Context</code>对象并返回可能出现的错误。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=p>(</span><span class=nx>g</span> <span class=o>*</span><span class=nx>Group</span><span class=p>)</span> <span class=nf>Wait</span><span class=p>()</span> <span class=kt>error</span> <span class=p>{</span>
+	<span class=nx>g</span><span class=p>.</span><span class=nx>wg</span><span class=p>.</span><span class=nf>Wait</span><span class=p>()</span>
+	<span class=k>if</span> <span class=nx>g</span><span class=p>.</span><span class=nx>cancel</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+		<span class=nx>g</span><span class=p>.</span><span class=nf>cancel</span><span class=p>()</span>
+	<span class=p>}</span>
+	<span class=k>return</span> <span class=nx>g</span><span class=p>.</span><span class=nx>err</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><h2 id=总结>总结</h2><p><code>Go</code>语言通过<code>errorgroup.Group</code>结构提供的<code>ErrorGroup</code>原语通过封装<code>WaitGroup</code>、<code>Once</code>基本原语结合上下文对象，提供了除同步等待外更加复杂的错误传播和执行任务取消的功能。在使用时，我们也需要注意它的两个特点：</p><ul><li><code>errgroup.Group</code>在出现错误或者等待结束后都会调用 <code>Context</code>对象 的 <code>cancel</code> 方法同步取消信号。</li><li>只有第一个出现的错误才会被返回，剩余的错误都会被直接抛弃。</li></ul></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2021-06-12&nbsp;<a class=git-hash href=https://github.com/dillonzq/LoveIt/commit/98b367a8fa7cf251f74e91e224ed99fc6ad9e17a target=_blank title="commit by liuzw(1413883407@qq.com) 98b367a8fa7cf251f74e91e224ed99fc6ad9e17a: init基础文件提交">
+<i class="fas fa-hashtag fa-fw"></i>98b367a</a></span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/13-err-group/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/go/>go</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/12-go-%E5%B9%B6%E5%8F%91%E9%99%B7%E9%98%B1/ class=prev rel=prev title=【Go】Go并发陷阱和有效规避方法><i class="fas fa-angle-left fa-fw"></i>【Go】Go并发陷阱和有效规避方法</a>
+<a href=/01-mysql%E5%AD%A6%E4%B9%A0%E5%8A%A8%E6%9C%BA/ class=next rel=next title="【mysql】准备学习 MySQL Plan计划">【mysql】准备学习 MySQL Plan计划<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2020 - 2021</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>coolliuzw</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:80},comment:{valine:{appId:"3VIPouKn5iFQMlbBf2EtE8Co-gzGzoHsz",appKey:"UbLTV7x8R6wlfF4XgAwBPsPn",avatar:"coolliuzw",el:"#valine",emojiCDN:"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/",emojiMaps:{100:"1f4af.png",alien:"1f47d.png",anger:"1f4a2.png",angry:"1f620.png",anguished:"1f627.png",astonished:"1f632.png",black_heart:"1f5a4.png",blue_heart:"1f499.png",blush:"1f60a.png",bomb:"1f4a3.png",boom:"1f4a5.png",broken_heart:"1f494.png",brown_heart:"1f90e.png",clown_face:"1f921.png",cold_face:"1f976.png",cold_sweat:"1f630.png",confounded:"1f616.png",confused:"1f615.png",cry:"1f622.png",crying_cat_face:"1f63f.png",cupid:"1f498.png",dash:"1f4a8.png",disappointed:"1f61e.png",disappointed_relieved:"1f625.png",dizzy:"1f4ab.png",dizzy_face:"1f635.png",drooling_face:"1f924.png",exploding_head:"1f92f.png",expressionless:"1f611.png",face_vomiting:"1f92e.png",face_with_cowboy_hat:"1f920.png",face_with_hand_over_mouth:"1f92d.png",face_with_head_bandage:"1f915.png",face_with_monocle:"1f9d0.png",face_with_raised_eyebrow:"1f928.png",face_with_rolling_eyes:"1f644.png",face_with_symbols_on_mouth:"1f92c.png",face_with_thermometer:"1f912.png",fearful:"1f628.png",flushed:"1f633.png",frowning:"1f626.png",ghost:"1f47b.png",gift_heart:"1f49d.png",green_heart:"1f49a.png",grimacing:"1f62c.png",grin:"1f601.png",grinning:"1f600.png",hankey:"1f4a9.png",hear_no_evil:"1f649.png",heart:"2764-fe0f.png",heart_decoration:"1f49f.png",heart_eyes:"1f60d.png",heart_eyes_cat:"1f63b.png",heartbeat:"1f493.png",heartpulse:"1f497.png",heavy_heart_exclamation_mark_ornament:"2763-fe0f.png",hole:"1f573-fe0f.png",hot_face:"1f975.png",hugging_face:"1f917.png",hushed:"1f62f.png",imp:"1f47f.png",innocent:"1f607.png",japanese_goblin:"1f47a.png",japanese_ogre:"1f479.png",joy:"1f602.png",joy_cat:"1f639.png",kiss:"1f48b.png",kissing:"1f617.png",kissing_cat:"1f63d.png",kissing_closed_eyes:"1f61a.png",kissing_heart:"1f618.png",kissing_smiling_eyes:"1f619.png",laughing:"1f606.png",left_speech_bubble:"1f5e8-fe0f.png",love_letter:"1f48c.png",lying_face:"1f925.png",mask:"1f637.png",money_mouth_face:"1f911.png",nauseated_face:"1f922.png",nerd_face:"1f913.png",neutral_face:"1f610.png",no_mouth:"1f636.png",open_mouth:"1f62e.png",orange_heart:"1f9e1.png",partying_face:"1f973.png",pensive:"1f614.png",persevere:"1f623.png",pleading_face:"1f97a.png",pouting_cat:"1f63e.png",purple_heart:"1f49c.png",rage:"1f621.png",relaxed:"263a-fe0f.png",relieved:"1f60c.png",revolving_hearts:"1f49e.png",right_anger_bubble:"1f5ef-fe0f.png",robot_face:"1f916.png",rolling_on_the_floor_laughing:"1f923.png",scream:"1f631.png",scream_cat:"1f640.png",see_no_evil:"1f648.png",shushing_face:"1f92b.png",skull:"1f480.png",skull_and_crossbones:"2620-fe0f.png",sleeping:"1f634.png",sleepy:"1f62a.png",slightly_frowning_face:"1f641.png",slightly_smiling_face:"1f642.png",smile:"1f604.png",smile_cat:"1f638.png",smiley:"1f603.png",smiley_cat:"1f63a.png",smiling_face_with_3_hearts:"1f970.png",smiling_imp:"1f608.png",smirk:"1f60f.png",smirk_cat:"1f63c.png",sneezing_face:"1f927.png",sob:"1f62d.png",space_invader:"1f47e.png",sparkling_heart:"1f496.png",speak_no_evil:"1f64a.png",speech_balloon:"1f4ac.png","star-struck":"1f929.png",stuck_out_tongue:"1f61b.png",stuck_out_tongue_closed_eyes:"1f61d.png",stuck_out_tongue_winking_eye:"1f61c.png",sunglasses:"1f60e.png",sweat:"1f613.png",sweat_drops:"1f4a6.png",sweat_smile:"1f605.png",thinking_face:"1f914.png",thought_balloon:"1f4ad.png",tired_face:"1f62b.png",triumph:"1f624.png",two_hearts:"1f495.png",unamused:"1f612.png",upside_down_face:"1f643.png",weary:"1f629.png",white_frowning_face:"2639-fe0f.png",white_heart:"1f90d.png",wink:"1f609.png",woozy_face:"1f974.png",worried:"1f61f.png",yawning_face:"1f971.png",yellow_heart:"1f49b.png",yum:"1f60b.png",zany_face:"1f92a.png",zipper_mouth_face:"1f910.png",zzz:"1f4a4.png"},enableQQ:!1,highlight:!0,lang:"zh-cn",pageSize:10,placeholder:"说点什么吧...",recordIP:!0,serverURLs:"https://3vipoukn.lc-cn-n1-shared.com",visitor:!0}},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},search:{algoliaAppID:"ZPFURTAVLE",algoliaIndex:"index",algoliaSearchKey:"8fb6ae6c4f71aeb5416dfb65477883e4",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"}}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

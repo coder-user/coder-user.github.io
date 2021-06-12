@@ -1,0 +1,180 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>【Go】Go语言实现产生coredump文件 - CoolLiuzw</title><meta name=Description content="简单的介绍Go语言如何产生coredump的文件。"><meta property="og:title" content="【Go】Go语言实现产生coredump文件"><meta property="og:description" content="简单的介绍Go语言如何产生coredump的文件。"><meta property="og:type" content="article"><meta property="og:url" content="https://coder-user.github.io/10-go-crash-gen/"><meta property="og:image" content="https://coder-user.github.io/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2020-12-23T23:03:06+08:00"><meta property="article:modified_time" content="2021-06-12T20:04:28+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://coder-user.github.io/logo.png"><meta name=twitter:title content="【Go】Go语言实现产生coredump文件"><meta name=twitter:description content="简单的介绍Go语言如何产生coredump的文件。"><meta name=application-name content="LoveIt"><meta name=apple-mobile-web-app-title content="LoveIt"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://coder-user.github.io/10-go-crash-gen/><link rel=prev href=https://coder-user.github.io/08-centos-coredump/><link rel=next href=https://coder-user.github.io/11-go-dlv-use/><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"【Go】Go语言实现产生coredump文件","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/coder-user.github.io\/10-go-crash-gen\/"},"image":[{"@type":"ImageObject","url":"https:\/\/coder-user.github.io\/images\/Apple-Devices-Preview.png","width":3200,"height":2048}],"genre":"posts","keywords":"go","wordcount":890,"url":"https:\/\/coder-user.github.io\/10-go-crash-gen\/","datePublished":"2020-12-23T23:03:06+08:00","dateModified":"2021-06-12T20:04:28+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"coolliuzw","logo":{"@type":"ImageObject","url":"https:\/\/coder-user.github.io\/images\/avatar_me.png","width":600,"height":600}},"author":{"@type":"Person","name":"coolliuzw"},"description":"简单的介绍Go语言如何产生coredump的文件。"}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark')&&document.body.setAttribute('theme','dark')</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=CoolLiuzw><span class=header-title-pre><i class="far fa-kiss-wink-heart fa-fw"></i></span>CoolLiuzw</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>所有文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=CoolLiuzw><span class=header-title-pre><i class="far fa-kiss-wink-heart fa-fw"></i></span>CoolLiuzw</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/ title>所有文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">【Go】Go语言实现产生coredump文件</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>coolliuzw</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/go/><i class="far fa-folder fa-fw"></i>go</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2020-12-23>2020-12-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 890 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;<span id=/10-go-crash-gen/ class=leancloud_visitors data-flag-title=【Go】Go语言实现产生coredump文件>
+<i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#简述>简述</a></li><li><a href=#开始>开始</a><ul><li><a href=#测试demo>测试demo</a></li><li><a href=#配置go产生coredump文件>配置Go产生coredump文件</a></li><li><a href=#运行文件>运行文件</a></li></ul></li><li><a href=#总结>总结</a></li></ul></nav></div></div><div class=content id=content><h2 id=简述>简述</h2><p>介绍Go语言生成coredump文件的方式和方法。</p><h2 id=开始>开始</h2><p>​ 之前的文章有谈过，centos7环境如何配置coredump文件的产生，也写了一个<code>c</code>语言的demo测试。今天来说说Go语言也可以生成coredump文件。来看看Go语言如何生成coredump吧。</p><h3 id=测试demo>测试demo</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kn>package</span> <span class=nx>main</span>
+
+<span class=kn>import</span> <span class=s>&#34;fmt&#34;</span>
+
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+  <span class=nx>a</span> <span class=o>:=</span> <span class=mi>10</span>
+  <span class=k>for</span> <span class=nx>i</span> <span class=o>:=</span> <span class=mi>1</span><span class=p>;</span> <span class=nx>i</span> <span class=o>&lt;=</span> <span class=mi>10</span><span class=p>;</span> <span class=nx>i</span><span class=o>++</span> <span class=p>{</span>
+    <span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>a</span><span class=o>/</span><span class=p>(</span><span class=mi>10</span><span class=o>-</span><span class=nx>i</span><span class=p>))</span>
+  <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li><code>go build -o main</code></li><li><code>./main</code>测试</li></ul><h3 id=配置go产生coredump文件>配置Go产生coredump文件</h3><p><code>GOTRACEBACK=none</code> :只输出panic异常信息</p><p><code>GOTRACEBACK=single</code>:只输出被认为引发panic异常的那个goroutine的相关信息</p><p><code>GOTRACEBACK=all</code>:输出所有goroutines的相关信息，除去与go runtime相关的stack frames.</p><p><code>GOTRACEBACK=system</code>:输出所有goroutines的相关信息，包括与go runtime相关的stack frames,从而得知哪些goroutine是go runtime启动运行的</p><p><code>GOTRACEBACK=crash</code>:与system的唯一区别是crash会生成coredump文件</p><p>这边使用最后一个配置的方式</p><ul><li><code>GOTRACEBACK=crash</code></li><li>临时配置<code>GOTRACEBACK=crash</code></li><li>永久配置<code>echo GOTRACEBACK=crash ~/.zshrc</code>或者 <code>echo GOTRACEBACK=crash /etc/profile</code></li></ul><h3 id=运行文件>运行文件</h3><ul><li><p><code>./main</code> 生成coredump</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>$ ./main
+<span class=m>1</span>
+<span class=m>1</span>
+<span class=m>1</span>
+<span class=m>1</span>
+<span class=m>2</span>
+<span class=m>2</span>
+<span class=m>3</span>
+<span class=m>5</span>
+<span class=m>10</span>
+panic: runtime error: integer divide by zero
+
+goroutine <span class=m>1</span> <span class=o>[</span>running<span class=o>]</span>:
+panic<span class=o>(</span>0x4a88e0, 0x54cc60<span class=o>)</span>
+	/usr/local/go/src/runtime/panic.go:1064 +0x545 <span class=nv>fp</span><span class=o>=</span>0xc000060f00 <span class=nv>sp</span><span class=o>=</span>0xc000060e38 <span class=nv>pc</span><span class=o>=</span>0x431e85
+runtime.panicdivide<span class=o>()</span>
+	/usr/local/go/src/runtime/panic.go:191 +0x5b <span class=nv>fp</span><span class=o>=</span>0xc000060f20 <span class=nv>sp</span><span class=o>=</span>0xc000060f00 <span class=nv>pc</span><span class=o>=</span>0x43059b
+main.main<span class=o>()</span>
+	/root/main/main.go:8 +0xda <span class=nv>fp</span><span class=o>=</span>0xc000060f88 <span class=nv>sp</span><span class=o>=</span>0xc000060f20 <span class=nv>pc</span><span class=o>=</span>0x49915a
+runtime.main<span class=o>()</span>
+	/usr/local/go/src/runtime/proc.go:204 +0x209 <span class=nv>fp</span><span class=o>=</span>0xc000060fe0 <span class=nv>sp</span><span class=o>=</span>0xc000060f88 <span class=nv>pc</span><span class=o>=</span>0x434a89
+runtime.goexit<span class=o>()</span>
+	/usr/local/go/src/runtime/asm_amd64.s:1374 +0x1 <span class=nv>fp</span><span class=o>=</span>0xc000060fe8 <span class=nv>sp</span><span class=o>=</span>0xc000060fe0 <span class=nv>pc</span><span class=o>=</span>0x463201
+
+goroutine <span class=m>2</span> <span class=o>[</span>force gc <span class=o>(</span>idle<span class=o>)]</span>:
+runtime.gopark<span class=o>(</span>0x4c4dd8, 0x553e20, 0x1411, 0x1<span class=o>)</span>
+	/usr/local/go/src/runtime/proc.go:306 +0xe5 <span class=nv>fp</span><span class=o>=</span>0xc00002cfb0 <span class=nv>sp</span><span class=o>=</span>0xc00002cf90 <span class=nv>pc</span><span class=o>=</span>0x434e85
+runtime.goparkunlock<span class=o>(</span>...<span class=o>)</span>
+	/usr/local/go/src/runtime/proc.go:312
+runtime.forcegchelper<span class=o>()</span>
+	/usr/local/go/src/runtime/proc.go:255 +0xc5 <span class=nv>fp</span><span class=o>=</span>0xc00002cfe0 <span class=nv>sp</span><span class=o>=</span>0xc00002cfb0 <span class=nv>pc</span><span class=o>=</span>0x434d25
+runtime.goexit<span class=o>()</span>
+	/usr/local/go/src/runtime/asm_amd64.s:1374 +0x1 <span class=nv>fp</span><span class=o>=</span>0xc00002cfe8 <span class=nv>sp</span><span class=o>=</span>0xc00002cfe0 <span class=nv>pc</span><span class=o>=</span>0x463201
+created by runtime.init.6
+	/usr/local/go/src/runtime/proc.go:243 +0x35
+
+goroutine <span class=m>3</span> <span class=o>[</span>GC sweep wait<span class=o>]</span>:
+runtime.gopark<span class=o>(</span>0x4c4dd8, 0x553f20, 0x140c, 0x1<span class=o>)</span>
+	/usr/local/go/src/runtime/proc.go:306 +0xe5 <span class=nv>fp</span><span class=o>=</span>0xc00002d7a8 <span class=nv>sp</span><span class=o>=</span>0xc00002d788 <span class=nv>pc</span><span class=o>=</span>0x434e85
+runtime.goparkunlock<span class=o>(</span>...<span class=o>)</span>
+	/usr/local/go/src/runtime/proc.go:312
+runtime.bgsweep<span class=o>(</span>0xc00004a000<span class=o>)</span>
+	/usr/local/go/src/runtime/mgcsweep.go:163 +0x9e <span class=nv>fp</span><span class=o>=</span>0xc00002d7d8 <span class=nv>sp</span><span class=o>=</span>0xc00002d7a8 <span class=nv>pc</span><span class=o>=</span>0x42145e
+runtime.goexit<span class=o>()</span>
+	/usr/local/go/src/runtime/asm_amd64.s:1374 +0x1 <span class=nv>fp</span><span class=o>=</span>0xc00002d7e0 <span class=nv>sp</span><span class=o>=</span>0xc00002d7d8 <span class=nv>pc</span><span class=o>=</span>0x463201
+created by runtime.gcenable
+	/usr/local/go/src/runtime/mgc.go:217 +0x5c
+
+goroutine <span class=m>4</span> <span class=o>[</span>GC scavenge wait<span class=o>]</span>:
+runtime.gopark<span class=o>(</span>0x4c4dd8, 0x553fc0, 0x140d, 0x1<span class=o>)</span>
+	/usr/local/go/src/runtime/proc.go:306 +0xe5 <span class=nv>fp</span><span class=o>=</span>0xc00002df78 <span class=nv>sp</span><span class=o>=</span>0xc00002df58 <span class=nv>pc</span><span class=o>=</span>0x434e85
+runtime.goparkunlock<span class=o>(</span>...<span class=o>)</span>
+	/usr/local/go/src/runtime/proc.go:312
+runtime.bgscavenge<span class=o>(</span>0xc00004a000<span class=o>)</span>
+	/usr/local/go/src/runtime/mgcscavenge.go:265 +0xd2 <span class=nv>fp</span><span class=o>=</span>0xc00002dfd8 <span class=nv>sp</span><span class=o>=</span>0xc00002df78 <span class=nv>pc</span><span class=o>=</span>0x41f492
+runtime.goexit<span class=o>()</span>
+	/usr/local/go/src/runtime/asm_amd64.s:1374 +0x1 <span class=nv>fp</span><span class=o>=</span>0xc00002dfe0 <span class=nv>sp</span><span class=o>=</span>0xc00002dfd8 <span class=nv>pc</span><span class=o>=</span>0x463201
+created by runtime.gcenable
+	/usr/local/go/src/runtime/mgc.go:218 +0x7e
+
+goroutine <span class=m>5</span> <span class=o>[</span>finalizer wait<span class=o>]</span>:
+runtime.gopark<span class=o>(</span>0x4c4dd8, 0x583368, 0x4a1410, 0x1<span class=o>)</span>
+	/usr/local/go/src/runtime/proc.go:306 +0xe5 <span class=nv>fp</span><span class=o>=</span>0xc00002c758 <span class=nv>sp</span><span class=o>=</span>0xc00002c738 <span class=nv>pc</span><span class=o>=</span>0x434e85
+runtime.goparkunlock<span class=o>(</span>...<span class=o>)</span>
+	/usr/local/go/src/runtime/proc.go:312
+runtime.runfinq<span class=o>()</span>
+	/usr/local/go/src/runtime/mfinal.go:175 +0xa9 <span class=nv>fp</span><span class=o>=</span>0xc00002c7e0 <span class=nv>sp</span><span class=o>=</span>0xc00002c758 <span class=nv>pc</span><span class=o>=</span>0x4163e9
+runtime.goexit<span class=o>()</span>
+	/usr/local/go/src/runtime/asm_amd64.s:1374 +0x1 <span class=nv>fp</span><span class=o>=</span>0xc00002c7e8 <span class=nv>sp</span><span class=o>=</span>0xc00002c7e0 <span class=nv>pc</span><span class=o>=</span>0x463201
+created by runtime.createfing
+	/usr/local/go/src/runtime/mfinal.go:156 +0x65
+<span class=o>[</span>1<span class=o>]</span>    <span class=m>4665</span> abort <span class=o>(</span>core dumped<span class=o>)</span>  ./main
+</code></pre></td></tr></table></div></div><p><code>-rw------- 1 root root 101M Dec 23 15:05 core.main.4665</code></p></li></ul><h2 id=总结>总结</h2><p>描述Go生成coredump的方法，和写demo实现，本来尝试使用gdb分析coredump文件，发现看不出堆栈的信息。后续文章分析使用dlv分析go的coredump。</p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2021-06-12&nbsp;<a class=git-hash href=https://github.com/dillonzq/LoveIt/commit/98b367a8fa7cf251f74e91e224ed99fc6ad9e17a target=_blank title="commit by liuzw(1413883407@qq.com) 98b367a8fa7cf251f74e91e224ed99fc6ad9e17a: init基础文件提交">
+<i class="fas fa-hashtag fa-fw"></i>98b367a</a></span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/10-go-crash-gen/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/go/>go</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/08-centos-coredump/ class=prev rel=prev title=【centos】如何开启coredump文件转储文件><i class="fas fa-angle-left fa-fw"></i>【centos】如何开启coredump文件转储文件</a>
+<a href=/11-go-dlv-use/ class=next rel=next title="【Go】Go语言的调试利器 dlv debug">【Go】Go语言的调试利器 dlv debug<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2020 - 2021</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>coolliuzw</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:80},comment:{valine:{appId:"3VIPouKn5iFQMlbBf2EtE8Co-gzGzoHsz",appKey:"UbLTV7x8R6wlfF4XgAwBPsPn",avatar:"coolliuzw",el:"#valine",emojiCDN:"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/",emojiMaps:{100:"1f4af.png",alien:"1f47d.png",anger:"1f4a2.png",angry:"1f620.png",anguished:"1f627.png",astonished:"1f632.png",black_heart:"1f5a4.png",blue_heart:"1f499.png",blush:"1f60a.png",bomb:"1f4a3.png",boom:"1f4a5.png",broken_heart:"1f494.png",brown_heart:"1f90e.png",clown_face:"1f921.png",cold_face:"1f976.png",cold_sweat:"1f630.png",confounded:"1f616.png",confused:"1f615.png",cry:"1f622.png",crying_cat_face:"1f63f.png",cupid:"1f498.png",dash:"1f4a8.png",disappointed:"1f61e.png",disappointed_relieved:"1f625.png",dizzy:"1f4ab.png",dizzy_face:"1f635.png",drooling_face:"1f924.png",exploding_head:"1f92f.png",expressionless:"1f611.png",face_vomiting:"1f92e.png",face_with_cowboy_hat:"1f920.png",face_with_hand_over_mouth:"1f92d.png",face_with_head_bandage:"1f915.png",face_with_monocle:"1f9d0.png",face_with_raised_eyebrow:"1f928.png",face_with_rolling_eyes:"1f644.png",face_with_symbols_on_mouth:"1f92c.png",face_with_thermometer:"1f912.png",fearful:"1f628.png",flushed:"1f633.png",frowning:"1f626.png",ghost:"1f47b.png",gift_heart:"1f49d.png",green_heart:"1f49a.png",grimacing:"1f62c.png",grin:"1f601.png",grinning:"1f600.png",hankey:"1f4a9.png",hear_no_evil:"1f649.png",heart:"2764-fe0f.png",heart_decoration:"1f49f.png",heart_eyes:"1f60d.png",heart_eyes_cat:"1f63b.png",heartbeat:"1f493.png",heartpulse:"1f497.png",heavy_heart_exclamation_mark_ornament:"2763-fe0f.png",hole:"1f573-fe0f.png",hot_face:"1f975.png",hugging_face:"1f917.png",hushed:"1f62f.png",imp:"1f47f.png",innocent:"1f607.png",japanese_goblin:"1f47a.png",japanese_ogre:"1f479.png",joy:"1f602.png",joy_cat:"1f639.png",kiss:"1f48b.png",kissing:"1f617.png",kissing_cat:"1f63d.png",kissing_closed_eyes:"1f61a.png",kissing_heart:"1f618.png",kissing_smiling_eyes:"1f619.png",laughing:"1f606.png",left_speech_bubble:"1f5e8-fe0f.png",love_letter:"1f48c.png",lying_face:"1f925.png",mask:"1f637.png",money_mouth_face:"1f911.png",nauseated_face:"1f922.png",nerd_face:"1f913.png",neutral_face:"1f610.png",no_mouth:"1f636.png",open_mouth:"1f62e.png",orange_heart:"1f9e1.png",partying_face:"1f973.png",pensive:"1f614.png",persevere:"1f623.png",pleading_face:"1f97a.png",pouting_cat:"1f63e.png",purple_heart:"1f49c.png",rage:"1f621.png",relaxed:"263a-fe0f.png",relieved:"1f60c.png",revolving_hearts:"1f49e.png",right_anger_bubble:"1f5ef-fe0f.png",robot_face:"1f916.png",rolling_on_the_floor_laughing:"1f923.png",scream:"1f631.png",scream_cat:"1f640.png",see_no_evil:"1f648.png",shushing_face:"1f92b.png",skull:"1f480.png",skull_and_crossbones:"2620-fe0f.png",sleeping:"1f634.png",sleepy:"1f62a.png",slightly_frowning_face:"1f641.png",slightly_smiling_face:"1f642.png",smile:"1f604.png",smile_cat:"1f638.png",smiley:"1f603.png",smiley_cat:"1f63a.png",smiling_face_with_3_hearts:"1f970.png",smiling_imp:"1f608.png",smirk:"1f60f.png",smirk_cat:"1f63c.png",sneezing_face:"1f927.png",sob:"1f62d.png",space_invader:"1f47e.png",sparkling_heart:"1f496.png",speak_no_evil:"1f64a.png",speech_balloon:"1f4ac.png","star-struck":"1f929.png",stuck_out_tongue:"1f61b.png",stuck_out_tongue_closed_eyes:"1f61d.png",stuck_out_tongue_winking_eye:"1f61c.png",sunglasses:"1f60e.png",sweat:"1f613.png",sweat_drops:"1f4a6.png",sweat_smile:"1f605.png",thinking_face:"1f914.png",thought_balloon:"1f4ad.png",tired_face:"1f62b.png",triumph:"1f624.png",two_hearts:"1f495.png",unamused:"1f612.png",upside_down_face:"1f643.png",weary:"1f629.png",white_frowning_face:"2639-fe0f.png",white_heart:"1f90d.png",wink:"1f609.png",woozy_face:"1f974.png",worried:"1f61f.png",yawning_face:"1f971.png",yellow_heart:"1f49b.png",yum:"1f60b.png",zany_face:"1f92a.png",zipper_mouth_face:"1f910.png",zzz:"1f4a4.png"},enableQQ:!1,highlight:!0,lang:"zh-cn",pageSize:10,placeholder:"说点什么吧...",recordIP:!0,serverURLs:"https://3vipoukn.lc-cn-n1-shared.com",visitor:!0}},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},search:{algoliaAppID:"ZPFURTAVLE",algoliaIndex:"index",algoliaSearchKey:"8fb6ae6c4f71aeb5416dfb65477883e4",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"}}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

@@ -1,0 +1,259 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>【Go】性能分析之benchmark基准测试 - CoolLiuzw</title><meta name=Description content="golang的benchmark测试具体使用方法和一些测试的demo案例."><meta property="og:title" content="【Go】性能分析之benchmark基准测试"><meta property="og:description" content="golang的benchmark测试具体使用方法和一些测试的demo案例."><meta property="og:type" content="article"><meta property="og:url" content="https://coder-user.github.io/14-benchmark-test/"><meta property="og:image" content="https://coder-user.github.io/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2021-01-01T20:33:06+08:00"><meta property="article:modified_time" content="2021-06-12T20:04:28+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://coder-user.github.io/logo.png"><meta name=twitter:title content="【Go】性能分析之benchmark基准测试"><meta name=twitter:description content="golang的benchmark测试具体使用方法和一些测试的demo案例."><meta name=application-name content="LoveIt"><meta name=apple-mobile-web-app-title content="LoveIt"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://coder-user.github.io/14-benchmark-test/><link rel=prev href=https://coder-user.github.io/11-ngrok/><link rel=next href=https://coder-user.github.io/16-singleflight-pkg/><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"【Go】性能分析之benchmark基准测试","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/coder-user.github.io\/14-benchmark-test\/"},"image":[{"@type":"ImageObject","url":"https:\/\/coder-user.github.io\/images\/Apple-Devices-Preview.png","width":3200,"height":2048}],"genre":"posts","keywords":"go","wordcount":1891,"url":"https:\/\/coder-user.github.io\/14-benchmark-test\/","datePublished":"2021-01-01T20:33:06+08:00","dateModified":"2021-06-12T20:04:28+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"coolliuzw","logo":{"@type":"ImageObject","url":"https:\/\/coder-user.github.io\/images\/avatar_me.png","width":600,"height":600}},"author":{"@type":"Person","name":"coolliuzw"},"description":"golang的benchmark测试具体使用方法和一些测试的demo案例."}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark')&&document.body.setAttribute('theme','dark')</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=CoolLiuzw><span class=header-title-pre><i class="far fa-kiss-wink-heart fa-fw"></i></span>CoolLiuzw</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>所有文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=CoolLiuzw><span class=header-title-pre><i class="far fa-kiss-wink-heart fa-fw"></i></span>CoolLiuzw</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/ title>所有文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">【Go】性能分析之benchmark基准测试</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>coolliuzw</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/go/><i class="far fa-folder fa-fw"></i>go</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-01-01>2021-01-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1891 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id=/14-benchmark-test/ class=leancloud_visitors data-flag-title=【Go】性能分析之benchmark基准测试>
+<i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#简介>简介</a></li><li><a href=#1-准备>1 准备</a></li><li><a href=#2-benchmark测试>2 benchmark测试</a><ul><li><a href=#21-测试环境的搭建>2.1 测试环境的搭建</a></li><li><a href=#22-go-test-执行测试用例>2.2 Go test 执行测试用例</a></li><li><a href=#23-go-test的一些扩展参数>2.3 Go test的一些扩展参数</a><ul><li><a href=#231-准确度的提升>2.3.1 准确度的提升</a></li><li><a href=#232-实现内存的统计>2.3.2 实现内存的统计</a></li></ul></li></ul></li><li><a href=#3-benchmark扩展和原理分析>3 benchmark扩展和原理分析</a><ul><li><a href=#31-精确耗时处理>3.1 精确耗时处理</a></li><li><a href=#32-原理简单说明>3.2 原理简单说明</a></li></ul></li><li><a href=#总结>总结</a></li></ul></nav></div></div><div class=content id=content><h2 id=简介>简介</h2><p><code>benchmark</code>基准测试是一种测试代码性能的方法，同时也可以用来判断某段代码的CPU或者内存效率问题。很多开发都是通过<code>benchmark</code>测试的结果来衡量一个函数或者功能的性能表现。一个优秀的程序员不仅需要写好自己的业务代码，其次测试代码的质量也是衡量的一个重要标准。一个完整的单元测试和性能测试，至少可以发现80%的bug。</p><p>以下以Go语言为案例，说说go的benchmark测试。</p><h2 id=1-准备>1 准备</h2><ul><li>压力测试的环境，必须同一个测试环境，修改前后才有对比可言。</li><li>压力测试的环境，最好和线上运行的系统相同，建议使用<code>linux</code>，有条件的可以与线上系统的配置相同。</li><li>机器处于闲置状态，测试时不要执行其他任务，也不要和其他人共享硬件资源。</li></ul><h2 id=2-benchmark测试>2 benchmark测试</h2><h3 id=21-测试环境的搭建>2.1 测试环境的搭建</h3><p>​ Go 语言标准库内置的 testing 测试框架提供了基准测试<code>benchmark</code>的能力，能让我们很容易地对某一段代码进行性能试。<code>benchmark</code>的测试方式和普通的测试方式相同，创建的测试文件都需要以<code>_test.go</code>结尾。一般测试的情况，都是一个源文件代码会对应一个测试文件。测试文件的量可以会远超业务代码的量。</p><p>使用命命令行操作：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>$ mkdir benchmark
+
+$ <span class=nb>cd</span> benchmark
+
+$ vim main.go
+</code></pre></td></tr></table></div></div><ul><li>main.go<ul><li>测试什么程序的性能呢？这个问题我想了很久。排序算法？</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kn>package</span> <span class=nx>main</span>
+
+<span class=kn>import</span> <span class=s>&#34;fmt&#34;</span>
+
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=nx>arr</span> <span class=o>:=</span> <span class=p>[]</span><span class=kt>int</span><span class=p>{</span><span class=mi>8</span><span class=p>,</span> <span class=mi>4</span><span class=p>,</span> <span class=mi>2</span><span class=p>,</span> <span class=mi>9</span><span class=p>,</span> <span class=mi>10</span><span class=p>,</span> <span class=o>-</span><span class=mi>3</span><span class=p>,</span> <span class=mi>3</span><span class=p>,</span> <span class=mi>20</span><span class=p>,</span> <span class=mi>15</span><span class=p>,</span> <span class=o>-</span><span class=mi>1</span><span class=p>}</span>
+	<span class=nf>bubbleSort</span><span class=p>(</span><span class=nx>arr</span><span class=p>)</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>arr</span><span class=p>)</span>
+<span class=p>}</span>
+
+<span class=kd>func</span> <span class=nf>bubbleSort</span><span class=p>(</span><span class=nx>arr</span> <span class=p>[]</span><span class=kt>int</span><span class=p>)</span> <span class=p>{</span>
+	<span class=nx>length</span> <span class=o>:=</span> <span class=nb>len</span><span class=p>(</span><span class=nx>arr</span><span class=p>)</span>
+	<span class=k>for</span> <span class=nx>i</span> <span class=o>:=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span> <span class=p>&lt;</span> <span class=nx>length</span><span class=o>-</span><span class=mi>1</span><span class=p>;</span> <span class=nx>i</span><span class=o>++</span> <span class=p>{</span>
+		<span class=nx>flag</span> <span class=o>:=</span> <span class=kc>true</span>
+
+		<span class=k>for</span> <span class=nx>j</span> <span class=o>:=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>j</span> <span class=p>&lt;</span> <span class=nx>length</span><span class=o>-</span><span class=mi>1</span><span class=o>-</span><span class=nx>i</span><span class=p>;</span> <span class=nx>j</span><span class=o>++</span> <span class=p>{</span>
+			<span class=k>if</span> <span class=nx>arr</span><span class=p>[</span><span class=nx>j</span><span class=p>]</span> <span class=p>&gt;</span> <span class=nx>arr</span><span class=p>[</span><span class=nx>j</span><span class=o>+</span><span class=mi>1</span><span class=p>]</span> <span class=p>{</span>
+				<span class=nx>arr</span><span class=p>[</span><span class=nx>j</span><span class=p>],</span> <span class=nx>arr</span><span class=p>[</span><span class=nx>j</span><span class=o>+</span><span class=mi>1</span><span class=p>]</span> <span class=p>=</span> <span class=nx>arr</span><span class=p>[</span><span class=nx>j</span><span class=o>+</span><span class=mi>1</span><span class=p>],</span> <span class=nx>arr</span><span class=p>[</span><span class=nx>j</span><span class=p>]</span>
+				<span class=nx>flag</span> <span class=p>=</span> <span class=kc>false</span>
+			<span class=p>}</span>
+		<span class=p>}</span>
+
+		<span class=k>if</span> <span class=nx>flag</span> <span class=p>{</span>
+			<span class=k>break</span>
+		<span class=p>}</span>
+	<span class=p>}</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>新建测试程序，编写测试代码</li></ul><p><strong>vim main_test.go</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kn>package</span> <span class=nx>main</span>
+
+<span class=kn>import</span> <span class=p>(</span>
+	<span class=s>&#34;math/rand&#34;</span>
+	<span class=s>&#34;testing&#34;</span>
+	<span class=s>&#34;time&#34;</span>
+<span class=p>)</span>
+
+<span class=kd>var</span> <span class=nx>intArray</span> <span class=p>[]</span><span class=kt>int</span>
+
+<span class=kd>func</span> <span class=nf>TestMain</span><span class=p>(</span><span class=nx>m</span> <span class=o>*</span><span class=nx>testing</span><span class=p>.</span><span class=nx>M</span><span class=p>)</span> <span class=p>{</span>
+	<span class=nx>rand</span><span class=p>.</span><span class=nf>Seed</span><span class=p>(</span><span class=nx>time</span><span class=p>.</span><span class=nf>Now</span><span class=p>().</span><span class=nf>Unix</span><span class=p>())</span>
+	<span class=nx>intArray</span> <span class=p>=</span> <span class=nb>make</span><span class=p>([]</span><span class=kt>int</span><span class=p>,</span> <span class=mi>10000</span><span class=p>)</span>
+
+	<span class=k>for</span> <span class=nx>i</span> <span class=o>:=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span> <span class=p>&lt;</span> <span class=mi>10000</span><span class=p>;</span> <span class=nx>i</span><span class=o>++</span> <span class=p>{</span>
+		<span class=nx>intArray</span><span class=p>[</span><span class=nx>i</span><span class=p>]</span> <span class=p>=</span> <span class=nx>rand</span><span class=p>.</span><span class=nf>Int</span><span class=p>()</span>
+	<span class=p>}</span>
+
+	<span class=nx>m</span><span class=p>.</span><span class=nf>Run</span><span class=p>()</span>
+<span class=p>}</span>
+
+
+<span class=kd>func</span> <span class=nf>Benchmark_bubbleSort</span><span class=p>(</span><span class=nx>b</span> <span class=o>*</span><span class=nx>testing</span><span class=p>.</span><span class=nx>B</span><span class=p>)</span> <span class=p>{</span>
+	<span class=nx>slice</span> <span class=o>:=</span> <span class=nx>intArray</span><span class=p>[</span><span class=mi>0</span><span class=p>:</span><span class=mi>10000</span><span class=p>]</span>
+	<span class=k>for</span> <span class=nx>i</span> <span class=o>:=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span> <span class=p>&lt;</span> <span class=nx>b</span><span class=p>.</span><span class=nx>N</span><span class=p>;</span> <span class=nx>i</span><span class=o>++</span> <span class=p>{</span>
+		<span class=nf>bubbleSort</span><span class=p>(</span><span class=nx>slice</span><span class=p>)</span>
+	<span class=p>}</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>benchmark 和普通的单元测试用例是使用，测试文件都是需要<code>_test.go</code> 结尾命名。</li><li>函数名以 <code>Benchmark</code> 开头，参数是 <code>b *testing.B</code>。</li><li><code>func TestMain(m *testing.M)</code>是测试前运行的数据，这边是实现随机一组int类型的数据。</li></ul><p>这样我们的测试环境就搭建好了，可以开始执行我们的测试了。</p><h3 id=22-go-test-执行测试用例>2.2 Go test 执行测试用例</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>$ go <span class=nb>test</span> -bench .
+goos: darwin
+goarch: amd64
+pkg: benchmark
+Benchmark_bubbleSort-8   	   99993	     <span class=m>11892</span> ns/op
+PASS
+ok  	benchmark	4.550s
+</code></pre></td></tr></table></div></div><p>在测试目录执行<code>go test</code>，使用 <code>go test -bench .</code>执行当前目录下的所有<code>benchmark</code>测试单元。</p><p><strong>如果目录下有很多的测试单元，你只想执行其中一个怎么办？</strong></p><p><code>-bench</code>参数支持使用正则表达式，正则表达式匹配到的<code>benchmark</code>测试才会执行。</p><p><code>$ go test -bench='^bubbleSort$' .</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>$ go <span class=nb>test</span> -bench<span class=o>=</span><span class=s1>&#39;bubbleSort&#39;</span> .
+goos: darwin
+goarch: amd64
+pkg: benchmark
+Benchmark_bubbleSort-8   	   99130	     <span class=m>12216</span> ns/op
+PASS
+ok  	benchmark	2.601s
+</code></pre></td></tr></table></div></div><p><strong>benchmark执行的过程中，过滤单元测试的输出</strong></p><ul><li><p><code>-run</code>匹配一个从来没有单元测试的方法，过滤单元测试的输出，可以使用以下两种的测试方法：</p><ul><li><code>-run=none</code></li><li><code>-run=^$</code></li></ul><p>eg:</p><p><code>go test -bench=. -run=none</code></p><p><code>go test -bench=. -run=^$</code></p></li></ul><h3 id=23-go-test的一些扩展参数>2.3 Go test的一些扩展参数</h3><h4 id=231-准确度的提升>2.3.1 准确度的提升</h4><p>正确的使用扩展参数的情况，能提高单元测试精确度。</p><p><code>-benchtime</code>和<code>-count</code>参数<code>-cpu</code></p><p><strong>-benchtime</strong></p><p><strong>测试时间</strong></p><p><code>go test -bench=. -benchtime=5s .</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>$  go <span class=nb>test</span> -bench<span class=o>=</span>. -benchtime<span class=o>=</span>5s .
+goos: darwin
+goarch: amd64
+pkg: benchmark
+Benchmark_bubbleSort-8   	  502545	     <span class=m>12027</span> ns/op
+PASS
+ok  	benchmark	11.097s
+</code></pre></td></tr></table></div></div><p>​ 为什么时间是 <code>11.097s</code> 不是 <code>5s</code>，测试用例编译、执行、销毁等是需要时间的。</p><p><strong>测试次数</strong></p><p><code>go test -bench=. -benchtime=5x .</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>$ go <span class=nb>test</span> -bench<span class=o>=</span>. -benchtime<span class=o>=</span>5x .
+goos: darwin
+goarch: amd64
+pkg: benchmark
+Benchmark_bubbleSort-8   	       5	     <span class=m>16795</span> ns/op
+PASS
+ok  	benchmark	0.388s
+</code></pre></td></tr></table></div></div><p><strong>-cpu</strong></p><p>设置cpu使用个数对程序的性能的影响。</p><p><code>go test -bench=. -cpu=2,4,8 .</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>$ go <span class=nb>test</span> -bench<span class=o>=</span>. -cpu<span class=o>=</span>2,4,8 .
+goos: darwin
+goarch: amd64
+pkg: benchmark
+Benchmark_bubbleSort-2   	   97129	     <span class=m>12054</span> ns/op
+Benchmark_bubbleSort-4   	   98277	     <span class=m>11940</span> ns/op
+Benchmark_bubbleSort-8   	   99444	     <span class=m>11927</span> ns/op
+PASS
+ok  	benchmark	5.012s
+</code></pre></td></tr></table></div></div><p>​ 为什么2，4，8核心的性能几乎是一样的？因为没有使用到多线程的机制，写的demo是串行的。</p><h4 id=232-实现内存的统计>2.3.2 实现内存的统计</h4><p><strong>-benchmem</strong></p><p><code>go test -bench=. -benchmem</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>goos: darwin
+goarch: amd64
+pkg: benchmark
+Benchmark_bubbleSort-8   	  100401	     <span class=m>11959</span> ns/op	       <span class=m>0</span> B/op	       <span class=m>0</span> allocs/op
+PASS
+ok  	benchmark	2.624s
+</code></pre></td></tr></table></div></div><h2 id=3-benchmark扩展和原理分析>3 benchmark扩展和原理分析</h2><h3 id=31-精确耗时处理>3.1 精确耗时处理</h3><ul><li>ResetTimer<ul><li>受到耗时准备任务的干扰情况，使用<code>ResetTimer</code>重置时间。</li></ul></li><li>StopTimer 和 StartTimer<ul><li>每次函数调用前后需要一些准备工作和清理工作，可以使用 <code>StopTimer</code> 暂停计时以及使用 <code>StartTimer</code> 开始计时。</li></ul></li></ul><h3 id=32-原理简单说明>3.2 原理简单说明</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nf>Benchmark_bubbleSort</span><span class=p>(</span><span class=nx>b</span> <span class=o>*</span><span class=nx>testing</span><span class=p>.</span><span class=nx>B</span><span class=p>)</span> <span class=p>{</span>
+	<span class=nx>slice</span> <span class=o>:=</span> <span class=nx>intArray</span><span class=p>[</span><span class=mi>0</span><span class=p>:</span><span class=mi>10000</span><span class=p>]</span>
+	<span class=k>for</span> <span class=nx>i</span> <span class=o>:=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span> <span class=p>&lt;</span> <span class=nx>b</span><span class=p>.</span><span class=nx>N</span><span class=p>;</span> <span class=nx>i</span><span class=o>++</span> <span class=p>{</span>
+		<span class=nf>bubbleSort</span><span class=p>(</span><span class=nx>slice</span><span class=p>)</span>
+	<span class=p>}</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><p>​ 通过demo可以看到，<code>benchmark</code>测试的时候，使用的参数为<code>b *testing.B</code>，有一个很重要用到的数据类型为<code>b.N</code>，通过<code>for</code>循环可以看出，是用例需要执行的次数。<code>b.N</code>对于每个用例测试可能都是不一样的。</p><p><strong>那这个b.N的数值的N是如何决定的呢？</strong></p><p>​ b.N从1开始，如果测试的用例可以在 1s 内完成，<code>b.N</code>的值增加，再次的去执行。b.N的值大概是以指数的方式序列递增，越到后面，增加的越快。</p><p><strong>demo:</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nf>BenchmarkSleep1s</span><span class=p>(</span><span class=nx>b</span> <span class=o>*</span><span class=nx>testing</span><span class=p>.</span><span class=nx>B</span><span class=p>)</span> <span class=p>{</span>
+	<span class=k>for</span> <span class=nx>i</span> <span class=o>:=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span> <span class=p>&lt;</span> <span class=nx>b</span><span class=p>.</span><span class=nx>N</span><span class=p>;</span> <span class=nx>i</span><span class=o>++</span> <span class=p>{</span>
+		<span class=nx>time</span><span class=p>.</span><span class=nf>Sleep</span><span class=p>(</span><span class=nx>time</span><span class=p>.</span><span class=nx>Second</span> <span class=o>*</span> <span class=mi>1</span><span class=p>)</span>
+	<span class=p>}</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><p><strong>测试命令</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>$ go test -bench=&#34;Sleep&#34;    
+goos: darwin
+goarch: amd64
+pkg: benchmark
+BenchmarkSleep1s-8             1        1002035924 ns/op
+PASS
+ok      benchmark       1.438s
+</code></pre></td></tr></table></div></div><ul><li>为什么只执行一次的话，应该就是上面的方式方法。</li></ul><h2 id=总结>总结</h2><p>介绍了benchmark的使用，以及相关扩展参数的使用方法。快去实践一下吧？
+后续的话，介绍使用pprof进行性能的分析。</p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2021-06-12&nbsp;<a class=git-hash href=https://github.com/dillonzq/LoveIt/commit/98b367a8fa7cf251f74e91e224ed99fc6ad9e17a target=_blank title="commit by liuzw(1413883407@qq.com) 98b367a8fa7cf251f74e91e224ed99fc6ad9e17a: init基础文件提交">
+<i class="fas fa-hashtag fa-fw"></i>98b367a</a></span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/14-benchmark-test/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/go/>go</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/11-ngrok/ class=prev rel=prev title=【ngrok】微软推荐的使用内网穿透工具><i class="fas fa-angle-left fa-fw"></i>【ngrok】微软推荐的使用内网穿透工具</a>
+<a href=/16-singleflight-pkg/ class=next rel=next title="【Go】singleflight 100行代码解决缓存击穿问题">【Go】singleflight 100行代码解决缓存击穿问题<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2020 - 2021</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>coolliuzw</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:80},comment:{valine:{appId:"3VIPouKn5iFQMlbBf2EtE8Co-gzGzoHsz",appKey:"UbLTV7x8R6wlfF4XgAwBPsPn",avatar:"coolliuzw",el:"#valine",emojiCDN:"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/",emojiMaps:{100:"1f4af.png",alien:"1f47d.png",anger:"1f4a2.png",angry:"1f620.png",anguished:"1f627.png",astonished:"1f632.png",black_heart:"1f5a4.png",blue_heart:"1f499.png",blush:"1f60a.png",bomb:"1f4a3.png",boom:"1f4a5.png",broken_heart:"1f494.png",brown_heart:"1f90e.png",clown_face:"1f921.png",cold_face:"1f976.png",cold_sweat:"1f630.png",confounded:"1f616.png",confused:"1f615.png",cry:"1f622.png",crying_cat_face:"1f63f.png",cupid:"1f498.png",dash:"1f4a8.png",disappointed:"1f61e.png",disappointed_relieved:"1f625.png",dizzy:"1f4ab.png",dizzy_face:"1f635.png",drooling_face:"1f924.png",exploding_head:"1f92f.png",expressionless:"1f611.png",face_vomiting:"1f92e.png",face_with_cowboy_hat:"1f920.png",face_with_hand_over_mouth:"1f92d.png",face_with_head_bandage:"1f915.png",face_with_monocle:"1f9d0.png",face_with_raised_eyebrow:"1f928.png",face_with_rolling_eyes:"1f644.png",face_with_symbols_on_mouth:"1f92c.png",face_with_thermometer:"1f912.png",fearful:"1f628.png",flushed:"1f633.png",frowning:"1f626.png",ghost:"1f47b.png",gift_heart:"1f49d.png",green_heart:"1f49a.png",grimacing:"1f62c.png",grin:"1f601.png",grinning:"1f600.png",hankey:"1f4a9.png",hear_no_evil:"1f649.png",heart:"2764-fe0f.png",heart_decoration:"1f49f.png",heart_eyes:"1f60d.png",heart_eyes_cat:"1f63b.png",heartbeat:"1f493.png",heartpulse:"1f497.png",heavy_heart_exclamation_mark_ornament:"2763-fe0f.png",hole:"1f573-fe0f.png",hot_face:"1f975.png",hugging_face:"1f917.png",hushed:"1f62f.png",imp:"1f47f.png",innocent:"1f607.png",japanese_goblin:"1f47a.png",japanese_ogre:"1f479.png",joy:"1f602.png",joy_cat:"1f639.png",kiss:"1f48b.png",kissing:"1f617.png",kissing_cat:"1f63d.png",kissing_closed_eyes:"1f61a.png",kissing_heart:"1f618.png",kissing_smiling_eyes:"1f619.png",laughing:"1f606.png",left_speech_bubble:"1f5e8-fe0f.png",love_letter:"1f48c.png",lying_face:"1f925.png",mask:"1f637.png",money_mouth_face:"1f911.png",nauseated_face:"1f922.png",nerd_face:"1f913.png",neutral_face:"1f610.png",no_mouth:"1f636.png",open_mouth:"1f62e.png",orange_heart:"1f9e1.png",partying_face:"1f973.png",pensive:"1f614.png",persevere:"1f623.png",pleading_face:"1f97a.png",pouting_cat:"1f63e.png",purple_heart:"1f49c.png",rage:"1f621.png",relaxed:"263a-fe0f.png",relieved:"1f60c.png",revolving_hearts:"1f49e.png",right_anger_bubble:"1f5ef-fe0f.png",robot_face:"1f916.png",rolling_on_the_floor_laughing:"1f923.png",scream:"1f631.png",scream_cat:"1f640.png",see_no_evil:"1f648.png",shushing_face:"1f92b.png",skull:"1f480.png",skull_and_crossbones:"2620-fe0f.png",sleeping:"1f634.png",sleepy:"1f62a.png",slightly_frowning_face:"1f641.png",slightly_smiling_face:"1f642.png",smile:"1f604.png",smile_cat:"1f638.png",smiley:"1f603.png",smiley_cat:"1f63a.png",smiling_face_with_3_hearts:"1f970.png",smiling_imp:"1f608.png",smirk:"1f60f.png",smirk_cat:"1f63c.png",sneezing_face:"1f927.png",sob:"1f62d.png",space_invader:"1f47e.png",sparkling_heart:"1f496.png",speak_no_evil:"1f64a.png",speech_balloon:"1f4ac.png","star-struck":"1f929.png",stuck_out_tongue:"1f61b.png",stuck_out_tongue_closed_eyes:"1f61d.png",stuck_out_tongue_winking_eye:"1f61c.png",sunglasses:"1f60e.png",sweat:"1f613.png",sweat_drops:"1f4a6.png",sweat_smile:"1f605.png",thinking_face:"1f914.png",thought_balloon:"1f4ad.png",tired_face:"1f62b.png",triumph:"1f624.png",two_hearts:"1f495.png",unamused:"1f612.png",upside_down_face:"1f643.png",weary:"1f629.png",white_frowning_face:"2639-fe0f.png",white_heart:"1f90d.png",wink:"1f609.png",woozy_face:"1f974.png",worried:"1f61f.png",yawning_face:"1f971.png",yellow_heart:"1f49b.png",yum:"1f60b.png",zany_face:"1f92a.png",zipper_mouth_face:"1f910.png",zzz:"1f4a4.png"},enableQQ:!1,highlight:!0,lang:"zh-cn",pageSize:10,placeholder:"说点什么吧...",recordIP:!0,serverURLs:"https://3vipoukn.lc-cn-n1-shared.com",visitor:!0}},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},search:{algoliaAppID:"ZPFURTAVLE",algoliaIndex:"index",algoliaSearchKey:"8fb6ae6c4f71aeb5416dfb65477883e4",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"}}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

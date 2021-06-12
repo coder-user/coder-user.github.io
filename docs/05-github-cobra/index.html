@@ -1,0 +1,190 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>【Go】Cobra Go最强大的命令行工具【1】 - CoolLiuzw</title><meta name=Description content="简单的介绍一个Go语言必须的库，强大的命令行工具."><meta property="og:title" content="【Go】Cobra Go最强大的命令行工具【1】"><meta property="og:description" content="简单的介绍一个Go语言必须的库，强大的命令行工具."><meta property="og:type" content="article"><meta property="og:url" content="https://coder-user.github.io/05-github-cobra/"><meta property="og:image" content="https://coder-user.github.io/05-github-cobra/featured-image.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2020-12-12T11:45:06+08:00"><meta property="article:modified_time" content="2021-06-12T20:04:28+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://coder-user.github.io/05-github-cobra/featured-image.png"><meta name=twitter:title content="【Go】Cobra Go最强大的命令行工具【1】"><meta name=twitter:description content="简单的介绍一个Go语言必须的库，强大的命令行工具."><meta name=application-name content="LoveIt"><meta name=apple-mobile-web-app-title content="LoveIt"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://coder-user.github.io/05-github-cobra/><link rel=prev href=https://coder-user.github.io/04-for...range/><link rel=next href=https://coder-user.github.io/06-github-cobra/><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"【Go】Cobra Go最强大的命令行工具【1】","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/coder-user.github.io\/05-github-cobra\/"},"image":[{"@type":"ImageObject","url":"https:\/\/coder-user.github.io\/05-github-cobra\/featured-image.png","width":1067,"height":338}],"genre":"posts","keywords":"go","wordcount":1100,"url":"https:\/\/coder-user.github.io\/05-github-cobra\/","datePublished":"2020-12-12T11:45:06+08:00","dateModified":"2021-06-12T20:04:28+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"coolliuzw","logo":{"@type":"ImageObject","url":"https:\/\/coder-user.github.io\/images\/avatar_me.png","width":600,"height":600}},"author":{"@type":"Person","name":"coolliuzw"},"description":"简单的介绍一个Go语言必须的库，强大的命令行工具."}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark')&&document.body.setAttribute('theme','dark')</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=CoolLiuzw><span class=header-title-pre><i class="far fa-kiss-wink-heart fa-fw"></i></span>CoolLiuzw</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>所有文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=CoolLiuzw><span class=header-title-pre><i class="far fa-kiss-wink-heart fa-fw"></i></span>CoolLiuzw</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/ title>所有文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">【Go】Cobra Go最强大的命令行工具【1】</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>coolliuzw</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/go/><i class="far fa-folder fa-fw"></i>go</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2020-12-12>2020-12-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1100 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;<span id=/05-github-cobra/ class=leancloud_visitors data-flag-title="【Go】Cobra Go最强大的命令行工具【1】">
+<i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class=featured-image><img class=lazyload src=/svg/loading.min.svg data-src=/05-github-cobra/featured-image.png data-srcset="/05-github-cobra/featured-image.png, /05-github-cobra/featured-image.png 1.5x, /05-github-cobra/featured-image.png 2x" data-sizes=auto alt=/05-github-cobra/featured-image.png title=简单的介绍一个Go语言必须的库，强大的命令行工具.></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#简介>简介</a></li><li><a href=#准备工作>准备工作</a><ul><li><a href=#安装>安装</a></li></ul></li><li><a href=#工具常用命令>工具常用命令</a></li><li><a href=#基础实践>基础实践</a><ul><li><a href=#demo工程项目生成>demo工程项目生成</a></li><li><a href=#demo程序修改>demo程序修改</a></li><li><a href=#添加自定义cli命令>添加自定义Cli命令</a></li></ul></li><li><a href=#总结>总结</a></li></ul></nav></div></div><div class=content id=content><p>简单的介绍一个Go语言必须的库，强大的命令行工具.</p><h2 id=简介>简介</h2><p>Cobra既是一个用于创建功能强大的现代CLI应用程序的库，也是一个生成应用程序和命令文件的程序。</p><p>Cobra被用于许多Go项目中，比如<code>Kubernetes</code>、<code>Hugo</code>和<code>githubcli</code>等等。</p><p>github地址: <a href=https://github.com/spf13/cobra target=_blank rel="noopener noreffer">cobra</a></p><h2 id=准备工作>准备工作</h2><h3 id=安装>安装</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>go get -u github.com/spf13/cobra
+</code></pre></td></tr></table></div></div><p>然后在你的项目引入Cobra的包:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>import <span class=s2>&#34;github.com/spf13/cobra&#34;</span>
+</code></pre></td></tr></table></div></div><p>go get后，也会给系统安一个cobra的工具，我们可以使用这个工具生成项目的demo。</p><h2 id=工具常用命令>工具常用命令</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>$ cobra -h                                      
+Cobra is a CLI library <span class=k>for</span> Go that empowers applications.
+This application is a tool to generate the needed files
+to quickly create a Cobra application.
+
+Usage:
+  cobra <span class=o>[</span>command<span class=o>]</span>
+
+Available Commands:
+  add         Add a <span class=nb>command</span> to a Cobra Application
+  <span class=nb>help</span>        Help about any <span class=nb>command</span>
+  init        Initialize a Cobra Application
+
+Flags:
+  -a, --author string    author name <span class=k>for</span> copyright attribution <span class=o>(</span>default <span class=s2>&#34;YOUR NAME&#34;</span><span class=o>)</span>
+      --config string    config file <span class=o>(</span>default is <span class=nv>$HOME</span>/.cobra.yaml<span class=o>)</span>
+  -h, --help             <span class=nb>help</span> <span class=k>for</span> cobra
+  -l, --license string   name of license <span class=k>for</span> the project
+      --viper            use Viper <span class=k>for</span> configuration <span class=o>(</span>default <span class=nb>true</span><span class=o>)</span>
+
+Use <span class=s2>&#34;cobra [command] --help&#34;</span> <span class=k>for</span> more information about a command.
+</code></pre></td></tr></table></div></div><h2 id=基础实践>基础实践</h2><h3 id=demo工程项目生成>demo工程项目生成</h3><ul><li><p>建议cobra空文件夹</p></li><li><p>使用go mod初始化文件 <code>go mod init cobra</code></p></li><li><p>使用cobra工具生成项目文件:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>cobra init --pkg-name cobra --author coolliuzw
+</code></pre></td></tr></table></div></div></li><li><p>运行测试</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>$ go run main.go            
+A longer description that spans multiple lines and likely contains
+examples and usage of using your application. For example:
+
+Cobra is a CLI library <span class=k>for</span> Go that empowers applications.
+This application is a tool to generate the needed files
+to quickly create a Cobra application.
+</code></pre></td></tr></table></div></div></li></ul><p>步骤执行完成后，就有一个基本可运行的命令行demo。</p><h3 id=demo程序修改>demo程序修改</h3><p>go run main.go，demo输出的是以上的内容，那么我们应该如何去修改他呢？跟我来：</p><ul><li><p><code>vim cmd/root.go</code> 就能看到输出的这段代码了。cobra自动生成命令行都放置在cmd这个目录下。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=c1>// rootCmd represents the base command when called without any subcommands
+</span><span class=c1></span><span class=kd>var</span> <span class=nx>rootCmd</span> <span class=p>=</span> <span class=o>&amp;</span><span class=nx>cobra</span><span class=p>.</span><span class=nx>Command</span><span class=p>{</span>
+	<span class=nx>Use</span><span class=p>:</span>   <span class=s>&#34;cobra&#34;</span><span class=p>,</span>
+	<span class=nx>Short</span><span class=p>:</span> <span class=s>&#34;A brief description of your application&#34;</span><span class=p>,</span>
+	<span class=nx>Long</span><span class=p>:</span> <span class=s>`A longer description that spans multiple lines and likely contains
+</span><span class=s>examples and usage of using your application. For example:
+</span><span class=s>
+</span><span class=s>Cobra is a CLI library for Go that empowers applications.
+</span><span class=s>This application is a tool to generate the needed files
+</span><span class=s>to quickly create a Cobra application.`</span><span class=p>,</span>
+	<span class=c1>// Uncomment the following line if your bare application
+</span><span class=c1></span>	<span class=c1>// has an action associated with it:
+</span><span class=c1></span>	<span class=c1>//	Run: func(cmd *cobra.Command, args []string) { },
+</span><span class=c1></span><span class=p>}</span>
+</code></pre></td></tr></table></div></div></li><li><p>demo也有一些注释说明简单的用法，我们来修改一下demo在测试一下。</p><ul><li><p>修改</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=c1>// rootCmd represents the base command when called without any subcommands
+</span><span class=c1></span><span class=kd>var</span> <span class=nx>rootCmd</span> <span class=p>=</span> <span class=o>&amp;</span><span class=nx>cobra</span><span class=p>.</span><span class=nx>Command</span><span class=p>{</span>
+  <span class=nx>Use</span><span class=p>:</span>   <span class=s>&#34;cobra&#34;</span><span class=p>,</span>
+  <span class=nx>Short</span><span class=p>:</span> <span class=s>&#34;A brief description of coolliuzw&#34;</span><span class=p>,</span>
+  <span class=nx>Long</span><span class=p>:</span> <span class=s>`A longer description of coolliuzw blog`</span><span class=p>,</span>
+  <span class=c1>// Uncomment the following line if your bare application
+</span><span class=c1></span>  <span class=c1>// has an action associated with it:
+</span><span class=c1></span>  <span class=c1>//	Run: func(cmd *cobra.Command, args []string) { },
+</span><span class=c1></span><span class=p>}</span>
+</code></pre></td></tr></table></div></div></li><li><p>运行</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>go run main.go   
+A longer description of coolliuzw blog
+</code></pre></td></tr></table></div></div></li><li><p>具体修改了什么看一下代码的注释。</p></li></ul></li></ul><h3 id=添加自定义cli命令>添加自定义Cli命令</h3><ul><li><p>添加<code>version</code>命令行工具.</p></li><li><p><code>cobra add version --author coolliuzw</code></p></li><li><p>cmd目录下多了一个version.go的文件。</p></li><li><p>尝试修改version测试</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=c1>// versionCmd represents the version command
+</span><span class=c1></span><span class=kd>var</span> <span class=nx>versionCmd</span> <span class=p>=</span> <span class=o>&amp;</span><span class=nx>cobra</span><span class=p>.</span><span class=nx>Command</span><span class=p>{</span>
+	<span class=nx>Use</span><span class=p>:</span>   <span class=s>&#34;version&#34;</span><span class=p>,</span>
+	<span class=nx>Short</span><span class=p>:</span> <span class=s>&#34;A brief description of version&#34;</span><span class=p>,</span>
+	<span class=nx>Long</span><span class=p>:</span> <span class=s>`A longer description of version long`</span><span class=p>,</span>
+	<span class=nx>Run</span><span class=p>:</span> <span class=kd>func</span><span class=p>(</span><span class=nx>cmd</span> <span class=o>*</span><span class=nx>cobra</span><span class=p>.</span><span class=nx>Command</span><span class=p>,</span> <span class=nx>args</span> <span class=p>[]</span><span class=kt>string</span><span class=p>)</span> <span class=p>{</span>
+      <span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;version called&#34;</span><span class=p>)</span>
+	<span class=p>},</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div></li><li><p>查看是否添加成功</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>go run main.go <span class=nb>help</span>   
+A longer description of coolliuzw blog
+
+Usage:
+  cobra <span class=o>[</span>command<span class=o>]</span>
+
+Available Commands:
+  <span class=nb>help</span>        Help about any <span class=nb>command</span>
+  version     A brief description of version
+
+Flags:
+      --config string   config file <span class=o>(</span>default is <span class=nv>$HOME</span>/.cobra.yaml<span class=o>)</span>
+  -h, --help            <span class=nb>help</span> <span class=k>for</span> cobra
+  -t, --toggle          Help message <span class=k>for</span> toggle
+
+Use <span class=s2>&#34;cobra [command] --help&#34;</span> <span class=k>for</span> more information about a command.
+
+//go run main.go help可以看程序支持的命令行.
+//version     A brief description of version也添加进去了
+</code></pre></td></tr></table></div></div></li><li><p>测试调用.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>$ go run main.go version
+version called
+// 成功调用
+</code></pre></td></tr></table></div></div></li></ul><h2 id=总结>总结</h2><ul><li>这边只说说demo怎么构建起来，是不是很简单。去创建你的cli工具吧</li></ul></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2021-06-12&nbsp;<a class=git-hash href=https://github.com/dillonzq/LoveIt/commit/98b367a8fa7cf251f74e91e224ed99fc6ad9e17a target=_blank title="commit by liuzw(1413883407@qq.com) 98b367a8fa7cf251f74e91e224ed99fc6ad9e17a: init基础文件提交">
+<i class="fas fa-hashtag fa-fw"></i>98b367a</a></span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/05-github-cobra/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/go/>go</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/04-for...range/ class=prev rel=prev title="【Go】for ... range 的坑，你踩了吗？"><i class="fas fa-angle-left fa-fw"></i>【Go】for ... range 的坑，你踩了吗？</a>
+<a href=/06-github-cobra/ class=next rel=next title="【Go】Cobra Go最强大的命令行工具【2】">【Go】Cobra Go最强大的命令行工具【2】<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2020 - 2021</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>coolliuzw</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:80},comment:{valine:{appId:"3VIPouKn5iFQMlbBf2EtE8Co-gzGzoHsz",appKey:"UbLTV7x8R6wlfF4XgAwBPsPn",avatar:"coolliuzw",el:"#valine",emojiCDN:"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/",emojiMaps:{100:"1f4af.png",alien:"1f47d.png",anger:"1f4a2.png",angry:"1f620.png",anguished:"1f627.png",astonished:"1f632.png",black_heart:"1f5a4.png",blue_heart:"1f499.png",blush:"1f60a.png",bomb:"1f4a3.png",boom:"1f4a5.png",broken_heart:"1f494.png",brown_heart:"1f90e.png",clown_face:"1f921.png",cold_face:"1f976.png",cold_sweat:"1f630.png",confounded:"1f616.png",confused:"1f615.png",cry:"1f622.png",crying_cat_face:"1f63f.png",cupid:"1f498.png",dash:"1f4a8.png",disappointed:"1f61e.png",disappointed_relieved:"1f625.png",dizzy:"1f4ab.png",dizzy_face:"1f635.png",drooling_face:"1f924.png",exploding_head:"1f92f.png",expressionless:"1f611.png",face_vomiting:"1f92e.png",face_with_cowboy_hat:"1f920.png",face_with_hand_over_mouth:"1f92d.png",face_with_head_bandage:"1f915.png",face_with_monocle:"1f9d0.png",face_with_raised_eyebrow:"1f928.png",face_with_rolling_eyes:"1f644.png",face_with_symbols_on_mouth:"1f92c.png",face_with_thermometer:"1f912.png",fearful:"1f628.png",flushed:"1f633.png",frowning:"1f626.png",ghost:"1f47b.png",gift_heart:"1f49d.png",green_heart:"1f49a.png",grimacing:"1f62c.png",grin:"1f601.png",grinning:"1f600.png",hankey:"1f4a9.png",hear_no_evil:"1f649.png",heart:"2764-fe0f.png",heart_decoration:"1f49f.png",heart_eyes:"1f60d.png",heart_eyes_cat:"1f63b.png",heartbeat:"1f493.png",heartpulse:"1f497.png",heavy_heart_exclamation_mark_ornament:"2763-fe0f.png",hole:"1f573-fe0f.png",hot_face:"1f975.png",hugging_face:"1f917.png",hushed:"1f62f.png",imp:"1f47f.png",innocent:"1f607.png",japanese_goblin:"1f47a.png",japanese_ogre:"1f479.png",joy:"1f602.png",joy_cat:"1f639.png",kiss:"1f48b.png",kissing:"1f617.png",kissing_cat:"1f63d.png",kissing_closed_eyes:"1f61a.png",kissing_heart:"1f618.png",kissing_smiling_eyes:"1f619.png",laughing:"1f606.png",left_speech_bubble:"1f5e8-fe0f.png",love_letter:"1f48c.png",lying_face:"1f925.png",mask:"1f637.png",money_mouth_face:"1f911.png",nauseated_face:"1f922.png",nerd_face:"1f913.png",neutral_face:"1f610.png",no_mouth:"1f636.png",open_mouth:"1f62e.png",orange_heart:"1f9e1.png",partying_face:"1f973.png",pensive:"1f614.png",persevere:"1f623.png",pleading_face:"1f97a.png",pouting_cat:"1f63e.png",purple_heart:"1f49c.png",rage:"1f621.png",relaxed:"263a-fe0f.png",relieved:"1f60c.png",revolving_hearts:"1f49e.png",right_anger_bubble:"1f5ef-fe0f.png",robot_face:"1f916.png",rolling_on_the_floor_laughing:"1f923.png",scream:"1f631.png",scream_cat:"1f640.png",see_no_evil:"1f648.png",shushing_face:"1f92b.png",skull:"1f480.png",skull_and_crossbones:"2620-fe0f.png",sleeping:"1f634.png",sleepy:"1f62a.png",slightly_frowning_face:"1f641.png",slightly_smiling_face:"1f642.png",smile:"1f604.png",smile_cat:"1f638.png",smiley:"1f603.png",smiley_cat:"1f63a.png",smiling_face_with_3_hearts:"1f970.png",smiling_imp:"1f608.png",smirk:"1f60f.png",smirk_cat:"1f63c.png",sneezing_face:"1f927.png",sob:"1f62d.png",space_invader:"1f47e.png",sparkling_heart:"1f496.png",speak_no_evil:"1f64a.png",speech_balloon:"1f4ac.png","star-struck":"1f929.png",stuck_out_tongue:"1f61b.png",stuck_out_tongue_closed_eyes:"1f61d.png",stuck_out_tongue_winking_eye:"1f61c.png",sunglasses:"1f60e.png",sweat:"1f613.png",sweat_drops:"1f4a6.png",sweat_smile:"1f605.png",thinking_face:"1f914.png",thought_balloon:"1f4ad.png",tired_face:"1f62b.png",triumph:"1f624.png",two_hearts:"1f495.png",unamused:"1f612.png",upside_down_face:"1f643.png",weary:"1f629.png",white_frowning_face:"2639-fe0f.png",white_heart:"1f90d.png",wink:"1f609.png",woozy_face:"1f974.png",worried:"1f61f.png",yawning_face:"1f971.png",yellow_heart:"1f49b.png",yum:"1f60b.png",zany_face:"1f92a.png",zipper_mouth_face:"1f910.png",zzz:"1f4a4.png"},enableQQ:!1,highlight:!0,lang:"zh-cn",pageSize:10,placeholder:"说点什么吧...",recordIP:!0,serverURLs:"https://3vipoukn.lc-cn-n1-shared.com",visitor:!0}},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},search:{algoliaAppID:"ZPFURTAVLE",algoliaIndex:"index",algoliaSearchKey:"8fb6ae6c4f71aeb5416dfb65477883e4",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"}}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>
