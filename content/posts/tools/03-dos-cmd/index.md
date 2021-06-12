@@ -1,0 +1,127 @@
+---
+weight: 1
+title: "【cmd】Dos常用命令，cmd你会用吗？"
+date: 2020-12-20T18:51:32+08:00
+lastmod: 2020-12-20T18:51:32+08:00
+draft: false
+author: "coolliuzw"
+# authorLink: "https://coolliuzw.gitee.io"
+description: "Dos常用命令的简介."
+resources:
+- name: "featured-image"
+  src: "featured-image.jpg"
+
+tags: ["tools"]
+categories: ["tools"]
+
+lightgallery: true
+
+toc:
+  auto: false
+---
+
+
+
+<!--more-->
+
+## 简述
+
+目前大部分的情况，公司开发还是使用`window`的系统，那么`cmd`和`powershell`相关常用的命令我们就必须掌握它，linux能做的相关简单的操作，windows也得学习学习。这篇就说说平常常用的window命令。
+
+## 开始
+
+说说我自己吧，可能是个人习惯的问题，能通过命令行操作的事情，就尽量不要使用到鼠标，习惯让自己的手尽量的不离开键盘。可能这样做的目的，对写代码的注意力集中也有一定的好处吧，让双手掌握代码。所以自己会记忆大量的工具的快捷键和命令，也不知道是不是一个好的习惯。不过长期以后就变的是肌肉记忆，可能划得来。
+
+## Dos
+
+磁盘操作系统（Disk Operating System），简单的理解，可以认为是目前windows的 `cmd` 和 `powershell`，非程序开发可能已经基本上使用不到了，但是cmd应该还是windows打开系统相关软件最快捷的方式之一。
+
+## 如何打开cmd
+
+1. 开始->windows系统->命令提示符（win10系统）
+
+2. `win`键`+R` 输入`cmd`（推荐使用）
+
+3. 在任意的文件夹下面,按住shft建+鼠标右键，点击在此处打开命令行窗口（win10是powershell窗口）
+
+4. 资源管理的地址栏的路径前面加上`cmd然后空格`，回车即可
+
+- 第二种应该是最常用的一种方法，但是最后一种的话，是推荐需要打开指定目录下执行cmd的最好方法。
+
+## 常用的命令
+
+### 盘符切换
+
+- D:    // 盘符名称+:
+
+### 打开应用
+
+- calc
+- mspaint
+- notepad
+
+### dir
+
+- 类似linux的ls
+
+### copy
+
+- copy [要复制的文件名] [复制到的路径或文件夹]
+
+### move
+
+- move [要移动的文件名] [文件移到的路径或文件夹]
+
+### md
+
+- 该命令用于新建目录。语法是：
+
+  md [path表示即将创建的目录的路径] [directoryname表示所有创建的目录名称，此参数必须要有]
+
+### cd
+
+- 该命令用于改变当前目录
+- cd ..   // 上一级目录，这个很重要，同linux
+
+### ren
+
+- 该命令用于重命名文件或文件夹。语法是：
+
+  ren [oldfilename旧名字] [newfilename新名字]
+
+### del
+
+- 该命令用于删除目录中的文件。要删除其它驱动器或目录中的文件，则必须指定路径。语法是：
+
+  del [filename表示要删除的文件名]
+
+### rd
+
+- 该命令用于删除文件夹。语法是：
+
+  rd [directoryname表示要删除的文件夹名称]
+
+### cls
+
+- 该命令用于清除屏幕。
+
+### exit
+
+- 该命令用于退出CMD.EXE 程序。
+
+### ipconfig
+
+- 查看网络信息
+
+### ping
+
+- 查看IP对应的网络地址和域名
+
+### netstat
+
+- 本地地址监听信息查看
+
+## 总结
+
+​	整理一些平常常用的Dos命令，后续有忘记的情况，可以查看如何使用，目前使用vscode输入命令行的情况也是比较经常的情况。
+
